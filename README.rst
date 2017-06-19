@@ -4,7 +4,7 @@ Introduction
 *pyQms enables universal and accurate quantification of mass spectrometry data*
 
 
-|doc-status| |build-status-travis|
+|doc-status| |build-status-travis| |build-status-appveyor|
 
 .. |doc-status| image:: https://readthedocs.org/projects/pyqms/badge/?version=latest
    :target: http://pyqms.readthedocs.io/en/latest/?badge=latest
@@ -13,6 +13,11 @@ Introduction
 .. |build-status-travis| image:: https://travis-ci.org/pyQms/pyqms.svg?branch=master
    :target: https://travis-ci.org/pyQms/pyqms
    :alt: Travis CI status
+
+.. |build-status-appveyor| image:: https://ci.appveyor.com/api/projects/status/j6bwfx62l0j8ddsi?svg=true
+   :target: https://ci.appveyor.com/project/JB-MS/pyqms
+   :alt: AppVeyor CI status
+
 
 Summary
 *******
