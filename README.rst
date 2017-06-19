@@ -78,7 +78,7 @@ Get the latest version via github
     | https://github.com/pyQms/pyQms
 
 or the latest package at
-    | http://pyQms.github.com/pyQms/pyqms/archives/master.zip
+    | https://github.com/pyQms/pyqms/archives/master.zip
 
 
 Citation
