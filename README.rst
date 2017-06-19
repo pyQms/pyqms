@@ -2,7 +2,6 @@ Introduction
 ############
 
 *pyQms enables universal and accurate quantification of mass spectrometry data*
-The latest Documentation was generated on: |today|
 
 ..
     |build-status| |doc-status| |Gitter|
@@ -12,8 +11,8 @@ The latest Documentation was generated on: |today|
        :alt: Travis CI status
 
     .. |doc-status| image:: https://readthedocs.org/projects/pyqms/badge/?version=latest
-        :target: http://pyqms.readthedocs.org/en/latest/?badge=latest
-        :alt: Documentation Status
+	:target: http://pyqms.readthedocs.io/en/latest/?badge=latest
+	:alt: Documentation Status
 
     .. |Gitter| image:: https://img.shields.io/gitter/room/gitterHQ/gitter.svg
        :alt: Join the chat at https://gitter.im/pyqms/pyqms
@@ -50,6 +49,10 @@ At its core, pyQms is a Python module that allows a isotope pattern library to
 be initialized and any list of (mz, intensity) to be matched against the library,
 yielding a mScore.
 
+Documentation
+*************
+
+http://pyqms.readthedocs.io/en/latest/
 
 
 Implementation
