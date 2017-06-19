@@ -3,12 +3,12 @@ Introduction
 
 *pyQms enables universal and accurate quantification of mass spectrometry data*
 
-..
-    |doc-status|
 
-    .. |doc-status| image:: https://readthedocs.org/projects/pyqms/badge/?version=latest
-	:target: http://pyqms.readthedocs.io/en/latest/?badge=latest
-	:alt: Documentation Status
+|doc-status|
+
+.. |doc-status| image:: https://readthedocs.org/projects/pyqms/badge/?version=latest
+   :target: http://pyqms.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
 
 Summary
 *******
