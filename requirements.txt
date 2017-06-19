@@ -1,0 +1,2 @@
+pymzml >= 0.7.7
+openpyxl >= 2.3.2
