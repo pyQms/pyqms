@@ -1,0 +1,17 @@
+prune docs/build/html/.doctrees/
+prune compare
+exclude docs/build/html/.buildinfo
+
+recursive-include example_scripts *.py
+recursive-include tests *.py
+recursive-include tests/data *.csv
+recursive-include tests/data *.pkl
+recursive-include tests/data *.xlsx
+
+include LICENSE.txt
+include requirements.txt
+include README.rst
+include data/BSA1_omssa_2_1_9_unified.csv
+
+recursive-include docs/build/html *
+include docs/build/latex/pyQms.pdf
