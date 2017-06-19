@@ -101,7 +101,7 @@ Install requirements::
     user@localhost:~$ cd pyqms
     user@localhost:~/pyqms$ pip3.4 install -r requirements.txt
 
-.. note::
+.. note:
 
     Pip is included in Python 3.4 and higher. However, it might not be
     included in in your system's PATH environment variable.
@@ -115,7 +115,7 @@ Install pyQms::
     user@localhost:~/pyqms$ python3.4 setup.py install
 
 
-.. note::
+.. note:
 
     Consider to use a Python virtual environment for easy installation and use. 
     Further, usage of python3.4+ is recommended.
@@ -152,7 +152,7 @@ to test the package.
 LICENSE
 *******
 
-This software is under MIT license, please refer to LICENSE.txt for full license.
+This software is under MIT license, please refer to LICENSE for full license.
 
 
 
