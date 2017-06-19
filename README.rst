@@ -4,19 +4,11 @@ Introduction
 *pyQms enables universal and accurate quantification of mass spectrometry data*
 
 ..
-    |build-status| |doc-status| |Gitter|
-
-    .. |build-status| image:: https://travis-ci.org/pyqms/pyqms.svg?branch=master
-       :target: https://travis-ci.org/pyqms/pyqms
-       :alt: Travis CI status
+    |doc-status|
 
     .. |doc-status| image:: https://readthedocs.org/projects/pyqms/badge/?version=latest
 	:target: http://pyqms.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
-
-    .. |Gitter| image:: https://img.shields.io/gitter/room/gitterHQ/gitter.svg
-       :alt: Join the chat at https://gitter.im/pyqms/pyqms
-       :target: https://gitter.im/pyqms/pyqms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
 
 Summary
 *******
