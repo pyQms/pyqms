@@ -74,20 +74,11 @@ openpyxl module is required.
 Download
 ********
 
-.. note::
-
-    All online resources will be accessible after publication!
-
 Get the latest version via github
     | https://github.com/pyQms/pyQms
 
 or the latest package at
-    | http://pyQms.github.com/dist/pyqms.tar.bz2
-    | http://pyQms.github.com/dist/pyqms.zip
-
-The complete Documentation can be found as pdf
-    | http://pyQms.github.com/dist/pyqms.pdf
-
+    | http://pyQms.github.com/pyQms/pyqms/archives/master.zip
 
 
 Citation
