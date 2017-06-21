@@ -69,6 +69,22 @@ Write raw quant results as csv
 .. include:: code_inc/write_raw_result_csv.inc
 
 
+Write results as mzTab
+----------------------
+
+.. autofunction:: write_mztab_result.main
+
+.. include:: code_inc/write_mztab_result.inc
+
+
+Write results as mzTab (BSA example)
+------------------------------------
+
+.. autofunction:: write_BSA_mztab_result.main
+
+.. include:: code_inc/write_BSA_mztab_result.inc
+
+
 Advanced usage
 ^^^^^^^^^^^^^^
 
@@ -141,7 +157,7 @@ Example 2D plot
 .. image:: images/mic_2d.png
 
 
-Determine m/z and intesnity errors
+Determine m/z and intensity errors
 ----------------------------------
 
 .. autofunction:: determine_mz_and_i_error.main

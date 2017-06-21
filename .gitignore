@@ -1,6 +1,6 @@
 # Custom #
 ##########
-*.inc
+*.pkl
 quantanamo
 db/
 public/uploads

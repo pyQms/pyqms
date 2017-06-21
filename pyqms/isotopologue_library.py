@@ -1912,7 +1912,7 @@ class IsotopologueLibrary( dict ):
         colors represent various relative peak intensities.
 
 
-        .. image:: images/intensity_score.png
+        .. image:: images/Intensity_score.png
 
 
 

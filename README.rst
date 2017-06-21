@@ -101,6 +101,7 @@ Install requirements::
     user@localhost:~$ cd pyqms
     user@localhost:~/pyqms$ pip3.4 install -r requirements.txt
 
+
 .. note:
 
     Pip is included in Python 3.4 and higher. However, it might not be
