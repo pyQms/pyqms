@@ -4,6 +4,8 @@
 Welcome to pyQms's documentation!
 =================================
 
+The latest Documentation was generated on: |today|
+
 .. toctree::
    intro
    quick_start

@@ -24,9 +24,8 @@ setup(
         ]
     },
     requires = ['pymzml'],
-    extras_require = {'example_scripts':['pymzml >= 0.7.7','openpyxl >= 2.3.2']},
     long_description = "pyQms enables universal and accurate quantification of mass spectrometry data",
-    author = 'Johannes Leufken, Anna Niehues, L. Peter Sarin, Michael Hippler, Sebastian A. Leidel and Christian Fufezan',
+    author = 'Johannes Leufken, Anna Niehues, L. Peter Sarin, Florian Wessels, Michael Hippler, Sebastian A. Leidel and Christian Fufezan',
     author_email = 'christian@fufezan.net',
     url = 'http://pyqms.github.io',
     license = 'The MIT License (MIT)',

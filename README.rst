@@ -85,7 +85,7 @@ Please cite us when using pyQms in your work.
 
 
 The original publication can be found here:
-    | Johannes Leufken, Anna Niehues, L. Peter Sarin,
+    | Johannes Leufken, Anna Niehues, L. Peter Sarin, Florian Wessels,
     | Michael Hippler, Sebastian A. Leidel and Christian Fufezan (2017)
     | pyQms enables universal and accurate quantification of mass spectrometry data,
     | *submitted*
