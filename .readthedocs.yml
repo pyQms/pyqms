@@ -1,4 +1,5 @@
 python:
     version: 3
+    setup_py_install: true    
     extra_requirements:
         - example_scripts
