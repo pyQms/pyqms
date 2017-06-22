@@ -1983,7 +1983,7 @@ class IsotopologueLibrary( dict ):
             \\end{equation}
 
 
-        **The intensity score :math:`S^{intensity}`**
+        **The intensity score**
 
         Prior to intensity scoring, the scaling factor :math:`\\sigma` is
         calculated by comparing the intensities of the measured :math:`i` and
