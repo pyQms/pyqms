@@ -80,9 +80,9 @@ Write results as mzTab
 Write results as mzTab (BSA example)
 ------------------------------------
 
-.. autofunction:: write_BSA_mztab_result.main
+.. autofunction:: write_BSA_mztab_results.main
 
-.. include:: code_inc/write_BSA_mztab_result.inc
+.. include:: code_inc/write_BSA_mztab_results.inc
 
 
 Advanced usage
