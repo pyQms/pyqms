@@ -1931,14 +1931,13 @@ class IsotopologueLibrary( dict ):
         Biometrics (27), 857-871.
         The matching and scoring is performed on the m/z values and the
         intensity values independently yielding two scores, i.e.
-        `S^{mz}` and :math:`S^{intensity}`. In both cases, each peak
-        :math:`k is scored,
+        :math:`S^{mz}` and :math:`S^{intensity}`. In both cases, each peak :math:`k` is scored,
         comparing the measured value :math:`i` with the calculated value
         :math:`j` (equation 1), whereas a perfect match is 1. Each peak of the
         isotopologue that has a relative intensity (relative to the maximum
         intensity isotope peak) :math:`r_{k}` above the matching threshold
         (by default 1% of the maximum intensity isotope peak) is matched and
-        \scored.
+        scored.
 
         .. math::
            :nowrap:
@@ -1948,7 +1947,7 @@ class IsotopologueLibrary( dict ):
             \\end{equation}
 
 
-        **The m/z score: :math:`S^{mz}`**
+        **The m/z score**
 
         For each peak :math:`k`, the m/z similarity between measured value
         :math:`i` and the calculated value :math:`j` is defined as
@@ -1960,18 +1959,18 @@ class IsotopologueLibrary( dict ):
                 s^{mz}_{ijk} = 1 - (\\frac{\\delta^{mz}_{ijk}}{\\alpha})
             \\end{equation}
 
-        Whereas :math:delta^{mz}_{ijk} the difference in ppm between measured
-        :math:`mz_{ik} and calculated :math:`mz_{jk} and :math:`\\alpha`
+        Whereas :math:`delta^{mz}_{ijk}` the difference in ppm between measured
+        :math:`mz_{ik}` and calculated :math:`mz_{jk}` and :math:`\\alpha`
         defines the range in ppm, in which the score decreases from 1 to 0 in a
         linear fashion. In principle, :math:`\\alpha` is equal to the precision
         of the measurement defined by the user (pyQms parameter “REL_MZ_RANGE”,
         default 5 ppm, http://pyqms.readthedocs.io/en/latest/params.html).
         For example, if the difference between measured and theoretical m/z
-        values would be 2.5 ppm, then the :math:s^{mz}_{ijk} score for this
+        values would be 2.5 ppm, then the :math:`s^{mz}_{ijk}` score for this
         peak :math:`k` would be 0.5.
 
         The total m/z score for all peaks termed :math:`S^{mz}` is the weighted
-        sum of all single similarity m/z scores :math:s^{mz}_{ijk} (equation 3).
+        sum of all single similarity m/z scores :math:`s^{mz}_{ijk}` (equation 3).
         The weighting is defined by the theoretical intensity of the peak
         :math:`k` relative to the highest peak in the theoretical isotope
         pattern, termed :math:`r_{k}`.
@@ -1984,7 +1983,7 @@ class IsotopologueLibrary( dict ):
             \\end{equation}
 
 
-        **The intensity score: :math:`S^{intensity}`**
+        **The intensity score :math:`S^{intensity}`**
 
         Prior to intensity scoring, the scaling factor :math:`\\sigma` is
         calculated by comparing the intensities of the measured :math:`i` and
@@ -2001,7 +2000,7 @@ class IsotopologueLibrary( dict ):
             \\end{equation}
 
         Using this scaling factor, which is equal to the abundance of the
-        measured molecule, one can calculate :math:\\delta^{intensity}_{ijk},
+        measured molecule, one can calculate :math:`\\delta^{intensity}_{ijk}`,
         which is the relative intensity error between measured and theoretical
         intensity for each peak :math:`k` (equation 5).
 
@@ -2021,7 +2020,7 @@ class IsotopologueLibrary( dict ):
                  s^{intensity}_{ijk} = 1 - (\\frac{\\delta^{intensity}_{ijk}}{1 - r_{k} + \\epsilon })
             \\end{equation}
 
-        In analogy to the m/z score (:math:s^{mz}_{ijk}), the denominator
+        In analogy to the m/z score (:math:`s^{mz}_{ijk}`), the denominator
         defines the range in which the peak based intensity score decreases
         from 1 to 0. However, in contrast to the m/z score, the intensity error
         has to be weighted by the abundance of each peak (1 - :math:`r_{k}` )
