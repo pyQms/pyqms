@@ -37,11 +37,11 @@ Abstract
 
 Quantitative mass spectrometry (MS) is a key technique in many research areas (Yates III et al. 2009), including proteomics, metabolomics, glycomics, and lipidomics. Because all of the corresponding molecules can be described by chemical formulas, universal quantification tools are highly desirable. Here we present pyQms, an open-source software for accurate quantification of all types of molecules measurable by MS. pyQms uses isotope pattern matching which offers accurate quality assessment of the quantification and the ability to directly incorporate mass spectrometer accuracy. pyQms is, due to its universal design, applicable to every research field, labeling strategy, and acquisition technique. This opens ultimate flexibility for researchers to design experiments employing innovative and hitherto unexplored labeling strategies. Importantly, pyQms performs very well to accurately quantify partially labeled proteomes in large-scale and high-throughput, the most challenging task for a quantification algorithm.
 
-            -- Leufken et al. (in revision)
+            -- Leufken, J., Niehues, A., Hippler, M., Sarin, L. P., Hippler, M., Leidel, S. A., and Fufezan, C. (2017) pyQms enables universal and accurate quantification of mass spectrometry data. MCP In Press
 
+Link to manuscript.
 
-This software is under MIT license, please refer to LICENSE.txt for full license.
-
+http://www.mcponline.org/content/early/2017/07/20/mcp.M117.068007.abstract 
 
 
 pyQms module
@@ -85,10 +85,10 @@ Please cite us when using pyQms in your work.
 
 
 The original publication can be found here:
-    | Johannes Leufken, Anna Niehues, L. Peter Sarin, Florian Wessels,
-    | Michael Hippler, Sebastian A. Leidel and Christian Fufezan (2017)
-    | pyQms enables universal and accurate quantification of mass spectrometry data,
-    | *submitted*
+    Leufken, J., Niehues, A., Hippler, M., Sarin, L. P., Hippler, M., Leidel, S. A., and Fufezan, C. (2017) pyQms enables universal and accurate quantification of mass spectrometry data. MCP In Press
+
+
+http://www.mcponline.org/content/early/2017/07/20/mcp.M117.068007.abstract 
 
 
 .. _installation_instructions:
