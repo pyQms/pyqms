@@ -199,7 +199,7 @@ def _parse_evidence_and_format_fixed_labels(data=None):
     return r
 
 
-def parse_evidence( fixed_labels=None, evidence_files=None, molecules=None, evidence_score_field=None ):
+def parse_evidence( fixed_labels=None, evidence_files=None, molecules=None, evidence_score_field=None, return_raw_csv_data=False ):
     '''
     Reads in the evidence file and returns the final formatted fixed labels,
     the evidence lookup, which is passed to the isotopologue library and the
@@ -295,6 +295,8 @@ def parse_evidence( fixed_labels=None, evidence_files=None, molecules=None, evid
     # this is the lookup for the lib with the evidences
     # tmp_evidences = ddict(list)
     tmp_evidences = {}
+
+    csv_raw_data_to_return = {}
     # tmp_charges_of_evidences = set()
     for evidence_file in evidence_files:
         input_is_csv       = False
@@ -327,7 +329,7 @@ def parse_evidence( fixed_labels=None, evidence_files=None, molecules=None, evid
             input_buffer = []
             for line_dict in dict_reader:
                 input_buffer.append(line_dict)
-
+            csv_raw_data_to_return[evidence_file] = input_buffer
             for line_dict in input_buffer:
 
                 modifications = line_dict.get(
@@ -489,7 +491,10 @@ def parse_evidence( fixed_labels=None, evidence_files=None, molecules=None, evid
 
     molecule_list = list(molecule_set)
 
-    return formatted_fixed_labels, evidence_lookup, molecule_list
+    if return_raw_csv_data:
+        return formatted_fixed_labels, evidence_lookup, molecule_list, csv_raw_data_to_return
+    else:  
+        return formatted_fixed_labels, evidence_lookup, molecule_list
 
 
 def calc_amount_function( obj_for_calc_amount ):
