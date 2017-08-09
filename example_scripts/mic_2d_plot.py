@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.4
+#!/usr/bin/env python3
 # encoding: utf-8
 """
     pyQms
@@ -28,7 +28,6 @@ try:
 except:
     print('rpy2 is not installed but required for plotting, please install it and try again')
     print('pip3.4 install rpy2')
-    exit()
 
 
 def main(pickle_file):

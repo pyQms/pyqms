@@ -1926,15 +1926,18 @@ class IsotopologueLibrary( dict ):
             the documentation.
 
 
-        pyQms matching score is based on the work of `Gower`_ (1971)
+        The pyQms matching score (mScore) is based on the work of  `Gower`_ (1971)
         *A General Coefficient of Similarity and Some of Its Properties*,
         Biometrics (27), 857-871.
-        The matching and scoring is performed on the :math:`mz` values and
-        the :math:`intensity` values independently. In both cases,
-        each peak :math:`k` of the isotopologue that has a relative intensity
-        :math:`r_{k}` above the matching threshold is scored,
-        comparing the measured value :math:`i` with the calculated
-        value :math:`j`, thus
+        The matching and scoring is performed on the m/z values and the
+        intensity values independently yielding two scores, i.e.
+        :math:`S^{mz}` and :math:`S^{intensity}`. In both cases, each peak :math:`k` is scored,
+        comparing the measured value :math:`i` with the calculated value
+        :math:`j` (equation 1), whereas a perfect match is 1. Each peak of the
+        isotopologue that has a relative intensity (relative to the maximum
+        intensity isotope peak) :math:`r_{k}` above the matching threshold
+        (by default 1% of the maximum intensity isotope peak) is matched and
+        scored.
 
         .. math::
            :nowrap:
@@ -1944,9 +1947,10 @@ class IsotopologueLibrary( dict ):
             \\end{equation}
 
 
-        **mz scoring**
+        **The m/z score**
 
-        The m/z similarity score of peak :math:`k` is
+        For each peak :math:`k`, the m/z similarity between measured value
+        :math:`i` and the calculated value :math:`j` is defined as
 
         .. math::
            :nowrap:
@@ -1955,20 +1959,21 @@ class IsotopologueLibrary( dict ):
                 s^{mz}_{ijk} = 1 - (\\frac{\\delta^{mz}_{ijk}}{\\alpha})
             \\end{equation}
 
-        With :math:`\\alpha` being the measured precision (REL_MZ_RANGE) and
-        :math:`\\delta^{mz}_{ijk}` the relative difference in ppm between
-        measured :math:`mz_{ik}` and calculated :math:`mz_{jk}`
+        Whereas :math:`delta^{mz}_{ijk}` the difference in ppm between measured
+        :math:`mz_{ik}` and calculated :math:`mz_{jk}` and :math:`\\alpha`
+        defines the range in ppm, in which the score decreases from 1 to 0 in a
+        linear fashion. In principle, :math:`\\alpha` is equal to the precision
+        of the measurement defined by the user (pyQms parameter “REL_MZ_RANGE”,
+        default 5 ppm, http://pyqms.readthedocs.io/en/latest/params.html).
+        For example, if the difference between measured and theoretical m/z
+        values would be 2.5 ppm, then the :math:`s^{mz}_{ijk}` score for this
+        peak :math:`k` would be 0.5.
 
-        .. math::
-           :nowrap:
-
-            \\begin{equation}
-                \\delta^{mz}_{ijk} = \\frac{ \\left| mz_{ik} - mz_{jk} \\right|}{mz_{jk} 10^{-6}}
-            \\end{equation}
-
-        The total mz score :math:`S^{mz}` is the weighted sum of all
-        similarity scores :math:`s^{mz}_{ijk}`, with the weighting being
-        the relative abundance of peak :math:`k`, i.e. :math:`r_{k}`
+        The total m/z score for all peaks termed :math:`S^{mz}` is the weighted
+        sum of all single similarity m/z scores :math:`s^{mz}_{ijk}` (equation 3).
+        The weighting is defined by the theoretical intensity of the peak
+        :math:`k` relative to the highest peak in the theoretical isotope
+        pattern, termed :math:`r_{k}`.
 
         .. math::
            :nowrap:
@@ -1978,12 +1983,14 @@ class IsotopologueLibrary( dict ):
             \\end{equation}
 
 
-        **Intensity scoring**
+        **The intensity score**
 
-        Prior intensity scoring, the scaling factor :math:`\\sigma` is
-        calculated by comparing the intensities of the measured :math:`i`
-        and calculated :math:`j` intensities for all peaks :math:`k` that are
-        within the measured precision:
+        Prior to intensity scoring, the scaling factor :math:`\\sigma` is
+        calculated by comparing the intensities of the measured :math:`i` and
+        calculated :math:`j` intensities for all peaks :math:`k` within the
+        matching threshold (see above). This scaling factor is calculated by
+        dividing the weighted sum of the measured intensity by the weighted sum
+        of the theoretical intensities (equation 4).
 
         .. math::
            :nowrap:
@@ -1992,29 +1999,10 @@ class IsotopologueLibrary( dict ):
                  \\sigma = \\frac{\\sum\\limits_{}^k intensity_{ik} r_{k} }{\\sum\\limits_{}^k intensity_{jk} r_{k}}
             \\end{equation}
 
-        The intensity similarity score of peak :math:`k` is
-
-        .. math::
-           :nowrap:
-
-            \\begin{equation}
-                 s^{intensity}_{ijk} = 1 - (\\frac{\\delta^{intensity}_{ijk}}{1 + \\epsilon - r_{k}})
-            \\end{equation}
-
-        With :math:`\\epsilon` being the intensity precision (pyQms parameter REL_I_RANGE)
-        and :math:`r_{k}` relative intensity of peak :math:`k`.
-        This ensures that:
-
-            * the intensity error range is scaled
-                inversely proportional to the relative intensity of peak :math:`k`,
-                i.e. :math:`r_{k}` and
-
-            * pyQms parameter REL_I_RANGE can be expressed as "intensity error range at
-                relative intensity of 1".
-
-        :math:`\\delta^{intensity}_{ijk}` is the relative difference between
-        measured :math:`intensity_{ik}` and scaled calculated intensity
-        :math:`\\sigma intensity_{jk}`.
+        Using this scaling factor, which is equal to the abundance of the
+        measured molecule, one can calculate :math:`\\delta^{intensity}_{ijk}`,
+        which is the relative intensity error between measured and theoretical
+        intensity for each peak :math:`k` (equation 5).
 
         .. math::
            :nowrap:
@@ -2023,10 +2011,27 @@ class IsotopologueLibrary( dict ):
                  \\delta^{intensity}_{ijk} = \\frac{ \\left|intensity_{ik} - \\sigma intensity_{jk}\\right|}{\\sigma intensity_{jk}}
             \\end{equation}
 
+        The intensity score of peak :math:`k` is then defined (equation 6).
 
-        The total intensity score :math:`S^{intensity}` is the weighted
-        sum of all similarity scores :math:`k`. Weighted by the relative
-        abundance of peak :math:`k`, i.e. :math:`r_{k}`
+        .. math::
+           :nowrap:
+
+            \\begin{equation}
+                 s^{intensity}_{ijk} = 1 - (\\frac{\\delta^{intensity}_{ijk}}{1 - r_{k} + \\epsilon })
+            \\end{equation}
+
+        In analogy to the m/z score (:math:`s^{mz}_{ijk}`), the denominator
+        defines the range in which the peak based intensity score decreases
+        from 1 to 0. However, in contrast to the m/z score, the intensity error
+        has to be weighted by the abundance of each peak (1 - :math:`r_{k}` )
+        as more abundant peaks can be measured more accurately than smaller
+        peaks. Additionally, we introduced ϵ (pyQms parameter “REL_I_RANGE”,
+        default 0.2), which represents the most conservative relative error
+        applied to the most precisely measured peak (:math:`r_{k}` = 1). Thus,
+        the overall relative error (denominator) will increase with lower peaks
+        The total intensity score :math:`S^{intensity}` is the weighted sum of
+        all similarity scores :math:`k` in analogy to the :math:`S^{mz}` score:
+
 
         .. math::
            :nowrap:
@@ -2035,13 +2040,15 @@ class IsotopologueLibrary( dict ):
                 S^{intensity} = \\frac{\\sum\\limits_{}^k s^{intensity}_{ijk} r_{k} }{\\sum\\limits_{}^k r_{k}}
             \\end{equation}
 
+        **The combined final score: mScore**
+        The final score is termed mScore and is a sum of :math:`S^{mz}` and
+        :math:`S^{intensity}`. However, because some machines can measure m/z
+        much more accurately then intensities, we introduced :math:`\\xi` to
+        allow for flexibilities depending on the type of mass spectrometer used.
+        :math:`\\xi` (the pyQms parameter “MZ_SCORE_PERCENTILE”, default 0.4)
+        is the fraction the :math:`S^{mz}` score is weighted into the sum.
+        Thus, the final mScore is defined as: 
 
-        **Final pyQms score**
-
-        The total score is then weighted by the parameter MZ_SCORE_PERCENTILE,
-        :math:`\\xi` to allow for flexibilities depending on the type of mass
-        spectrometer used. Some machines can measure mz much better than
-        intensity. Thus,
 
         .. math::
            :nowrap:
