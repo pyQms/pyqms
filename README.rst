@@ -157,6 +157,17 @@ This software is under MIT license, please refer to LICENSE for full license.
 
 
 
+Publications and project using pyQms for quantification
+*******************************************************
+        
+ | - Hohner, R., Barth, J., Magneschi, L., Jaeger, D., Niehues, A., Bald, T., Grossman, A., Fufezan, C., and Hippler, M. (2013) The Metabolic Status Drives Acclimation of Iron Deficiency Responses in Chlamydomonas reinhardtii as Revealed by Proteomics Based Hierarchical Clustering and Reverse Genetics. **Mol. Cell. Proteomics** 12, 2774–2790 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/23820728>`_
+ | - Barth, J., Bergner, S. V., Jaeger, D., Niehues, A., Schulze, S., Scholz, M., and Fufezan, C. (2014) The Interplay of Light and Oxygen in the Reactive Oxygen Stress Response of Chlamydomonas reinhardtii Dissected by Quantitative Mass Spectrometry. **Mol. Cell. Proteomics** 13, 969–989 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/24482124>`_ 
+ | - Kukuczka, B., Magneschi, L., Petroutsos, D., Steinbeck, J., Bald, T., Powikrowska, M., Fufezan, C., Finazzi, G., and Hippler, M. (2014) Proton Gradient Regulation5-Like1-Mediated Cyclic Electron Flow Is Crucial for Acclimation to Anoxia and Complementary to Nonphotochemical Quenching in Stress Adaptation. **Plant Physiol.** 165, 1604–1617 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/24948831>`_ 
+ | - Alings, F., Sarin, L. P., Fufezan, C., Drexler, H. C. A., and Leidel, S. A. (2015) An evolutionary approach uncovers a diverse response of tRNA 2-thiolation to elevated temperatures in yeast. **RNA** 21, 202–212 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/25505025>`_ 
+ | - Bergner, S. V., Scholz, M., Trompelt, K., Barth, J., Gäbelein, P., Steinbeck, J., Xue, H., Clowez, S., Fucile, G., Goldschmidt-Clermont, M., Fufezan, C., and Hippler, M. (2015) STATE TRANSITION7-Dependent Phosphorylation Is Modulated by Changing Environmental Conditions, and Its Absence Triggers Remodeling of Photosynthetic Protein Complexes. **Plant Physiol.** 168, 615–634 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/25858915>`_ 
+ | - Hochmal, A. K., Zinzius, K., Charoenwattanasatien, R., Gäbelein, P., Mutoh, R., Tanaka, H., Schulze, S., Liu, G., Scholz, M., Nordhues, A., Offenborn, J. N., Petroutsos, D., Finazzi, G., Fufezan, C., Huang, K., Kurisu, G., and Hippler, M. (2016) Calredoxin represents a novel type of calcium-dependent sensor-responder connected to redox regulation in the chloroplast. **Nat. Commun.** 7, 11847 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/27297041>`_ 
+ | - Pfannmüller, A., Leufken, J., Studt, L., Michielse, C. B., Sieber, C. M. K., Güldener, U., Hawat, S., Hippler, M., Fufezan, C., and Tudzynski, B. (2017) Comparative transcriptome and proteome analysis reveals a global impact of the nitrogen regulators AreA and AreB on secondary metabolism in Fusarium fujikuroi. PLoS One in press, 1–27 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/28441411>`_ 
+
 Contact information
 *******************
 
