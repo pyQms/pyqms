@@ -2047,7 +2047,7 @@ class IsotopologueLibrary( dict ):
         allow for flexibilities depending on the type of mass spectrometer used.
         :math:`\\xi` (the pyQms parameter “MZ_SCORE_PERCENTILE”, default 0.4)
         is the fraction the :math:`S^{mz}` score is weighted into the sum.
-        Thus, the final mScore is defined as: 
+        Thus, the final mScore is defined as:
 
 
         .. math::
@@ -2207,14 +2207,24 @@ class IsotopologueLibrary( dict ):
         Bisect a given list by using the minimum and maximum of a defined border
         (list or tuple of values)
         '''
-        lower_value = borders[0]
-        upper_value = borders[1]
-        try:
-            min_pos = bisect.bisect( source_list, lower_value ) - tolerance
-        except:
-            print('Slice list failed:', source_list, lower_value)
-            exit(1)
-        max_pos = bisect.bisect( source_list, upper_value ) + tolerance
+        lower_value = list(borders[0])
+        upper_value = list(borders[1])
+        is_numpy_array = getattr( source_list, "tolist", False)
+        if is_numpy_array is False:
+            # normal arrays ...
+            try:
+                min_pos = bisect.bisect( source_list, lower_value ) - tolerance
+                max_pos = bisect.bisect( source_list, upper_value ) + tolerance
+            except:
+                # the list has tuples instead of list
+                min_pos = bisect.bisect( source_list, tuple(lower_value) ) - tolerance
+                max_pos = bisect.bisect( source_list, tuple(upper_value) ) + tolerance
+
+        else:
+            # numpy array
+            min_pos = bisect.bisect( source_list.tolist(), lower_value ) - tolerance
+            max_pos = bisect.bisect( source_list.tolist(), upper_value ) + tolerance
+
         if min_pos < 0:
             min_pos = 0
         if max_pos > len( source_list ):
