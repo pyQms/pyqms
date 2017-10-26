@@ -347,13 +347,21 @@ class IsotopologueLibrary( dict ):
                     # see 806
                     pattern          = self.regex['<isotope><element>']
                     match            = pattern.match( element )
-                    enriched_isotope = int(
-                        round(
-                            float(
-                                match.group('isotope')
+                    try:
+                        enriched_isotope = int(
+                            round(
+                                float(
+                                    match.group('isotope')
+                                )
                             )
                         )
-                    )
+                    except:
+                        print('Failed on', element )
+                        print('Possibly element is not in pyqms.knowledge_base.py ?')
+                        print('Current Distributions available:')
+                        print( self.isotopic_distributions )
+                        # print(match)
+                        exit(1)
                     # print('> Extending isotopic distribution that are within the modifications (upep)')
                     # enriched_isotope = int(round(float(match.group('isotope'))))
                     template_element = match.group('element')
@@ -2221,7 +2229,11 @@ class IsotopologueLibrary( dict ):
                 # the list has tuples instead of list
                 min_pos = bisect.bisect( source_list, tuple(lower_value) ) - tolerance
                 max_pos = bisect.bisect( source_list, tuple(upper_value) ) + tolerance
-
+                # except:
+                #     print('Failed on', borders)
+                #     print( source_list[:3])
+                #     print( '??')
+                #     exit(1)
         else:
             # numpy array
             min_pos = bisect.bisect( source_list.tolist(), lower_value ) - tolerance

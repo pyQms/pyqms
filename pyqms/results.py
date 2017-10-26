@@ -1544,6 +1544,11 @@ class Results(dict):
                                     dict2write['trivial_name(s)'] = ';'.join(
                                         tmp_evidence_dict[molecule]['trivial_names']
                                     )
+                            else:
+                                trivial_names = self.lookup['formula to trivial name'].get( key.formula, None)
+                                if trivial_names is not None:
+                                    dict2write['trivial_name(s)'] = ';'.join( trivial_names )
+
 
                             csv_out.writerow( dict2write )
         return
@@ -1598,7 +1603,7 @@ class Results(dict):
                 * opt_{identifier}_*
                 * reliability
                 * uri
-        
+
         Addtional information can be added to the mzTab file by adding a dict
         like shown below to the results.lookup dict under the key
         'mztab_meta_info'.: ::
@@ -1648,7 +1653,7 @@ MTD mzTab-type  Quantification
 MTD description mzTab based pyQms quantification results on peptide level
 MTD peptide-quantification-unit [PRIDE, PRIDE:0000393, Relative quantification unit,]
 MTD peptide-quantification-value [PRIDE, PRIDE:0000425, MS1 intensity based label-free quantification method,]'''
-    
+
         if 'mztab_meta_info' not in self.lookup.keys():
             self.lookup['mztab_meta_info'] = {}
             if 'ms_run-location' not in self.lookup['mztab_meta_info'].keys():
@@ -2001,7 +2006,7 @@ MTD peptide-quantification-value [PRIDE, PRIDE:0000425, MS1 intensity based labe
                         upep_2_rt[current_upep][ 'lower_window_border' ] =  half_diff_redef_win
 
                         upep_2_rt[ last_upep ][ 'upper_window_border' ] =  half_diff_redef_win
-                 
+
         return upep_2_rt
 
 if __name__ == '__main__':
