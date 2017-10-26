@@ -357,9 +357,25 @@ class IsotopologueLibrary( dict ):
                         )
                     except:
                         print('Failed on', element )
-                        print('Possibly element is not in pyqms.knowledge_base.py ?')
+                        print('Maybe element is not in pyqms.knowledge_base.py ?')
                         print('Current Distributions available:')
-                        print( self.isotopic_distributions )
+                        print( self.isotopic_distributions.keys() )
+                        # import csv
+                        # ___element_list = []
+                        # with open('/home/cf322940/Downloads/NIST_isotope_abundance.csv') as nos:
+                        #     for d in csv.DictReader( nos ):
+                        #         # print( d.keys())/
+                        #         if d['Symbol'] == element:
+                        #             ___element_list.append(
+                        #                 (
+                        #                     d['Relative atomic mass'],
+                        #                     d['Relative isotope abundance']
+                        #                 )
+                        #             )
+                        # print('"{0}" : ['.format( element ))
+                        # for mass, i in ___element_list:
+                        #     print('     ( {0}, {1} ),'.format( mass, i ))
+                        # print('],')
                         # print(match)
                         exit(1)
                     # print('> Extending isotopic distribution that are within the modifications (upep)')
@@ -694,6 +710,7 @@ class IsotopologueLibrary( dict ):
                         # now add the ranges to the global list
                         #
                     for charge in self.charges:
+                        # try:
                         lower_mz = self[ formula ]['env'][label_percentile_tuple]\
                                 [ charge ]['mz'][0]
                         # except:
