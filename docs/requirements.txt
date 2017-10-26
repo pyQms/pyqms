@@ -1,3 +1,5 @@
 sphinx
 sphinx_rtd_theme
-pymzml
+numpy >= 1.8.0r
+cython >= 0.24.1
+https://github.com/pymzml/pymzML/archive/master.zip
