@@ -70,16 +70,18 @@ class TestResults( unittest.TestCase ):
     def crash_test(self):
         '''
         Testing to slice with an tuple which can not be ordered
+        # __Modified CF__ ... tuple can be slice now
         '''
-        with self.assertRaises(SystemExit) as system_exit_check:
-            lib._slice_list(
-                SPECTRUM,
-                [ ('1002', 0.001), ('1003', 0.001)]
-            )
-        self.assertEqual(
-            system_exit_check.exception.code,
-            1
-        )
+        pass
+        # with self.assertRaises(SystemExit) as system_exit_check:
+        #     lib._slice_list(
+        #         SPECTRUM,
+        #         [ (1002, 0.001), (1003, 0.001)]
+        #     )
+        # self.assertEqual(
+        #     system_exit_check.exception.code,
+        #     1
+        # )
 
 
 if __name__ == '__main__':
