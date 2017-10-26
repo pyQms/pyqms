@@ -653,15 +653,17 @@ class IsotopologueLibrary( dict ):
                             )
 
                         for charge in self.charges:
-                            if charge > 0:
-                                ionization_spec = pyqms.knowledge_base.PROTON
-                            else:
-                                ionization_spec = pyqms.knowledge_base.ELECTRON
+                            # if charge > 0:
+                            #     ionization_spec = pyqms.knowledge_base.PROTON
+                            # else:
+                            #     ionization_spec = pyqms.knowledge_base.ELECTRON
+                            # ^--- negative mode = proton loss not electron addition
+
+                            mz = (total_local_mass + charge * pyqms.knowledge_base.PROTON) / float( abs(charge) )
+
                             #
                             # MACHINE ERROR
                             #
-                            mz = (total_local_mass + charge * ionization_spec) / float( abs(charge) )
-
                             if self.params['MACHINE_OFFSET_IN_PPM'] != 0:
                                 mz = mz + mz * 1e-6 * self.params['MACHINE_OFFSET_IN_PPM']
 
