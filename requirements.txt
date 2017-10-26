@@ -1,3 +1,5 @@
 pymzml >= 0.7.7,<=0.9
 openpyxl >= 2.3.2
 nose
+numpy >= 1.8.0r
+cython >= 0.24.1
