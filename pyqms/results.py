@@ -413,27 +413,35 @@ class Results(dict):
 
     def _determine_measured_error(
             self,
-            score_threshold = None,
-            topX            = 3,
-            filename        = None,
-            plot            = True
+            score_threshold  = None,
+            topX             = 3,
+            filename         = None,
+            plot             = True,
+            formulas_to_test = None
         ):
         """
-        Function to determine the m/z an intensity error.
+        Function to determine and plot (density plot) the m/z an intensity
+        error.
 
         """
         if filename == None:
             filename = 'Histograms_mz_and_i_error.pdf'
+        kwargs = {
+            'score_threshold' : score_threshold
+        }
+        if formulas_to_test is not None:
+            kwargs['formulas'] = formulas_to_test
+
         mz_error_list = []
         i_error_list = []
-        for key,i, entry in self.extract_results(score_threshold=score_threshold):
+        for key, i, entry in self.extract_results(**kwargs):
             for mmz, mi, rel_i, cmz, ci in sorted(entry.peaks, key=itemgetter(2), reverse=True)[:topX]:
                 if mmz is not None:
                     si = ci * entry.scaling_factor
                     rel_i_error  = abs(mi - si) / si
                     if rel_i_error > 1:
                         rel_i_error = 1
-                    rel_mz_error = abs( mmz - cmz ) / cmz
+                    rel_mz_error = ( mmz - cmz ) / cmz
                     mz_error_list.append( rel_mz_error * 1e6 )
                     i_error_list.append( rel_i_error )
         if plot:
@@ -443,7 +451,10 @@ class Results(dict):
                 r.density(
                     rpy2.robjects.vectors.FloatVector(mz_error_list)
                 ),
-                main = 'm/z error N = {0}'.format(len(mz_error_list)),
+                main = 'm/z error N = {0}, mean = {1}'.format(
+                    len(mz_error_list),
+                    sum(mz_error_list) / len(mz_error_list)
+                ),
                 xlab = 'm/z error [ppm]',
                 ylab = 'density'
             )
@@ -451,7 +462,10 @@ class Results(dict):
                 r.density(
                     rpy2.robjects.vectors.FloatVector(i_error_list)
                 ),
-                main = 'intensity error N = {0}'.format(len(i_error_list)),
+                main = 'intensity error N = {0}, mean = {1}'.format(
+                    len(i_error_list),
+                    sum(i_error_list) / len(i_error_list)
+                ),
                 xlab = 'intensity error [rel.]',
                 ylab = 'density'
             )
