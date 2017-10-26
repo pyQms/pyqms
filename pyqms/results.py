@@ -1511,7 +1511,9 @@ class Results(dict):
             'retention_time',
             'mScore',
             'file_name',
-            'trivial_name(s)'
+            'trivial_name(s)',
+            '#exp. peaks',
+            '#obs. peaks',
         ]
         map_formulas = False
         if len(self.lookup['formula to molecule'].values()) > 1:
@@ -1547,6 +1549,8 @@ class Results(dict):
                         'retention_time'    : v.rt,
                         'mScore'            : v.score,
                         'file_name'         : key.file_name,
+                        '#exp. peaks'       : len(v.peaks ),
+                        '#obs. peaks'       : len([ x for x in v.peaks if x[0] is not None ])
                     }
                     if map_formulas is False:
                         csv_out.writerow( dict2write )
