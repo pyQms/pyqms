@@ -85,10 +85,25 @@ Please cite us when using pyQms in your work.
 
 
 The original publication can be found here:
-    Leufken, J., Niehues, A., Hippler, M., Sarin, L. P., Hippler, M., Leidel, S. A., and Fufezan, C. (2017) pyQms enables universal and accurate quantification of mass spectrometry data. MCP In Press
+    Leufken, J., Niehues, A., Hippler, M., Sarin, L. P., Hippler, M., Leidel, S. A., and Fufezan, C. (2017) pyQms enables universal and accurate quantification of mass spectrometry data. Mol. Cell. Proteomics 16, 1736–1745
+    
+
+Full article
+============
+
+http://www.mcponline.org/content/16/10/1736
+
+
+Early access article version
+============================
 
 
 http://www.mcponline.org/content/early/2017/07/20/mcp.M117.068007.abstract 
+
+DOI
+===
+
+10.1074/mcp.M117.068007
 
 
 .. _installation_instructions:
