@@ -1,6 +1,2 @@
 sphinx
 sphinx_rtd_theme
-numpy >= 1.8.0r
-cython >= 0.24.1
-pynumpress
-pymzml >= 0.7.7,<=0.9

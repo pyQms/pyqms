@@ -20,10 +20,14 @@
 """
 import pyqms
 import sys
-import pymzml
+
 import pickle
 import os
 import pyqms.adaptors
+try:
+    import pymzml
+except:
+    print('Please install pymzML via: pip install pymzml')
 
 
 def main(ident_file = None, mzml_file = None):
