@@ -130,11 +130,20 @@ Install pyQms::
 
     user@localhost:~/pyqms$ python3.4 setup.py install
 
-
 .. note:
 
     Consider to use a Python virtual environment for easy installation and use. 
     Further, usage of python3.4+ is recommended.
+
+pyQms can be also be installed via pip::
+    
+    pip install pyqms
+
+.. note:
+    
+    For obtaining the latest version of pyQms please use the github repo.
+
+
 
 (You might need administrator privileges to write in the Python site-package folder.
 On Linux or OS X, use ```sudo python setup.py install``` or write into a user folder
