@@ -347,13 +347,37 @@ class IsotopologueLibrary( dict ):
                     # see 806
                     pattern          = self.regex['<isotope><element>']
                     match            = pattern.match( element )
-                    enriched_isotope = int(
-                        round(
-                            float(
-                                match.group('isotope')
+                    try:
+                        enriched_isotope = int(
+                            round(
+                                float(
+                                    match.group('isotope')
+                                )
                             )
                         )
-                    )
+                    except:
+                        print('Failed on', element )
+                        print('Maybe element is not in pyqms.knowledge_base.py ?')
+                        print('Current Distributions available:')
+                        print( self.isotopic_distributions.keys() )
+                        # import csv
+                        # ___element_list = []
+                        # with open('/home/cf322940/Downloads/NIST_isotope_abundance.csv') as nos:
+                        #     for d in csv.DictReader( nos ):
+                        #         # print( d.keys())/
+                        #         if d['Symbol'] == element:
+                        #             ___element_list.append(
+                        #                 (
+                        #                     d['Relative atomic mass'],
+                        #                     d['Relative isotope abundance']
+                        #                 )
+                        #             )
+                        # print('"{0}" : ['.format( element ))
+                        # for mass, i in ___element_list:
+                        #     print('     ( {0}, {1} ),'.format( mass, i ))
+                        # print('],')
+                        # print(match)
+                        exit(1)
                     # print('> Extending isotopic distribution that are within the modifications (upep)')
                     # enriched_isotope = int(round(float(match.group('isotope'))))
                     template_element = match.group('element')
@@ -686,6 +710,7 @@ class IsotopologueLibrary( dict ):
                         # now add the ranges to the global list
                         #
                     for charge in self.charges:
+                        # try:
                         lower_mz = self[ formula ]['env'][label_percentile_tuple]\
                                 [ charge ]['mz'][0]
                         # except:
@@ -2223,7 +2248,11 @@ class IsotopologueLibrary( dict ):
                 # the list has tuples instead of list
                 min_pos = bisect.bisect( source_list, tuple(lower_value) ) - tolerance
                 max_pos = bisect.bisect( source_list, tuple(upper_value) ) + tolerance
-
+                # except:
+                #     print('Failed on', borders)
+                #     print( source_list[:3])
+                #     print( '??')
+                #     exit(1)
         else:
             # numpy array
             min_pos = bisect.bisect( source_list.tolist(), lower_value ) - tolerance
