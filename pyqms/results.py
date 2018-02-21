@@ -444,31 +444,48 @@ class Results(dict):
                     rel_mz_error = ( mmz - cmz ) / cmz
                     mz_error_list.append( rel_mz_error * 1e6 )
                     i_error_list.append( rel_i_error )
-        if plot:
+        if plot and len(mz_error_list) > 0:
             assert self._import_rpy2() == True, 'require R & rpy2 installed...'
             grdevices.pdf( filename )
-            graphics.plot(
-                r.density(
-                    rpy2.robjects.vectors.FloatVector(mz_error_list)
-                ),
-                main = 'm/z error N = {0}, mean = {1}'.format(
-                    len(mz_error_list),
-                    sum(mz_error_list) / len(mz_error_list)
-                ),
-                xlab = 'm/z error [ppm]',
-                ylab = 'density'
-            )
-            graphics.plot(
-                r.density(
-                    rpy2.robjects.vectors.FloatVector(i_error_list)
-                ),
-                main = 'intensity error N = {0}, mean = {1}'.format(
-                    len(i_error_list),
-                    sum(i_error_list) / len(i_error_list)
-                ),
-                xlab = 'intensity error [rel.]',
-                ylab = 'density'
-            )
+            for error_name, value_list in [('m/z error [ppm]', mz_error_list), ('intensity error [rel.]', i_error_list)]:
+                if len(value_list) > 1:
+                    plot_data = r.density(
+                        rpy2.robjects.vectors.FloatVector(value_list)
+                    )
+                    x_data = plot_data[0]
+                    y_data = plot_data[1]
+                    N      = len(value_list)
+                    mean   = sum(value_list) / len(value_list)
+                else:
+                    # plot_data = [ value_list[0], 1 ]
+                    x_data = [value_list[0], value_list[0]]
+                    y_data = [0, 1]
+                    N      = 1
+                    mean   = value_list[0]
+
+                graphics.plot(
+                    x_data,
+                    y_data,
+                    main = '{0} N = {1}, mean = {2}'.format(
+                        error_name,
+                        N,
+                        mean
+                    ),
+                    xlab = error_name,
+                    ylab = 'density',
+                    type = 'l'
+                )
+                # graphics.plot(
+                #     r.density(
+                #         rpy2.robjects.vectors.FloatVector(i_error_list)
+                #     ),
+                #     main = 'intensity error N = {0}, mean = {1}'.format(
+                #         len(i_error_list),
+                #         sum(i_error_list) / len(i_error_list)
+                #     ),
+                #     xlab = 'intensity error [rel.]',
+                #     ylab = 'density'
+                # )
             # graphics.hist(rpy2.robjects.vectors.FloatVector(i_error_list),main='rel i error',xlab='rel i error',ylab='density')
             grdevices.dev_off()
         return mz_error_list, i_error_list

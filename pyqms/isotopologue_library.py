@@ -1562,7 +1562,9 @@ class IsotopologueLibrary( dict ):
                 sliced_spec,
                 mz_range=mz_range
             )
-            if len(spec_tmz_set & self.match_sets[package_number]['tmzs']) >= 2:
+            # print(self.match_sets[package_number]['tmzs'])
+            # print(spec_tmz_set)
+            if len(spec_tmz_set & self.match_sets[package_number]['tmzs']) >= self.params['MINIMUM_NUMBER_OF_MATCHED_ISOTOPOLOGUES']:
                 for index in range( self.match_sets[package_number]['ids'][0],\
                                     self.match_sets[package_number]['ids'][1]):
                     # >>>
