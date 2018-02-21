@@ -12,25 +12,25 @@ with open(version_txt_path, 'r') as version_file:
     pyqms_version = version_file.readline().strip()
 
 setup(
-    name='pyqms',
-    version=pyqms_version,
-    packages = [ 'pyqms' ],
-    package_dir = { 'pyqms' : 'pyqms' },
-    description='pyqms',
-    package_data = {
+    name             = 'pyqms',
+    version          = pyqms_version,
+    packages         = [ 'pyqms' ],
+    package_dir      = { 'pyqms' : 'pyqms' },
+    description      = 'pyQms - Python module for accurate quantification of mass spectrometry data',
+    package_data     = {
         'pyqms' : [
             'version.txt',
             'kb/ext/unimod.xml',
         ]
     },
-    requires = ['pymzml'],
+    requires         = ['pymzml'],
     long_description = "pyQms enables universal and accurate quantification of mass spectrometry data",
-    author = 'Johannes Leufken, Anna Niehues, L. Peter Sarin, Florian Wessels, Michael Hippler, Sebastian A. Leidel and Christian Fufezan',
-    author_email = 'christian@fufezan.net',
-    url = 'http://pyqms.github.io',
-    license = 'The MIT License (MIT)',
-    platforms = 'any that supports python 3.4',
-    classifiers = [
+    author           = 'Johannes Leufken, Anna Niehues, L. Peter Sarin, Florian Wessels, Michael Hippler, Sebastian A. Leidel and Christian Fufezan',
+    author_email     = 'christian@fufezan.net',
+    url              = 'http://pyqms.github.io',
+    license          = 'The MIT License (MIT)',
+    platforms        = 'any that supports python 3.4',
+    classifiers      = [
         'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: Education',
