@@ -62,15 +62,11 @@ def main( mzml=None):
     )
     run = pymzml.run.Reader(
         mzml,
-        extraAccessions = [
-            ('MS:1000016', ['value', 'unitName'])
-        ],
-        obo_version = '1.1.0'
     )
     mzml_basename = os.path.basename(mzml)
     results = None
     for spectrum in run:
-        scan_time, unit = spectrum.get('MS:1000016', (None,None))
+        scan_time = spectrum.get('MS:1000016')
         if spectrum['ms level'] == 1:
             results = lib.match_all(
                 mz_i_list = spectrum.centroidedPeaks,

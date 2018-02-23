@@ -43,7 +43,7 @@ def main(result_pkl=None):
 
     plot_name = os.path.join(
         os.path.dirname(result_pkl),
-        'mz_and_intesnity_error_{0}.pdf'.format(
+        'mz_and_intensity_error_{0}.pdf'.format(
             os.path.basename(result_pkl)
         )
     )

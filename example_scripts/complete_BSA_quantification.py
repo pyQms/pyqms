@@ -99,33 +99,28 @@ def main(ident_file = None, mzml_file = None):
     lib = pyqms.IsotopologueLibrary( **params )
 
     run = pymzml.run.Reader(
-        mzml_file,
-        extraAccessions = [
-            ('MS:1000016', ['value', 'unitName'])
-        ],
-        obo_version = '1.1.0'
+        mzml_file
     )
     out_folder         = os.path.dirname(mzml_file)
     mzml_file_basename = os.path.basename(mzml_file)
     results = None
     for spectrum in run:
-        spec_id = spectrum['id']
-        scan_time, unit = spectrum.get('MS:1000016', (None, None ))
-        if unit == 'second':
-            time_div_factor = 60.0
-            # convert seconds to minutes...
-        else:
-            time_div_factor = 1
-
+        spec_id   = spectrum['id']
+        try:
+            # pymzML 2.0.0 style
+            scan_time = spectrum.scan_time
+        except:
+            # scan time will be in seconds
+            scan_time = spectrum.get('MS:1000016')
         if spectrum['ms level'] == 1:
             results = lib.match_all(
                 mz_i_list = spectrum.centroidedPeaks,
                 file_name = mzml_file_basename,
                 spec_id   = spectrum['id'],
-                spec_rt   = scan_time / time_div_factor,
+                spec_rt   = scan_time,
                 results   = results
             )
-
+    # print(results)
     out_folder = os.path.join(
         os.path.dirname(ident_file),
         'complete_BSA_quantification'
@@ -151,7 +146,7 @@ def main(ident_file = None, mzml_file = None):
         rt_border_tolerance  = rt_border_tolerance,
         calc_amount_function = None, # calc_amount_function
     )
-
+    # print(calculated_amounts)
     formula_charge_to_quant_info = {}
     for line_dict in calculated_amounts:
         formula_charge_to_quant_info[ (line_dict['formula'], int(line_dict['charge'])) ] = {
@@ -209,7 +204,7 @@ def main(ident_file = None, mzml_file = None):
                     },
                 ]
             }
-
+            # print(formula_charge_to_quant_info[short_key])
             additional_legends = {
                 key : [
                     {
