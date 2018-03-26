@@ -236,12 +236,12 @@ class TestResults( unittest.TestCase ):
         '''
         We have perfect matches...
         '''
-        mz_error_list, i_error_list = self.results._determine_measured_error(
+        error_dict = self.results._determine_measured_error(
             score_threshold = 0.5,
             plot            = False
         )
-        assert mz_error_list == [0, 0, 0]
-        assert i_error_list == [0, 0, 0]
+        assert error_dict['mz_error'] == [0, 0, 0]
+        assert error_dict['intensity_error'] == [0, 0, 0]
 
     def rpy2_import_test(self):
         '''

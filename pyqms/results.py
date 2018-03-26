@@ -32,6 +32,7 @@ import codecs
 import pyqms.adaptors
 import pprint
 import copy
+from collections import defaultdict as ddict
 # import numpy
 
 m_key = namedtuple(
@@ -432,9 +433,14 @@ class Results(dict):
         if formulas_to_test is not None:
             kwargs['formulas'] = formulas_to_test
 
-        mz_error_list = []
-        i_error_list = []
+        error_dict = {
+            'mz_error'                       : [],
+            'intensity_error'                : [],
+            'time_dependent_mz_error'        : ddict(list),
+            'time_dependent_intensity_error' : ddict(list),
+        }
         for key, i, entry in self.extract_results(**kwargs):
+            rt = int(round(entry.rt))
             for mmz, mi, rel_i, cmz, ci in sorted(entry.peaks, key=itemgetter(2), reverse=True)[:topX]:
                 if mmz is not None:
                     si = ci * entry.scaling_factor
@@ -442,53 +448,64 @@ class Results(dict):
                     if rel_i_error > 1:
                         rel_i_error = 1
                     rel_mz_error = ( mmz - cmz ) / cmz
-                    mz_error_list.append( rel_mz_error * 1e6 )
-                    i_error_list.append( rel_i_error )
-        if plot and len(mz_error_list) > 0:
+                    rel_mz_error_in_ppm = rel_mz_error * 1e6
+
+                    error_dict['mz_error'].append(
+                        rel_mz_error_in_ppm
+                    )
+                    error_dict['intensity_error'].append(
+                        rel_i_error
+                    )
+                    error_dict['time_dependent_mz_error'][rt].append(
+                        rel_mz_error_in_ppm
+                    )
+                    error_dict['time_dependent_intensity_error'][rt].append(
+                        rel_i_error
+                    )
+        if plot and len(error_dict['mz_error']) > 0:
             assert self._import_rpy2() == True, 'require R & rpy2 installed...'
             grdevices.pdf( filename )
-            for error_name, value_list in [('m/z error [ppm]', mz_error_list), ('intensity error [rel.]', i_error_list)]:
-                if len(value_list) > 1:
-                    plot_data = r.density(
-                        rpy2.robjects.vectors.FloatVector(value_list)
-                    )
-                    x_data = plot_data[0]
-                    y_data = plot_data[1]
-                    N      = len(value_list)
-                    mean   = sum(value_list) / len(value_list)
-                else:
-                    # plot_data = [ value_list[0], 1 ]
-                    x_data = [value_list[0], value_list[0]]
-                    y_data = [0, 1]
-                    N      = 1
-                    mean   = value_list[0]
+            for plot_data_type, value_object in error_dict.items():
+            # for error_name, value_list in [('m/z error [ppm]', mz_error_list), ('intensity error [rel.]', i_error_list)]:
+                if type(value_object) == type([]):
 
-                graphics.plot(
-                    x_data,
-                    y_data,
-                    main = '{0} N = {1}, mean = {2}'.format(
-                        error_name,
-                        N,
-                        mean
-                    ),
-                    xlab = error_name,
-                    ylab = 'density',
-                    type = 'l'
-                )
-                # graphics.plot(
-                #     r.density(
-                #         rpy2.robjects.vectors.FloatVector(i_error_list)
-                #     ),
-                #     main = 'intensity error N = {0}, mean = {1}'.format(
-                #         len(i_error_list),
-                #         sum(i_error_list) / len(i_error_list)
-                #     ),
-                #     xlab = 'intensity error [rel.]',
-                #     ylab = 'density'
+
+                    if len(value_object) > 1:
+                        plot_data = r.density(
+                            rpy2.robjects.vectors.FloatVector(value_object)
+                        )
+                        x_data = plot_data[0]
+                        y_data = plot_data[1]
+                        N      = len(value_object)
+                        mean   = sum(value_object) / len(value_object)
+                    else:
+                        # plot_data = [ value_object[0], 1 ]
+                        x_data = [value_object[0], value_object[0]]
+                        y_data = [0, 1]
+                        N      = 1
+                        mean   = value_object[0]
+
+                    graphics.plot(
+                        x_data,
+                        y_data,
+                        main = '{0} N = {1}, mean = {2}'.format(
+                            plot_data_type,
+                            N,
+                            mean
+                        ),
+                        xlab = plot_data_type,
+                        ylab = 'density',
+                        type = 'l'
+                    )
+                # plot histogram as well?
+                # graphics.hist(
+                    # rpy2.robjects.vectors.FloatVector(i_error_list),
+                #     main='rel i error',
+                #     xlab='rel i error',
+                #     ylab='density'
                 # )
-            # graphics.hist(rpy2.robjects.vectors.FloatVector(i_error_list),main='rel i error',xlab='rel i error',ylab='density')
             grdevices.dev_off()
-        return mz_error_list, i_error_list
+        return error_dict
 
     def _import_rpy2(self):
         """Imports all rpy2 related modules into global namespace."""
@@ -782,8 +799,10 @@ class Results(dict):
             additional_legends (dict): key points on lists of strings that are
                 plotted as well.
         """
-        assert self._import_rpy2() is True, "Require R plot .. use self.init_r_plot"
 
+        assert self._import_rpy2() is True, "Require R plot .. use self.init_r_plot"
+        if graphics is None:
+            graphics, grdevices = self.init_r_plot(file_name)
         if zlimits is None:
             zlimits = [ 0, 1 ]
         zlimits_color_ints = [
