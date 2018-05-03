@@ -465,8 +465,10 @@ class Results(dict):
         if plot and len(error_dict['mz_error']) > 0:
             assert self._import_rpy2() == True, 'require R & rpy2 installed...'
             grdevices.pdf( filename )
-            for plot_data_type, value_object in error_dict.items():
+            for plot_data_type, xaxis_label in [ ('mz_error','m/z error [ppm]'), ('intensity_error','intensity error [rel.]') ]:
+            # for plot_data_type, value_object in error_dict.items():
             # for error_name, value_list in [('m/z error [ppm]', mz_error_list), ('intensity error [rel.]', i_error_list)]:
+                value_object = error_dict[plot_data_type]
                 if type(value_object) == type([]):
 
 
@@ -474,6 +476,7 @@ class Results(dict):
                         plot_data = r.density(
                             rpy2.robjects.vectors.FloatVector(value_object)
                         )
+                        maxDensity =  plot_data[0][ plot_data[1].index( max(plot_data[1]) ) ]
                         x_data = plot_data[0]
                         y_data = plot_data[1]
                         N      = len(value_object)
@@ -484,16 +487,18 @@ class Results(dict):
                         y_data = [0, 1]
                         N      = 1
                         mean   = value_object[0]
+                        maxDensity = mean
 
                     graphics.plot(
                         x_data,
                         y_data,
-                        main = '{0} N = {1}, mean = {2}'.format(
+                        main = '{0} N = {1}, mean = {2} max = {3}'.format(
                             plot_data_type,
                             N,
-                            mean
+                            mean,
+                            maxDensity
                         ),
-                        xlab = plot_data_type,
+                        xlab = xaxis_label,
                         ylab = 'density',
                         type = 'l'
                     )

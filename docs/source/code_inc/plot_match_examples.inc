@@ -22,8 +22,12 @@
 	"""
 	import pickle
 	import sys
-	import pymzml.plot
 	import os
+	try:
+	    import pymzml
+	    import pymzml.plot
+	except:
+	    print('Please install pymzML via: pip install pymzml')
 	
 	
 	def main(result_pkl=None):

@@ -25,8 +25,11 @@
 	import pickle
 	import os
 	import pprint
-	import pymzml
 	from collections import defaultdict as ddict
+	try:
+	    import pymzml
+	except:
+	    print('Please install pymzML via: pip install pymzml')
 	
 	
 	def main( mzml=None):

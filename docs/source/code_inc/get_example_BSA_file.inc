@@ -51,7 +51,7 @@
 	        with open( output_path, 'wb') as ooo:
 	            local_filename, headers = request.urlretrieve(
 	                http_url,
-	                filename = output_path
+	                filename = output_path,
 	            )
 	        try:
 	            shutil.move(
