@@ -492,7 +492,7 @@ class Results(dict):
                     graphics.plot(
                         x_data,
                         y_data,
-                        main = '{0} N = {1}, mean = {2} max = {3}'.format(
+                        main = '{0} N = {1}, mean = {2:1.3f} max = {3:1.3f}'.format(
                             plot_data_type,
                             N,
                             mean,
