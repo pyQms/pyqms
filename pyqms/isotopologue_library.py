@@ -27,7 +27,7 @@ import bisect
 import pyqms
 import operator
 import time
-
+import numpy as np
 
 class IsotopologueLibrary( dict ):
     """
@@ -2248,21 +2248,21 @@ class IsotopologueLibrary( dict ):
                 # the list has tuples instead of list
                 min_pos = bisect.bisect( source_list, tuple(lower_value) ) - tolerance
                 max_pos = bisect.bisect( source_list, tuple(upper_value) ) + tolerance
-                # except:
-                #     print('Failed on', borders)
-                #     print( source_list[:3])
-                #     print( '??')
-                #     exit(1)
-        else:
-            # numpy array
-            min_pos = bisect.bisect( source_list.tolist(), lower_value ) - tolerance
-            max_pos = bisect.bisect( source_list.tolist(), upper_value ) + tolerance
 
-        if min_pos < 0:
-            min_pos = 0
-        if max_pos > len( source_list ):
-            max_pos = len(source_list)
-        return source_list[ min_pos: max_pos ]
+            if min_pos < 0:
+                min_pos = 0
+            if max_pos > len(source_list):
+                max_pos = len(source_list)
+
+            r_list =  source_list[min_pos: max_pos]
+        else:
+            r_list = source_list[
+                np.where(
+                    (lower_value[0] - tolerance < source_list[:,0]) *\
+                     (source_list[:,0] < upper_value[0])
+                )
+            ]
+        return r_list
 
     def _transform_mz_to_set(self, mz):
         '''
