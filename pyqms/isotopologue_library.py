@@ -261,12 +261,31 @@ class IsotopologueLibrary( dict ):
 
         self._cache_kb()                      # knowledge_base information
         if self.verbose:
-            print('> Metabolic labels        >', self.metabolic_labels)
-            print('> Fixed labels            >', self.fixed_labels)
-            print('> Charges                 >', self.charges)
-            print('> Machine ppm offset      > {MACHINE_OFFSET_IN_PPM}'.format(
-                **self.params
-            ))
+            print(
+                '> Number of molecules     >{0}'.format(
+                    len(molecules)
+                )
+            )
+            print(
+                '> Metabolic labels        >{0}'.format(
+                    self.metabolic_labels
+                )
+            )
+            print(
+                '> Fixed labels            >{0}'.format(
+                    self.fixed_labels
+                )
+            )
+            print(
+                '> Charges                 >{0}'.format(
+                    self.charges
+                )
+            )
+            print(
+                '> Machine ppm offset      > {MACHINE_OFFSET_IN_PPM}'.format(
+                    **self.params
+                )
+            )
         # ----------------------------------------------------------------
         #       METABOLIC LABELS
         # ----------------------------------------------------------------
@@ -711,6 +730,12 @@ class IsotopologueLibrary( dict ):
                         #
                     for charge in self.charges:
                         # try:
+                        if len(self[ formula ]['env'][label_percentile_tuple]\
+                                [ charge ]['mz']) == 0:
+                            print('\n> Apparently no molecules have been added to the library')
+                            print('> Please check input molecules for errors:')
+                            print(molecules)
+                            exit()
                         lower_mz = self[ formula ]['env'][label_percentile_tuple]\
                                 [ charge ]['mz'][0]
                         # except:
@@ -806,7 +831,12 @@ class IsotopologueLibrary( dict ):
                     print('  Current mz limits in params are: [ {LOWER_MZ_LIMIT} .. {UPPER_MZ_LIMIT}]'.format( **self.params))
                     exit(1)
                 else:
-                    print('> Created {0} match sets, total mz range [{1:10.5f} .. {2:10.5f}]'.format( len(self.match_sets), *self.match_set_mz_range ))
+                    print(
+                        '> Created {0} match sets, total mz range [{1:10.5f} .. {2:10.5f}]'.format(
+                            len(self.match_sets), 
+                            *self.match_set_mz_range
+                        )
+                    )
         return
 
     def _build_label_percentile_tuples(self):

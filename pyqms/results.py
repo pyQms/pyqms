@@ -1396,6 +1396,21 @@ class Results(dict):
                         tmp['formula'],
                         []
                     )
+                    # new_molecule_list = []
+                    # for no_evidence_molecule in molecule_list:
+                    #     for original_molecule, fixed_label_variant_molecule_list in self.lookup['molecule fixed label variations'].items():
+                    #         if no_evidence_molecule in fixed_label_variant_molecule_list:
+                    #             new_molecule_list.append(original_molecule)
+                    #             break
+                    #     if len(new_molecule_list) > 0:
+                    #         break
+                    # # print(molecule_list)
+                    # # print(new_molecule_list)
+                    # molecule_list = new_molecule_list
+                # if len(molecule_list) == 0:
+                # print(tmp['formula'])
+                # else:
+                    # print('Yolo') 
                 for molecule in molecule_list:
                     tmp['molecule'] = molecule
                     if evidence_lookup_present is True:
