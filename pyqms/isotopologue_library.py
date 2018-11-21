@@ -2310,6 +2310,14 @@ class IsotopologueLibrary( dict ):
                 mz_i_list,
                 [(x, 0.001) for x in mz_range]
             )
+        # for mz, intensity in target_mz_list:
+        #     tmz = int(round( mz * self.params['INTERNAL_PRECISION'] ))
+        #     tmz_set.add( tmz )
+        #     try:
+        #         tmz_lookup[ tmz ].append( (mz, intensity) )
+        #     except:
+        #         tmz_lookup[ tmz ] = [ (mz, intensity) ]
+
         is_numpy_array = getattr( target_mz_list, "tolist", False)
         if is_numpy_array is False:
             for mz, intensity in target_mz_list:
@@ -2320,14 +2328,16 @@ class IsotopologueLibrary( dict ):
                 except:
                     tmz_lookup[ tmz ] = [ (mz, intensity) ]
         else:
-            tmz =np.round(target_mz_list[:,0]).astype(int) * self.params['INTERNAL_PRECISION']
+            tmz =np.round(target_mz_list[:,0]* self.params['INTERNAL_PRECISION']).astype(int)
             for pos, tmz_entry in enumerate(tmz):
                 try:
-                    tmz_lookup[ tmz_entry ].append( (target_mz_list[pos][0], target_mz_list[pos][1]))
+                    tmz_lookup[ tmz_entry ].append(
+                        (target_mz_list[pos][0], target_mz_list[pos][1])
+                    )
                 except:
                     tmz_lookup[ tmz_entry ] = [ (target_mz_list[pos][0], target_mz_list[pos][1]) ]
             tmz_set = set(tmz)
-        # print(tmz_set)
+
         return tmz_set, tmz_lookup
 
 
