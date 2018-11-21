@@ -2326,6 +2326,7 @@ class IsotopologueLibrary( dict ):
                     tmz_lookup[ tmz_entry ].append( target_mz_list[pos] )
                 except:
                     tmz_lookup[ tmz_entry ] = [ target_mz_list[pos] ]
+            tmz_set = set(tmz)
         return tmz_set, tmz_lookup
 
 
