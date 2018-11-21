@@ -1262,6 +1262,10 @@ class IsotopologueLibrary( dict ):
             are based on pyqms.knowledge_base and cached by `self._cache_kb`
         '''
         self.umm = pyqms.UnimodMapper()
+        tmp_cc_factory = pyqms.ChemicalComposition(
+            aa_compositions        = self.aa_compositions,
+            isotopic_distributions = self.isotopic_distributions
+        )
         for labeled_aa, label_definitions in self.fixed_labels.items():
             for pos, uni_mod_string in enumerate(label_definitions):
                 new_aa = '{0}{1}'.format(labeled_aa, pos)
@@ -1280,12 +1284,32 @@ class IsotopologueLibrary( dict ):
                 formated_umod_list = self.regex['<isotope><element>(<count>)']\
                     .findall( uni_mod_string )
                 print(new_aa,formated_umod_list, uni_mod_string)
-                tmp_comp = {}
+                # unimod_comp = []
+                # print(tmp_cc_factory._chemical_formula_to_dict(uni_mod_string))
                 for isotope, element, count in formated_umod_list:
-                    tmp_comp['{0}{1}'.format(isotope,element)] = count
-                possible_names= self.umm.composition2name_list[tmp_comp]
-                print(possible_names)
-                exit()
+                    # unimod_comp.append(
+                    #     '{0}{1}({2})'.format(isotope,element,count)
+                    # )
+                    # tmp_cc_factory['{0}{1}'.format(isotope,element)]=int(count)
+                                        #     tmp_cc_factory.add_chemical_formula('+{0}{1}({2})'.format(isotope,element,count))
+                    # print(pyqms.ChemicalComposition()
+                    if int(count) > 0:
+                        k = pyqms.ChemicalComposition('+{0}{1}({2})'.format(isotope,element,count))
+                    #     # tmp_cc_factory.add_chemical_formula({'+{0}{1}'.format(isotope,element):int(count)})
+                    else:
+                    #     # print(isotope, element, count)
+
+                        k = pyqms.ChemicalComposition('-{0}{1}({2})'.format(isotope,element,abs(int(count))))
+                        # tmp_cc_factory.subtract_chemical_formula({'-{0}{1}'.format(isotope,element):abs(int(count))})
+                    print(k)
+                # unimod_comp_name = ' '.join(unimod_comp)
+                print(tmp_cc_factory)
+                unimod_comp_name = tmp_cc_factory.hill_notation_unimod()
+                # print(unimod_comp_name)
+                # possible_names= self.umm.composition2name_list(unimod_comp_name)
+                # print(possible_names)
+                tmp_cc_factory.clear()
+                # exit()
 
                 for isotope, element, count in formated_umod_list:
                     if isotope == '':

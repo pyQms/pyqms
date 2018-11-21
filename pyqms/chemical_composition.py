@@ -545,6 +545,7 @@ class ChemicalComposition(dict):
             sign = -1
         if isinstance(chemical_formula, str):
             chemical_formula = self._chemical_formula_to_dict(chemical_formula)
+        # print(chemical_formula)
         for element, count in chemical_formula.items():
             self[element] = self[element] + sign * count
         # else:
