@@ -1261,6 +1261,7 @@ class IsotopologueLibrary( dict ):
             self.aa_compositions and self.isotopic_distributions
             are based on pyqms.knowledge_base and cached by `self._cache_kb`
         '''
+        self.umm = pyqms.UnimodMapper()
         for labeled_aa, label_definitions in self.fixed_labels.items():
             for pos, uni_mod_string in enumerate(label_definitions):
                 new_aa = '{0}{1}'.format(labeled_aa, pos)
@@ -1278,6 +1279,14 @@ class IsotopologueLibrary( dict ):
                     exit(1)
                 formated_umod_list = self.regex['<isotope><element>(<count>)']\
                     .findall( uni_mod_string )
+                print(new_aa,formated_umod_list, uni_mod_string)
+                tmp_comp = {}
+                for isotope, element, count in formated_umod_list:
+                    tmp_comp['{0}{1}'.format(isotope,element)] = count
+                possible_names= self.umm.composition2name_list[tmp_comp]
+                print(possible_names)
+                exit()
+
                 for isotope, element, count in formated_umod_list:
                     if isotope == '':
                         formated_element = element

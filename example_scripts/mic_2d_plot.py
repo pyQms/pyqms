@@ -60,20 +60,15 @@ def main(pickle_file):
     if os.path.exists(out_folder) is False:
         os.mkdir(out_folder)
     print('Plotting into folder: {0}'.format(out_folder))
-    if len( results.keys() ) > 10:
-        print(
-            '''
-Result class should not hold more then 10 keys, to prevent plot overflow!
-Will stop after 10 plots!
-'''
-        )
-        # sys.exit()
-    for n, key in enumerate(results.keys()):
-        if n > 10:
-            print('Stopping after 10 plots!')
-            exit()
-        if len(results[key]['data']) <= 15:
-            continue
+    print('Will plot 2D MICs for the 10 highest scoring molecules; mScore>=0.85')
+    high_scoring_molecule_keys  = []
+    for key in results.keys():
+        if len(high_scoring_molecule_keys) == 10:
+            break
+        if results[key]['max_score_index'] >= 0.85 and results[key]['len_data'] >= 15:
+            high_scoring_molecule_keys.append(key)
+
+    for n, key in enumerate(high_scoring_molecule_keys):
         mzml_filename = key.file_name
         if os.sep in mzml_filename:
             mzml_filename = os.path.basename(mzml_filename)
@@ -92,9 +87,8 @@ Will stop after 10 plots!
         graphics, grdevices = results.init_r_plot(file_name)
         results.plot_MICs_2D(
             [key],
-            graphics = graphics
+            graphics= graphics
         )
-
 
     return
 

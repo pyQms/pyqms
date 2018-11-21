@@ -50,6 +50,7 @@ def main(result_pkl=None):
             'rb'
         )
     )
+    print(results_class.fixed_labels)
     rt_border_tolerance = 1
     # quant_summary_file  = '{0}_quant_summary.csv'.format(result_pkl)
     quant_summary_file  = '{0}_quant_summary.xlsx'.format(result_pkl)

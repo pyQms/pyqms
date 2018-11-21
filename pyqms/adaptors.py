@@ -256,6 +256,7 @@ def parse_evidence( fixed_labels=None, evidence_files=None, molecules=None, evid
     unimod_parser = pyqms.UnimodMapper()
 
     fixed_mod_lookup            = {}
+    # pyqms_mod_pos_lookup        = {}
     amino_acid_2_fixed_mod_name = ddict(list)
 
     formatted_fixed_labels      = None
@@ -267,7 +268,9 @@ def parse_evidence( fixed_labels=None, evidence_files=None, molecules=None, evid
     if fixed_labels is not None and len(fixed_labels.keys()) != 0:
         formatted_fixed_labels = {}
         for aa, fixed_mod_info_dict_list in fixed_labels.items():
-            for fixed_mod_info_dict in fixed_mod_info_dict_list:
+            for pyqms_mod_pos, fixed_mod_info_dict in enumerate(fixed_mod_info_dict_list):
+                # here the order of the fixed mods is alrady determined
+                # also for the isotopologue library!
                 if isinstance(fixed_mod_info_dict['element_composition'], dict):
                     tmp_cc_factory = pyqms.chemical_composition.ChemicalComposition()
                     tmp_cc_factory.add_chemical_formula(
@@ -284,6 +287,7 @@ def parse_evidence( fixed_labels=None, evidence_files=None, molecules=None, evid
                 )
                 #save it under name and amino acid!
                 fixed_mod_lookup[ fixed_mod_info_dict['evidence_mod_name'] ] = dc( tmp_cc_factory )
+                # pyqms_mod_pos_lookup['{0}{1}'.format(aa, pyqms_mod_pos)] = fixed_mod_info_dict['evidence_mod_name']
                 amino_acid_2_fixed_mod_name[ aa ].append(
                     fixed_mod_info_dict['evidence_mod_name']
                 )

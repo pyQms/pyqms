@@ -1396,17 +1396,29 @@ class Results(dict):
                         tmp['formula'],
                         []
                     )
-                    # new_molecule_list = []
-                    # for no_evidence_molecule in molecule_list:
-                    #     for original_molecule, fixed_label_variant_molecule_list in self.lookup['molecule fixed label variations'].items():
-                    #         if no_evidence_molecule in fixed_label_variant_molecule_list:
-                    #             new_molecule_list.append(original_molecule)
-                    #             break
-                    #     if len(new_molecule_list) > 0:
-                    #         break
-                    # # print(molecule_list)
-                    # # print(new_molecule_list)
+                    print(molecule_list)
+                    new_molecule_list = []
+                    for no_evidence_molecule in molecule_list:
+                        for original_molecule, fixed_label_variant_molecule_list in self.lookup['molecule fixed label variations'].items():
+                            if no_evidence_molecule in fixed_label_variant_molecule_list:
+                                # print(fixed_label_variant_molecule_list)
+                                for fm_label_variant in fixed_label_variant_molecule_list:
+                                    fm_label_variant_formula = self.lookup['molecule to formula'][fm_label_variant]
+                                    print(fm_label_variant, fm_label_variant_formula)
+                                    if fm_label_variant_formula in self.lookup['formula to evidences'].keys():
+                                        print(self.lookup['formula to evidences'][fm_label_variant_formula])
+                                        exit()
+                                # break
+                                # new_molecule_list.append(original_molecule)
+                        #         break
+                        # if len(new_molecule_list) > 0:
+                        #     break
+                    print(molecule_list)
+                    print(new_molecule_list)
+                    # print(self.lookup['molecule to formula'].keys())
+                    # print(self.lookup['molecule to formula'][new_molecule_list[0]])
                     # molecule_list = new_molecule_list
+                exit()
                 # if len(molecule_list) == 0:
                 # print(tmp['formula'])
                 # else:
