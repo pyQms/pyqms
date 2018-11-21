@@ -2323,10 +2323,11 @@ class IsotopologueLibrary( dict ):
             tmz =np.round(target_mz_list[:,0]).astype(int) * self.params['INTERNAL_PRECISION']
             for pos, tmz_entry in enumerate(tmz):
                 try:
-                    tmz_lookup[ tmz_entry ].append( target_mz_list[pos] )
+                    tmz_lookup[ tmz_entry ].append( (target_mz_list[pos][0], target_mz_list[pos][1]))
                 except:
-                    tmz_lookup[ tmz_entry ] = [ target_mz_list[pos] ]
+                    tmz_lookup[ tmz_entry ] = [ (target_mz_list[pos][0], target_mz_list[pos][1]) ]
             tmz_set = set(tmz)
+
         return tmz_set, tmz_lookup
 
 
