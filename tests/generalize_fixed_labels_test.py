@@ -16,6 +16,7 @@ TESTS = [
         'params': {
             'molecules': ['KLEINERTEST'],
             'charges': [2, ],
+            'metabolic_labels': {'15N':[0]}
         },
         'fixed_labels_old_style':{
             'R': ['C(-6) 13C(6) N(-4) 15N(4)', ''],
@@ -26,15 +27,68 @@ TESTS = [
             'K': ['Label:13C(6)15N(2)', '']
         },
     },
+    # 15N labeling or unlabeled
     {
         'params': {
-            'molecules': ['KLEINERTEST'],
+            'molecules': ['KLEINERCHECK'],
             'charges': [2, ],
+            'metabolic_labels': {'15N':[0,0.99]}
         },
         'fixed_labels_old_style':{
             'R': ['C(-6) 13C(6) N(-4) 15N(4)', ''],
             'K': ['C(-6) 13C(6) N(-2) 15N(2)', ''],
             'C': ['O(1) H(3) 14N(1) C(2)'],
+        },
+        'fixed_labels_new_style':{
+            'R': ['Label:13C(6)15N(4)', ''],
+            'K': ['Label:13C(6)15N(2)', ''],
+            'C': ['Carbamidomethyl']
+        },
+    },
+    {
+        'params': {
+            'molecules': ['KLEINERCHECK'],
+            'charges': [2, ],
+        },
+        'fixed_labels_old_style':{
+            'R': ['C(-6) 13C(6) N(-4) 15N(4)', ''],
+            'K': ['C(-6) 13C(6) N(-2) 15N(2)', ''],
+            'C': ['O(1) H(3) N(1) C(2)'],
+        },
+        'fixed_labels_new_style':{
+            'R': ['Label:13C(6)15N(4)', ''],
+            'K': ['Label:13C(6)15N(2)', ''],
+            'C': ['Carbamidomethyl']
+        },
+    },
+    # 13C labeling or unlabeled
+    {
+        'params': {
+            'molecules': ['KLEINERCHECK'],
+            'charges': [2, ],
+            'metabolic_labels': {'13C':[0,0.99]}
+        },
+        'fixed_labels_old_style':{
+            'R': ['C(-6) 13C(6) N(-4) 15N(4)', ''],
+            'K': ['C(-6) 13C(6) N(-2) 15N(2)', ''],
+            'C': ['O(1) H(3) N(1) 12C(2)'],
+        },
+        'fixed_labels_new_style':{
+            'R': ['Label:13C(6)15N(4)', ''],
+            'K': ['Label:13C(6)15N(2)', ''],
+            'C': ['Carbamidomethyl']
+        },
+    },
+    {
+        'params': {
+            'molecules': ['KLEINERCHECK'],
+            'charges': [2, ],
+            'metabolic_labels': {'13C':[0]}
+        },
+        'fixed_labels_old_style':{
+            'R': ['C(-6) 13C(6) N(-4) 15N(4)', ''],
+            'K': ['C(-6) 13C(6) N(-2) 15N(2)', ''],
+            'C': ['O(1) H(3) N(1) C(2)'],
         },
         'fixed_labels_new_style':{
             'R': ['Label:13C(6)15N(4)', ''],

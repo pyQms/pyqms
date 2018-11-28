@@ -230,7 +230,9 @@ class IsotopologueLibrary( dict ):
             'formula to molecule'             : {},
             'molecule to annotations'         : {},
             'molecule fixed label variations' : {},
-            'formula to trivial name'         : {}
+            'formula to trivial name'         : {},
+            'unimod name to fixed label'      : {},
+            'fixed labeled amino acid to unimod name' : {}  
         }
         self.break_points      = {}
         self.skipped_molecules = set()
@@ -1512,24 +1514,88 @@ class IsotopologueLibrary( dict ):
         Checks the fixed labels for unimods strings and converts those to the
         corresponding formula using the unimod mapper.
 
-        Sets ups more lookup to map the fixed label unimods names to the
+        Sets up more lookup to map the fixed label unimods names to the
         formula and vice versa. Additionally, a lookup is generated to retrieve
         unimod name information for thw internal notation of e.g. K0 and K1
         reformated amino acids, which define fixed labels
 
         '''
+        self.fixed_label_unimod_isotope_lookup = pyqms.knowledge_base.fixed_label_unimod_isotope_lookup
+        # extract metabolic background from metabolic labels This decides which
+        # elements needs to be remapped to the explicit isotope form
+        # E.g. if we define metabolic_labels: {'15N':[0,0.99]} we only need to 
+        # remap the N of Carbamindomethyl to 14N to do everything downstream 
+        # correct
+        metabolic_labeled_elements = []
+        for isotope_element, label_percentile_list in self.metabolic_labels.items():
+            isotope_einriched = False
+            for label_percentile in label_percentile_list:
+                if label_percentile > 0:
+                    isotope_einriched= True
+                    break
+            if isotope_einriched is True:
+                match            = self.regex['<isotope><element>'].match( isotope_element )
+                template_element = match.group('element')
+                metabolic_labeled_elements.append( template_element )
         updated_fixed_labels = {}
         for labeled_aa, label_definitions in self.fixed_labels.items():
             for pos, uni_mod_string in enumerate(label_definitions):
                 # try to convert to unimod formula with unimod_mapper
+                self.lookup['fixed labeled amino acid to unimod name']['{0}{1}'.format(labeled_aa, pos)] = uni_mod_string
+
                 if uni_mod_string in self._unimod_mapper.mapper.keys():
-                    unimod_formula =  self._unimod_mapper.name2composition(uni_mod_string)
+                    unimod_formula =  self._unimod_mapper.name2composition(
+                        uni_mod_string
+                    )
+                    specificity_sites = self._unimod_mapper.name2specificity_site_dict(
+                        uni_mod_string
+                    )
+                    if len(specificity_sites[labeled_aa]) == 1:
+                        unimod_site_classification  =specificity_sites[labeled_aa][0]['classification']
+                    else:
+                        print(
+                            'Warning: Amino acid {0} and unimod {1} have multiple specificity sites'.format(
+                                labeled_aa,
+                                uni_mod_string
+                            )
+                        )
+                        exit()
+                    if unimod_site_classification in self.params['UNIMOD_SITE_SPECIFICITY_CLASSIFIERS_FOR_FIXED_LABELS']:
+                        remap_elements_with_positive_count = True
+                    else:
+                        remap_elements_with_positive_count = False
+                    # print(labeled_aa, uni_mod_string)
+                    # print(unimod_site_classification)
+                    # specificity_site_list = self._unimod_mapper.name2specificity_site_list(
+                    #     uni_mod_string
+                    # )
+                    # print(specificity_sites, specificity_site_list)
                     new_uni_mod_string = ''
                     for element, count in sorted(unimod_formula.items()):
+                        # if the mod has a certain classification e.g.
+                        # chemical derivative AND is an addition we need to
+                        # set it to the 'natural' isotope
+                        # Carbamidomethylation in 15N background needs to insert
+                        # a 14N. Subtractions (count <0 ) we leave otherwise 
+                        # they will not be handled correctly.
+                        # We need to check whcih labeling background we have from
+                        # metabolic labeling, i.e. what element is defined  in 
+                        # metabolic_labels which label percentile > 0.000?
+                        # we should only remap those!
+                        if remap_elements_with_positive_count is True and  count > 0 and element in metabolic_labeled_elements:
+                            element = self.fixed_label_unimod_isotope_lookup.get(
+                                element,
+                                element
+                            )
+
                         new_uni_mod_string += '{element}({count})'.format(
                             element=element,
                             count=count
                         )
+                    # 'unimod name to fixed label'      : {},
+                    # 'fixed labeled amino acid to unimod name' : {} 
+                    # update lookups
+                    self.lookup['unimod name to fixed label'][uni_mod_string] = new_uni_mod_string
                 else:
                     new_uni_mod_string = uni_mod_string
                 if labeled_aa not in updated_fixed_labels.keys():

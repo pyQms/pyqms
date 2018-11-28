@@ -75,6 +75,16 @@ params = {
         0.9 : (129 , 202 , 78)  ,
         1   : (27  , 137 , 62)
     },
+    'UNIMOD_SITE_SPECIFICITY_CLASSIFIERS_FOR_FIXED_LABELS': [
+        # for these classifiers the elements are remapped and specified
+        # specifically as e.g. 14N instead of N. This is relevant for
+        # e.g. Carbmidomethylation, which is introduced during sample preparation
+        # and the N needs to be defined as 14N and not 15N
+        # also relevant for e.g. SILAC in 15N background
+        # There may be more classifiers which are relevant for this parameter!
+        'Chemical derivative',
+        'Isotopic label'
+    ]
 }
 
 params_descriptions =  odict([

@@ -87,6 +87,7 @@ class UnimodMapper( object ):
                     self.unimod_xml_name
                 ))
         data_list = []
+        # classification_attribs = set()
         print('> Parsing unimod.xml from {0}'.format( xmlFile ))
         if os.path.exists( xmlFile ):
             unimodXML = ET.iterparse(
@@ -98,10 +99,10 @@ class UnimodMapper( object ):
                 if event == b'start':
                     if element.tag.endswith('}mod'):
                         tmp = {
-                            'unimodID' : element.attrib['record_id'],
-                            'unimodname' : element.attrib['title'],
-                            'element' : {},
-                            'specificity_sites' : []
+                            'unimodID': element.attrib['record_id'],
+                            'unimodname': element.attrib['title'],
+                            'element': {},
+                            'specificity_sites': {}
                         }
                     elif element.tag.endswith('}delta'):
                         collect_element = True
@@ -115,9 +116,50 @@ class UnimodMapper( object ):
                                 tmp['element'][ element.attrib['symbol'] ] = \
                                     number
                     elif element.tag.endswith('}specificity'):
-                            amino_acid = element.attrib['site']
-                            if element.attrib['classification'] != 'Artefact':
-                                tmp['specificity_sites'].append( amino_acid )
+                        '''
+                        <umod:specificity hidden="1" site="M" position="Anywhere" classification="Isotopic label"
+                           spec_group="2"/>
+                        <umod:specificity hidden="0" site="C" position="Anywhere" classification="Chemical derivative"
+                           spec_group="1"/>
+                       <umod:specificity hidden="1" site="T" position="Anywhere" classification="Artefact"
+                           spec_group="8"/>
+                        {
+                            # can incorporate the label in the sample e.g. 15N
+                            'Pre-translational',
+                            'Co-translational',
+                            'Post-translational',
+                            'N-linked glycosylation',
+                            'Other glycosylation',
+                            'Non-standard residue',
+                            'O-linked glycosylation'
+                            'AA substitution',
+                            
+                            # Post harvest labeling i.e. natural isotopes
+                            'Isotopic label',
+                            'Chemical derivative',
+                            'Artefact',
+                            
+                            Undecided
+                            'Synth. pep. protect. gp.',
+                            'Other',
+                            'Multiple',
+                        }
+
+                        '''
+                        amino_acid = element.attrib['site']
+                        position = element.attrib['position']
+                        classification = element.attrib['classification']
+                        if amino_acid not in tmp['specificity_sites'].keys():
+                            tmp['specificity_sites'][amino_acid] = []
+                        tmp['specificity_sites'][amino_acid].append(
+                            {
+                                'position': position,
+                                'classification': classification
+                            }
+                        )
+                        # classification_attribs.add(classification)
+                        # if element.attrib['position'] != 'Artefact':
+                        #     tmp['specificity_sites'].append( amino_acid )
                     else:
                         pass
                 else:
@@ -136,6 +178,7 @@ class UnimodMapper( object ):
                 )
             )
             sys.exit(1)
+        # print(classification_attribs)
         return data_list
 
     def _initialize_mapper(self):
@@ -214,6 +257,24 @@ class UnimodMapper( object ):
         '''
         return self._map_key_2_index_2_value(unimod_name, 'unimodID')
 
+    def name2specificity_site_dict(self, unimod_name):
+        '''
+        Converts unimod name to a dict of amino acids mapping to
+        the position in the peptide and the classification of the modification
+        on this aa
+
+        Args:
+            unimod_name (str): name of modification (as named in unimod)
+
+        Returns:
+            dict: dict of specificity sites
+        '''
+        dict_2_return = None
+        index = self.mapper.get( unimod_name, None)
+        if index is not None:
+            dict_2_return = self._data_list_2_value(index, 'specificity_sites')
+        return dict_2_return
+
     def name2specificity_site_list(self, unimod_name):
         '''
         Converts unimod name to list of specified amino acids or sites
@@ -227,7 +288,7 @@ class UnimodMapper( object ):
         list_2_return = None
         index = self.mapper.get( unimod_name, None)
         if index is not None:
-            list_2_return = self._data_list_2_value(index, 'specificity_sites')
+            list_2_return = list(self._data_list_2_value(index, 'specificity_sites').keys())
         return list_2_return
 
     # unimodid 2 ....

@@ -355,3 +355,10 @@ aa_compositions = {
     'W': 'C11H10N2O',
     'Y': 'C9H9NO2',
 }
+
+fixed_label_unimod_isotope_lookup = {
+    'N': '14N',
+    'C': '12C',
+    'H': '1H',
+    'S': '32S'
+}

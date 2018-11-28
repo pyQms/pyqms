@@ -29,7 +29,7 @@ TESTS = [
 
         },
         'fixed_labels' : {
-            'K' : [ 'Label:13C(6)15N(2)', 'Label:13C(6)15N(4)', ''],
+            'K' : [ 'Label:13C(6)15N(2)', 'Propionamide', ''],
             'R' : [ 'Label:13C(6)15N(4)', '']
         },
         'output' : [
