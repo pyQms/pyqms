@@ -299,9 +299,11 @@ class IsotopologueLibrary( dict ):
         # ----------------------------------------------------------------
         #       FIXED LABELS
         # ----------------------------------------------------------------
+        self._unimod_mapper = pyqms.UnimodMapper()
         if len( self.fixed_labels.keys() ) != 0:
             # we redefine molecules according to fixed_labeld, i.e SILAC or
             # similar
+            self._generalize_fixed_labels()
             self._extend_kb_with_fixed_labels()
             molecules = self._extend_molecules_with_fixed_labels( molecules )
 
@@ -310,7 +312,8 @@ class IsotopologueLibrary( dict ):
         self._range_for_elements_with_two_isotopes = [None, None]
         cc_factory = pyqms.ChemicalComposition(
             aa_compositions        = self.aa_compositions,
-            isotopic_distributions = self.isotopic_distributions
+            isotopic_distributions = self.isotopic_distributions,
+            unimod_mapper          = self._unimod_mapper
         )
         # ----------------------------------------------------------------
         #       BUILDING ISOTOPOLGUES ....
@@ -1261,11 +1264,6 @@ class IsotopologueLibrary( dict ):
             self.aa_compositions and self.isotopic_distributions
             are based on pyqms.knowledge_base and cached by `self._cache_kb`
         '''
-        self.umm = pyqms.UnimodMapper()
-        tmp_cc_factory = pyqms.ChemicalComposition(
-            aa_compositions        = self.aa_compositions,
-            isotopic_distributions = self.isotopic_distributions
-        )
         for labeled_aa, label_definitions in self.fixed_labels.items():
             for pos, uni_mod_string in enumerate(label_definitions):
                 new_aa = '{0}{1}'.format(labeled_aa, pos)
@@ -1283,34 +1281,7 @@ class IsotopologueLibrary( dict ):
                     exit(1)
                 formated_umod_list = self.regex['<isotope><element>(<count>)']\
                     .findall( uni_mod_string )
-                print(new_aa,formated_umod_list, uni_mod_string)
-                # unimod_comp = []
-                # print(tmp_cc_factory._chemical_formula_to_dict(uni_mod_string))
-                for isotope, element, count in formated_umod_list:
-                    # unimod_comp.append(
-                    #     '{0}{1}({2})'.format(isotope,element,count)
-                    # )
-                    # tmp_cc_factory['{0}{1}'.format(isotope,element)]=int(count)
-                                        #     tmp_cc_factory.add_chemical_formula('+{0}{1}({2})'.format(isotope,element,count))
-                    # print(pyqms.ChemicalComposition()
-                    if int(count) > 0:
-                        k = pyqms.ChemicalComposition('+{0}{1}({2})'.format(isotope,element,count))
-                    #     # tmp_cc_factory.add_chemical_formula({'+{0}{1}'.format(isotope,element):int(count)})
-                    else:
-                    #     # print(isotope, element, count)
-
-                        k = pyqms.ChemicalComposition('-{0}{1}({2})'.format(isotope,element,abs(int(count))))
-                        # tmp_cc_factory.subtract_chemical_formula({'-{0}{1}'.format(isotope,element):abs(int(count))})
-                    print(k)
-                # unimod_comp_name = ' '.join(unimod_comp)
-                print(tmp_cc_factory)
-                unimod_comp_name = tmp_cc_factory.hill_notation_unimod()
-                # print(unimod_comp_name)
-                # possible_names= self.umm.composition2name_list(unimod_comp_name)
-                # print(possible_names)
-                tmp_cc_factory.clear()
-                # exit()
-
+                # print(formated_umod_list)
                 for isotope, element, count in formated_umod_list:
                     if isotope == '':
                         formated_element = element
@@ -1536,6 +1507,39 @@ class IsotopologueLibrary( dict ):
                     # )
         return extended_set_of_molecules
 
+    def _generalize_fixed_labels(self):
+        '''
+        Checks the fixed labels for unimods strings and converts those to the
+        corresponding formula using the unimod mapper.
+
+        Sets ups more lookup to map the fixed label unimods names to the
+        formula and vice versa. Additionally, a lookup is generated to retrieve
+        unimod name information for thw internal notation of e.g. K0 and K1
+        reformated amino acids, which define fixed labels
+
+        '''
+        updated_fixed_labels = {}
+        for labeled_aa, label_definitions in self.fixed_labels.items():
+            for pos, uni_mod_string in enumerate(label_definitions):
+                # try to convert to unimod formula with unimod_mapper
+                if uni_mod_string in self._unimod_mapper.mapper.keys():
+                    unimod_formula =  self._unimod_mapper.name2composition(uni_mod_string)
+                    new_uni_mod_string = ''
+                    for element, count in sorted(unimod_formula.items()):
+                        new_uni_mod_string += '{element}({count})'.format(
+                            element=element,
+                            count=count
+                        )
+                else:
+                    new_uni_mod_string = uni_mod_string
+                if labeled_aa not in updated_fixed_labels.keys():
+                    updated_fixed_labels[labeled_aa] = []
+
+                updated_fixed_labels[labeled_aa].append(
+                    new_uni_mod_string
+                )
+        self.fixed_labels = updated_fixed_labels
+        return
 
     def _increase_element_envelope(self, element=None, label_percentile=None, count=0):
         '''

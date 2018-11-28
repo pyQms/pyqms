@@ -127,6 +127,22 @@ TESTS = [
             ),
         }
     },
+    # test new generalize fixed labels function which accepts also unimods strings
+    {
+        'in' : {
+            'params' : {
+                'molecules' : ['KLEINERTEST'],
+                'charges' : [2, ],
+                'fixed_labels' : {
+                    'R' : ['', 'Label:13C(6)15N(4)'],
+                    'K' : ['', 'Label:13C(6)15N(2)']
+                },
+            }
+        },
+        'out' : {
+            'formated_molecule' :sorted(['K0LEINER0TEST', 'K1LEINER0TEST', 'K1LEINER1TEST', 'K0LEINER1TEST']),
+        }
+    },
 ]
     # 2 isotope element (N,nitrogen)
 CRASH_TESTS = {

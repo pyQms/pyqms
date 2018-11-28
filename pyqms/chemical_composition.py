@@ -87,9 +87,9 @@ class ChemicalComposition(dict):
 
     '''
     def __init__(self, sequence=None, aa_compositions=None,
-                 isotopic_distributions=None):
+                 isotopic_distributions=None, unimod_mapper=None):
 
-        self._unimod_parser = None
+        self._unimod_mapper = unimod_mapper
         self.composition_of_mod_at_pos = {}
         """dict: chemical composition of unimod modifications at given position
         (if peptide sequence was used as input or using the `use` function)
@@ -251,7 +251,7 @@ class ChemicalComposition(dict):
                 exit(1)
             for occ, match in enumerate( pattern.finditer( unimod )):
                 try:
-                    unimodcomposition = self._unimod_parser.name2composition(
+                    unimodcomposition = self._unimod_mapper.name2composition(
                         unimod[ :match.start() ]
                     )
                 except:
@@ -276,7 +276,7 @@ class ChemicalComposition(dict):
             # else:
             #     end = len( unimod )
             # try:
-            #     unimodcomposition = self._unimod_parser.name2composition(
+            #     unimodcomposition = self._unimod_mapper.name2composition(
             #         unimod[:end ]
             #     )
             # except:
@@ -328,8 +328,8 @@ class ChemicalComposition(dict):
         # reset the shiznit
         if '#' in sequence:
             # Unimod Style format
-            if self._unimod_parser is None:
-                self._unimod_parser = pyqms.UnimodMapper()
+            if self._unimod_mapper is None:
+                self._unimod_mapper = pyqms.UnimodMapper()
             self._parse_sequence_unimod_style( sequence )
         else:
             self._parse_sequence_old_style( sequence )
