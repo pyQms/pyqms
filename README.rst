@@ -15,7 +15,7 @@ Introduction
    :alt: Travis CI status
 
 .. |build-status-appveyor| image:: https://ci.appveyor.com/api/projects/status/j6bwfx62l0j8ddsi?svg=true
-   :target: https://ci.appveyor.com/project/JB-MS/pyqms
+   :target: https://ci.appveyor.com/project/fufezan-lab/pyqms
    :alt: AppVeyor CI status
 
 .. |pypi| image:: https://img.shields.io/pypi/v/pyqms.svg
