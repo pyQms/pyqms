@@ -14,7 +14,7 @@ Introduction
    :target: https://travis-ci.org/pyQms/pyqms
    :alt: Travis CI status
 
-.. |build-status-appveyor| image:: https://ci.appveyor.com/api/projects/status/j6bwfx62l0j8ddsi?svg=true
+.. |build-status-appveyor| image:: https://ci.appveyor.com/api/projects/status/n4x2ug7h3ce4d49y?svg=true
    :target: https://ci.appveyor.com/project/fufezan-lab/pyqms
    :alt: AppVeyor CI status
 
