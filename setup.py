@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from distutils.core import setup
+from setuptools import setup
 import os
 
 version_txt_path = os.path.join(
@@ -23,7 +23,7 @@ setup(
             'kb/ext/unimod.xml',
         ]
     },
-    requires         = ['pymzml'],
+    install_requires         = ['pymzml', 'openpyxl'],
     long_description = "pyQms enables universal and accurate quantification of mass spectrometry data",
     author           = 'Johannes Leufken, Anna Niehues, L. Peter Sarin, Florian Wessels, Michael Hippler, Sebastian A. Leidel and Christian Fufezan',
     author_email     = 'christian@fufezan.net',
