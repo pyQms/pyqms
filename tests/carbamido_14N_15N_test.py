@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.4
+#!/usr/bin/env python
 # encoding: utf-8
 '''
 Test if the fixed_labeled is counted into the metabolic_labels
