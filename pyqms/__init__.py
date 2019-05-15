@@ -24,7 +24,7 @@ import sys
 version_info  = (0, 5, 0, 'beta')
 version = '0.5.0-beta'
 
-if not hasattr(sys, "version_info") or sys.version_info < (3, 3):
+if not hasattr(sys, "version_info") or sys.version_info < (3, 5):
     raise RuntimeError("pyQms requires Python 3.3 or later.")
 
 from . import knowledge_base
