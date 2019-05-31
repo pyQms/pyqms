@@ -66,6 +66,7 @@ def main( mzml=None):
     mzml_basename = os.path.basename(mzml)
     results = None
     for spectrum in run:
+        # print(spectrum.ID)
         scan_time = spectrum.get('MS:1000016')
         if spectrum['ms level'] == 1:
             results = lib.match_all(
@@ -75,13 +76,14 @@ def main( mzml=None):
                 spec_rt   = scan_time,
                 results   = results
             )
-    pickle.dump(
-        results,
-        open(
-            '{0}_pyQms_results.pkl'.format(mzml_basename),
-            'wb'
-        )
-    )
+    # pickle.dump(
+    #     results,
+    #     open(
+    #         '{0}_pyQms_results.pkl'.format(mzml_basename),
+    #         'wb'
+    #     )
+    # )
+    print(results)
     return
 
 
