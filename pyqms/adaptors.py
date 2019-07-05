@@ -19,6 +19,7 @@
         * Fufezan, C.
 
 """
+import os
 from collections import defaultdict as ddict
 import csv
 import pyqms
