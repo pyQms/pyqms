@@ -27,7 +27,7 @@ import bisect
 import pyqms
 import operator
 import time
-
+import numpy as np
 
 class IsotopologueLibrary( dict ):
     """
@@ -2248,21 +2248,21 @@ class IsotopologueLibrary( dict ):
                 # the list has tuples instead of list
                 min_pos = bisect.bisect( source_list, tuple(lower_value) ) - tolerance
                 max_pos = bisect.bisect( source_list, tuple(upper_value) ) + tolerance
-                # except:
-                #     print('Failed on', borders)
-                #     print( source_list[:3])
-                #     print( '??')
-                #     exit(1)
-        else:
-            # numpy array
-            min_pos = bisect.bisect( source_list.tolist(), lower_value ) - tolerance
-            max_pos = bisect.bisect( source_list.tolist(), upper_value ) + tolerance
 
-        if min_pos < 0:
-            min_pos = 0
-        if max_pos > len( source_list ):
-            max_pos = len(source_list)
-        return source_list[ min_pos: max_pos ]
+            if min_pos < 0:
+                min_pos = 0
+            if max_pos > len(source_list):
+                max_pos = len(source_list)
+
+            r_list =  source_list[min_pos: max_pos]
+        else:
+            r_list = source_list[
+                np.where(
+                    (lower_value[0] - tolerance < source_list[:,0]) *\
+                     (source_list[:,0] < upper_value[0] + tolerance)
+                )
+            ]
+        return r_list
 
     def _transform_mz_to_set(self, mz):
         '''
@@ -2310,13 +2310,34 @@ class IsotopologueLibrary( dict ):
                 mz_i_list,
                 [(x, 0.001) for x in mz_range]
             )
-        for mz, intensity in target_mz_list:
-            tmz = int(round( mz * self.params['INTERNAL_PRECISION'] ))
-            tmz_set.add( tmz )
-            try:
-                tmz_lookup[ tmz ].append( (mz, intensity) )
-            except:
-                tmz_lookup[ tmz ] = [ (mz, intensity) ]
+        # for mz, intensity in target_mz_list:
+        #     tmz = int(round( mz * self.params['INTERNAL_PRECISION'] ))
+        #     tmz_set.add( tmz )
+        #     try:
+        #         tmz_lookup[ tmz ].append( (mz, intensity) )
+        #     except:
+        #         tmz_lookup[ tmz ] = [ (mz, intensity) ]
+
+        is_numpy_array = getattr( target_mz_list, "tolist", False)
+        if is_numpy_array is False:
+            for mz, intensity in target_mz_list:
+                tmz = int(round( mz * self.params['INTERNAL_PRECISION'] ))
+                tmz_set.add( tmz )
+                try:
+                    tmz_lookup[ tmz ].append( (mz, intensity) )
+                except:
+                    tmz_lookup[ tmz ] = [ (mz, intensity) ]
+        else:
+            tmz =np.round(target_mz_list[:,0]* self.params['INTERNAL_PRECISION']).astype(int)
+            for pos, tmz_entry in enumerate(tmz):
+                try:
+                    tmz_lookup[ tmz_entry ].append(
+                        (target_mz_list[pos][0], target_mz_list[pos][1])
+                    )
+                except:
+                    tmz_lookup[ tmz_entry ] = [ (target_mz_list[pos][0], target_mz_list[pos][1]) ]
+            tmz_set = set(tmz)
+
         return tmz_set, tmz_lookup
 
 
