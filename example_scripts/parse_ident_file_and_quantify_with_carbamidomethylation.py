@@ -100,10 +100,12 @@ def main(ident_file=None, mzml_file=None):
         spec_id = spectrum['id']
         try:
             # pymzML 2.0.0 style
-            scan_time = spectrum.scan_time
+            scan_time, unit = spectrum.scan_time
+            if 'unit' == 'minute':
+                scan_time /= 60.0
         except:
             # scan time will be in seconds
-            scan_time = spectrum.get('MS:1000016')
+            scan_time = spectrum.get('MS:1000016') / 60.0
         if spectrum['ms level'] == 1:
             results = lib.match_all(
                 mz_i_list = spectrum.centroidedPeaks,
