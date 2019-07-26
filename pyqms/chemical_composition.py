@@ -86,10 +86,13 @@ class ChemicalComposition(dict):
 
 
     '''
+
+    _unimod_parser = pyqms.UnimodMapper()
+
     def __init__(self, sequence=None, aa_compositions=None,
                  isotopic_distributions=None):
 
-        self._unimod_parser = None
+        # self._unimod_parser = None
         self.composition_of_mod_at_pos = {}
         """dict: chemical composition of unimod modifications at given position
         (if peptide sequence was used as input or using the `use` function)
@@ -438,7 +441,7 @@ class ChemicalComposition(dict):
 
         Returns:
             str: Hill notation format of self.
-                
+
                 For example::
 
                     'C50H88N10O17'
@@ -483,9 +486,9 @@ class ChemicalComposition(dict):
 
         Returns:
             str: Hill notation format including unimod format rules of self.
-                
+
                 For example::
-                
+
                     'C(50)H(88)N(10)O(17)'
                     'C(50)H(88)14N(1)N(9)(17)'
 
@@ -531,8 +534,14 @@ class ChemicalComposition(dict):
         else:
             cc_mass_dict = cc
         for element, count in cc_mass_dict.items():
-            mass += count * self.isotopic_distributions[element][0][0]
-
+            if element not in self.isotopic_distributions.keys():
+                match = re.search('(?P<isotope>[0-9]*)(?P<element>[A-Z][a-z]*$)', element)
+                for _emass, _distribution in self.isotopic_distributions[match.group('element')]:
+                    if int(round(mass)) == int(match.group('isotope')):
+                        emass = _emass
+            else:
+                emass = self.isotopic_distributions[element][0][0]
+            mass += count * emass
         return mass
 
     def _merge(self, chemical_formula, mode='addition'):
