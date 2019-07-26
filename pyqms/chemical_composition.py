@@ -244,6 +244,8 @@ class ChemicalComposition(dict):
             if unimod == '':
                 continue
             # print( unimod )
+            unimodcomposition = None
+
             unimod = unimod.strip()
             if ':' not in unimod:
                 print(
@@ -251,10 +253,10 @@ class ChemicalComposition(dict):
                         unimod
                     )
                 )
-                exit(1)
+                sys.exit(1)
             for occ, match in enumerate( pattern.finditer( unimod )):
                 try:
-                    unimodcomposition = self._unimod_parser.name2composition(
+                    unimodcomposition = ChemicalComposition._unimod_parser.name2composition(
                         unimod[ :match.start() ]
                     )
                 except:
@@ -265,7 +267,14 @@ class ChemicalComposition(dict):
                         )
                     )
                     sys.exit(1)
-                # if occ >= 1:
+
+                if unimodcomposition is None:
+                    print(
+                        'This unimod: {0} could not be mapped and thus no CC could be read'.format(
+                            unimod
+                        )
+                    )
+                    sys.exit(1)
                 position = int(match.group('pos'))
                 if position in self.unimod_at_pos.keys():
                     sys.exit('{0} <<- Two unimods at the same position ? '.format(
@@ -292,7 +301,7 @@ class ChemicalComposition(dict):
             # print( self , 'peptide only')
             # print( 'Unimod:', unimod, unimod[:end] , )
             # Full addition
-            # print( unimodcomposition , '<<<<<<')
+            print( unimodcomposition , '<<<<<<', ChemicalComposition._unimod_parser)
             for k, v in unimodcomposition.items():
                 self[ k ] += v
             # storage position related modifications
