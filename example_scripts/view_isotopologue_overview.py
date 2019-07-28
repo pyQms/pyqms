@@ -23,7 +23,7 @@ import pyqms
 
 
 def main(args):
-    '''
+    """
     Uses a given peptide and charge and calculates and outputs the isotope
     envelope. Further options include metabolic labels and fixed labels.
 
@@ -37,39 +37,34 @@ def main(args):
 
     Minimally a peptide and charge is required!
 
-    '''
+    """
 
-    molecule         = sys.argv[1]
-    charges          = [ 1 ]
+    molecule = sys.argv[1]
+    charges = [1]
     metabolic_labels = None
-    fixed_labels     = None
+    fixed_labels = None
     if len(sys.argv) >= 3:
-        charges = [ int(sys.argv[2]), ]
+        charges = [int(sys.argv[2])]
         if len(sys.argv) >= 4:
             metabolic_labels = eval(sys.argv[3])
             if len(sys.argv) >= 5:
                 fixed_labels = eval(sys.argv[4])
 
     lib = pyqms.IsotopologueLibrary(
-        molecules        = [ molecule ],
-        charges          = charges,
-        metabolic_labels = metabolic_labels,
-        fixed_labels     = fixed_labels,
-        params           = {
-            'LOWER_MZ_LIMIT' : 0
-        }
+        molecules=[molecule],
+        charges=charges,
+        metabolic_labels=metabolic_labels,
+        fixed_labels=fixed_labels,
+        params={"LOWER_MZ_LIMIT": 0},
     )
 
     for formula in lib.keys():
         for charge in charges:
-            lib.print_overview(
-                formula,
-                charge=charge
-            )
+            lib.print_overview(formula, charge=charge)
 
 
-if __name__ == '__main__':
-    if len( sys.argv ) < 3:
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
         print(main.__doc__)
     else:
-        main( sys.argv )
+        main(sys.argv)

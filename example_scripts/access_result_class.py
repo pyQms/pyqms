@@ -24,7 +24,7 @@ import pprint
 
 
 def main(result_pkl=None):
-    '''
+    """
 
     usage:
         ./access_result_class.py <Path2ResultPkl>
@@ -40,34 +40,23 @@ def main(result_pkl=None):
         molecules in the results pkl.
 
 
-    '''
-    results_class = pickle.load(
-        open(
-            result_pkl,
-            'rb'
-        )
-    )
+    """
+    results_class = pickle.load(open(result_pkl, "rb"))
 
     amount_collector = {}
 
     for key, value in results_class.items():
-        peptide = results_class.lookup['formula to molecule'][key.formula][0]
+        peptide = results_class.lookup["formula to molecule"][key.formula][0]
         if peptide not in amount_collector.keys():
-            amount_collector[ peptide ] = {
-                'amount' : 0
-            }
-        for matched_spectrum in value['data']:
-            amount_collector[peptide]['amount'] += matched_spectrum.scaling_factor
+            amount_collector[peptide] = {"amount": 0}
+        for matched_spectrum in value["data"]:
+            amount_collector[peptide]["amount"] += matched_spectrum.scaling_factor
 
-    pprint.pprint(
-        amount_collector
-    )
+    pprint.pprint(amount_collector)
 
 
-if __name__ == '__main__':
-    if len( sys.argv ) < 2:
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
         print(main.__doc__)
     else:
-        main(
-            result_pkl = sys.argv[1],
-        )
+        main(result_pkl=sys.argv[1])

@@ -22,13 +22,14 @@ import pyqms
 import sys
 import pickle
 import os
+
 try:
     import pymzml
 except:
-    print('Please install pymzML via: pip install pymzml')
+    print("Please install pymzML via: pip install pymzml")
 
 
-def main( mzml=None):
+def main(mzml=None):
     """
     Simple script as template for quantification using pyQms.
 
@@ -43,38 +44,32 @@ def main( mzml=None):
         The peptides under molecules are BSA peptides.
 
     """
-    molecules = [
-        'HLVDEPQNLIK',
-        'YICDNQDTISSK',
-        'DLGEEHFK'
-    ]
-    charges          = [2, 3, 4, 5]
+    molecules = ["HLVDEPQNLIK", "YICDNQDTISSK", "DLGEEHFK"]
+    charges = [2, 3, 4, 5]
     metabolic_labels = None
-    fixed_labels     = None
+    fixed_labels = None
 
     lib = pyqms.IsotopologueLibrary(
-        molecules        = molecules,
-        charges          = charges,
-        metabolic_labels = metabolic_labels,
-        fixed_labels     = fixed_labels,
+        molecules=molecules,
+        charges=charges,
+        metabolic_labels=metabolic_labels,
+        fixed_labels=fixed_labels,
         # params           = params,
-        verbose          = True
+        verbose=True,
     )
-    run = pymzml.run.Reader(
-        mzml,
-    )
+    run = pymzml.run.Reader(mzml)
     mzml_basename = os.path.basename(mzml)
     results = None
     for spectrum in run:
         # print(spectrum.ID)
-        scan_time = spectrum.get('MS:1000016')
-        if spectrum['ms level'] == 1:
+        scan_time = spectrum.get("MS:1000016")
+        if spectrum["ms level"] == 1:
             results = lib.match_all(
-                mz_i_list = spectrum.centroidedPeaks,
-                file_name = mzml_basename,
-                spec_id   = spectrum['id'],
-                spec_rt   = scan_time,
-                results   = results
+                mz_i_list=spectrum.centroidedPeaks,
+                file_name=mzml_basename,
+                spec_id=spectrum["id"],
+                spec_rt=scan_time,
+                results=results,
             )
     # pickle.dump(
     #     results,
@@ -87,8 +82,8 @@ def main( mzml=None):
     return
 
 
-if __name__ == '__main__':
-    if len( sys.argv ) < 2:
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
         print(main.__doc__)
     else:
-        main(mzml=sys.argv[1] )
+        main(mzml=sys.argv[1])

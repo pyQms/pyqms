@@ -23,7 +23,7 @@ import sys
 
 
 def main(result_pkl=None):
-    '''
+    """
 
     usage:
         ./write_mztab_results.py <Path2ResultPkl>
@@ -44,36 +44,29 @@ def main(result_pkl=None):
         Since pyQms is a raw quantification tool, some meta data has to be
         passed/set manually by the user.
 
-    '''
-    results_class = pickle.load(
-        open(
-            result_pkl,
-            'rb'
-        )
-    )
+    """
+    results_class = pickle.load(open(result_pkl, "rb"))
     # provide meta data as lists of mztab specific formats. Pass directly
     # mztab correct format.
 
     mztab_meta_info = {
-        'protein_search_engine_score'   : [],
-        'psm_search_engine_score'       : ['[MS,MS:1001475,OMSSA:evalue, ]'],
-        'fixed_mod'                     : ['[UNIMOD, UNIMOD:4, Carbamidomethyl, ]'],
-        'variable_mod'                  : ['[UNIMOD, UNIMOD:35, Oxidation, ]'],
-        'study_variable-description'    : ['Standard BSA measurement'],
-        'ms_run-location'               : ['BSA1.mzML'],
-
+        "protein_search_engine_score": [],
+        "psm_search_engine_score": ["[MS,MS:1001475,OMSSA:evalue, ]"],
+        "fixed_mod": ["[UNIMOD, UNIMOD:4, Carbamidomethyl, ]"],
+        "variable_mod": ["[UNIMOD, UNIMOD:35, Oxidation, ]"],
+        "study_variable-description": ["Standard BSA measurement"],
+        "ms_run-location": ["BSA1.mzML"],
     }
 
-    results_class.lookup['mztab_meta_info'] = mztab_meta_info
+    results_class.lookup["mztab_meta_info"] = mztab_meta_info
 
     results_class.write_result_mztab(
-        output_file_name = '{0}_results.mztab'.format(result_pkl)
+        output_file_name="{0}_results.mztab".format(result_pkl)
     )
 
-if __name__ == '__main__':
-    if len( sys.argv ) < 2:
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
         print(main.__doc__)
     else:
-        main(
-            result_pkl = sys.argv[1],
-        )
+        main(result_pkl=sys.argv[1])

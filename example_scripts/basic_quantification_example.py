@@ -25,7 +25,7 @@ import os
 import pprint
 
 
-def main( mzml=None):
+def main(mzml=None):
     """
     Example script as template for most basic usage of quantification using
     pyQms.
@@ -87,54 +87,54 @@ def main( mzml=None):
         (493.27465300375036, 2725.885986328125),
         (496.0077303201583, 8604.0830078125),
     ]
-    print('{0:-^100}'.format('Library generation'))
+    print("{0:-^100}".format("Library generation"))
     lib = pyqms.IsotopologueLibrary(
-        molecules        = [ 'DDSPDLPK' ],
-        charges          = [ 2 ],
-        metabolic_labels = None,
-        fixed_labels     = None,
-        verbose          = True
+        molecules=["DDSPDLPK"],
+        charges=[2],
+        metabolic_labels=None,
+        fixed_labels=None,
+        verbose=True,
     )
-    print('{0:-^100}'.format('Library generation'))
+    print("{0:-^100}".format("Library generation"))
 
     results = lib.match_all(
-        mz_i_list = peak_list,
-        file_name = 'BSA_test',
-        spec_id   = 1165,
-        spec_rt   = 29.10,
-        results   = None
+        mz_i_list=peak_list,
+        file_name="BSA_test",
+        spec_id=1165,
+        spec_rt=29.10,
+        results=None,
     )
     print()
-    print('{0:-^100}'.format('Results summary'))
+    print("{0:-^100}".format("Results summary"))
     for key in results.keys():
-        peptide = results.lookup['formula to molecule'][key.formula][0]
+        peptide = results.lookup["formula to molecule"][key.formula][0]
         print(
-            'For Peptide {0} with formula {1} and charge {2} the following match could be made:'.format(
-                peptide,
-                key.formula,
-                key.charge
+            "For Peptide {0} with formula {1} and charge {2} the following match could be made:".format(
+                peptide, key.formula, key.charge
             )
         )
-        for match in results[key]['data']:
+        for match in results[key]["data"]:
             print(
-                '\tAmount {0:1.2f} (scaling_factor) was detected with a matching score of {1:1.2f}'.format(
-                    match.scaling_factor,
-                    match.score
+                "\tAmount {0:1.2f} (scaling_factor) was detected with a matching score of {1:1.2f}".format(
+                    match.scaling_factor, match.score
                 )
             )
-            print(
-                '\tThe follwowing peaks have been matched:'
-            )
-            for measured_mz, measured_intensity, relative_i, calculated_mz, calculated_intensity in match.peaks: 
+            print("\tThe follwowing peaks have been matched:")
+            for (
+                measured_mz,
+                measured_intensity,
+                relative_i,
+                calculated_mz,
+                calculated_intensity,
+            ) in match.peaks:
                 print(
-                    '\t\t{0:1.6f} m/z @ {1:1.2e} intensity'.format(
-                        measured_mz,
-                        measured_intensity
+                    "\t\t{0:1.6f} m/z @ {1:1.2e} intensity".format(
+                        measured_mz, measured_intensity
                     )
                 )
-    print('{0:-^100}'.format('Results summary'))
+    print("{0:-^100}".format("Results summary"))
     return
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

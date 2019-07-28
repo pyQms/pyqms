@@ -24,13 +24,14 @@ import pickle
 import os
 import pprint
 from collections import defaultdict as ddict
+
 try:
     import pymzml
 except:
-    print('Please install pymzML via: pip install pymzml')
+    print("Please install pymzML via: pip install pymzml")
 
 
-def main( mzml=None):
+def main(mzml=None):
     """
     Example script fort visualizing the m/z and intensity error, which is the
     basis for the scoring of the matches in pyQms.
@@ -92,139 +93,99 @@ def main( mzml=None):
         (493.27465300375036, 2725.885986328125),
         (496.0077303201583, 8604.0830078125),
     ]
-    print('{0:-^100}'.format('Library generation'))
+    print("{0:-^100}".format("Library generation"))
     lib = pyqms.IsotopologueLibrary(
-        molecules        = [ 'DDSPDLPK' ],
-        charges          = [ 2 ],
-        metabolic_labels = None,
-        fixed_labels     = None,
-        verbose          = True
+        molecules=["DDSPDLPK"],
+        charges=[2],
+        metabolic_labels=None,
+        fixed_labels=None,
+        verbose=True,
     )
-    print('{0:-^100}'.format('Library generation'))
+    print("{0:-^100}".format("Library generation"))
 
     results = lib.match_all(
-        mz_i_list = peak_list,
-        file_name = 'BSA_test',
-        spec_id   = 1165,
-        spec_rt   = 29.10,
-        results   = None
+        mz_i_list=peak_list,
+        file_name="BSA_test",
+        spec_id=1165,
+        spec_rt=29.10,
+        results=None,
     )
     for key, i, entry in results.extract_results():
         p = pymzml.plot.Factory()
         label_mz_error = []
-        label_i_error  = []
+        label_i_error = []
         measured_peaks = []
-        matched_peaks  = []
+        matched_peaks = []
         peak_info = ddict(list)
         # pprint.pprint(entry.peaks)
-        for measured_mz, measured_intensity, relative_i, calculated_mz, calculated_intensity in entry.peaks:
+        for (
+            measured_mz,
+            measured_intensity,
+            relative_i,
+            calculated_mz,
+            calculated_intensity,
+        ) in entry.peaks:
             if measured_mz is not None:
-                measured_peaks.append(
-                    (
-                        measured_mz,
-                        measured_intensity
-                    )
-                )
+                measured_peaks.append((measured_mz, measured_intensity))
                 matched_peaks.append(
-                    (
-                        calculated_mz,
-                        calculated_intensity * entry.scaling_factor
-                    )
+                    (calculated_mz, calculated_intensity * entry.scaling_factor)
                 )
-                mz_error = (measured_mz - calculated_mz) / ( measured_mz * 1e-6 )
+                mz_error = (measured_mz - calculated_mz) / (measured_mz * 1e-6)
                 label_mz_error.append(
-                    (
-                        calculated_mz,
-                        '{0:5.3f} ppm m/z error'.format(
-                            mz_error
-                        )
-                    )
+                    (calculated_mz, "{0:5.3f} ppm m/z error".format(mz_error))
                 )
                 scaled_intensity = calculated_intensity * entry.scaling_factor
-                rel_i_error  = abs(measured_intensity - scaled_intensity) / scaled_intensity
+                rel_i_error = (
+                    abs(measured_intensity - scaled_intensity) / scaled_intensity
+                )
 
-                peak_info['measured peaks'].append(measured_mz)
-                peak_info['theoretical peaks'].append(calculated_mz)
-                peak_info['relative intensity'].append(relative_i)
-                peak_info['scaled matched peaks'].append( calculated_intensity * entry.scaling_factor )
-                peak_info['mz error'].append( mz_error)
-                peak_info['i error'].append(  rel_i_error )
-
+                peak_info["measured peaks"].append(measured_mz)
+                peak_info["theoretical peaks"].append(calculated_mz)
+                peak_info["relative intensity"].append(relative_i)
+                peak_info["scaled matched peaks"].append(
+                    calculated_intensity * entry.scaling_factor
+                )
+                peak_info["mz error"].append(mz_error)
+                peak_info["i error"].append(rel_i_error)
 
                 if rel_i_error > 1:
                     rel_i_error = 1
 
                 label_i_error.append(
-                    (
-                        calculated_mz,
-                        '{0:5.3f} rel. intensity error'.format(
-                            rel_i_error
-                        )
-                    )
+                    (calculated_mz, "{0:5.3f} rel. intensity error".format(rel_i_error))
                 )
 
-
-
-        mz_only  = [ n[0] for n in measured_peaks ]
-        mz_range = [ min(mz_only)-1, max(mz_only)+1 ]
-        peptide = results.lookup['formula to molecule'][key.formula][0]
+        mz_only = [n[0] for n in measured_peaks]
+        mz_range = [min(mz_only) - 1, max(mz_only) + 1]
+        peptide = results.lookup["formula to molecule"][key.formula][0]
         p.newPlot(
-            header = 'Formula: {0}; Peptide: {1}; Charge: {2}\n Amount: {3:1.3f}; Score: {4:1.3f}'.format(
-                key.formula,
-                peptide,
-                key.charge,
-                entry.scaling_factor,
-                entry.score
+            header="Formula: {0}; Peptide: {1}; Charge: {2}\n Amount: {3:1.3f}; Score: {4:1.3f}".format(
+                key.formula, peptide, key.charge, entry.scaling_factor, entry.score
             ),
-            mzRange = mz_range
+            mzRange=mz_range,
         )
-        p.add(
-            measured_peaks,
-            color = (0, 0, 0),
-            style = 'sticks'
-        )
-        p.add(
-            matched_peaks,
-            color = (0, 200, 0),
-            style = 'triangles'
-        )
-        p.add(
-            label_mz_error,
-            color = (255, 0, 0),
-            style = 'label_x'
-        )
-        p.add(
-            label_i_error,
-            color = (255, 0, 0),
-            style = 'label_x'
-        )
+        p.add(measured_peaks, color=(0, 0, 0), style="sticks")
+        p.add(matched_peaks, color=(0, 200, 0), style="triangles")
+        p.add(label_mz_error, color=(255, 0, 0), style="label_x")
+        p.add(label_i_error, color=(255, 0, 0), style="label_x")
 
         plot_name = os.path.join(
             os.pardir,
-            'data',
-            'Score_visualization_Peptide_{1}_Charge_{2}.xhtml'.format(
-                key.file_name,
-                peptide,
-                key.charge
-            )
+            "data",
+            "Score_visualization_Peptide_{1}_Charge_{2}.xhtml".format(
+                key.file_name, peptide, key.charge
+            ),
         )
-        p.save(
-            filename = plot_name,
-            mzRange  = mz_range
-        )
-        print(
-                'Plotted file {0}'.format(
-                    plot_name
-                )
-            )
+        p.save(filename=plot_name, mzRange=mz_range)
+        print("Plotted file {0}".format(plot_name))
         # print(entry)
-        print('Match info')
+        print("Match info")
         for key, value_list in sorted(peak_info.items()):
             print(key)
-            print('[{0}]'.format(','.join([str(n) for n in value_list])))
+            print("[{0}]".format(",".join([str(n) for n in value_list])))
             print()
     return
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -24,7 +24,7 @@ import os
 
 
 def main(result_pkl=None):
-    '''
+    """
 
     usage:
         ./determine_mz_and_i_error.py <Path2ResultPkl>
@@ -33,33 +33,21 @@ def main(result_pkl=None):
     in the quantifications for the given result pkl.
 
 
-    '''
-    results_class = pickle.load(
-        open(
-            result_pkl,
-            'rb'
-        )
-    )
+    """
+    results_class = pickle.load(open(result_pkl, "rb"))
 
     plot_name = os.path.join(
         os.path.dirname(result_pkl),
-        'mz_and_intensity_error_{0}.pdf'.format(
-            os.path.basename(result_pkl)
-        )
+        "mz_and_intensity_error_{0}.pdf".format(os.path.basename(result_pkl)),
     )
 
     results_class._determine_measured_error(
-        score_threshold = None,
-        topX            = 3,
-        filename        = plot_name,
-        plot            = True
+        score_threshold=None, topX=3, filename=plot_name, plot=True
     )
 
 
-if __name__ == '__main__':
-    if len( sys.argv ) < 2:
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
         print(main.__doc__)
     else:
-        main(
-            result_pkl = sys.argv[1],
-        )
+        main(result_pkl=sys.argv[1])

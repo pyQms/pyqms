@@ -23,10 +23,11 @@ import sys
 import pickle
 import os
 import pyqms.adaptors
+
 try:
     import pymzml
 except:
-    print('Please install pymzML via: pip install pymzml')
+    print("Please install pymzML via: pip install pymzml")
 
 
 def main(ident_file=None, mzml_file=None):
@@ -56,76 +57,64 @@ def main(ident_file=None, mzml_file=None):
 
     """
 
-    if ident_file.upper().endswith('MZTAB'):
-        evidence_score_field  = 'search_engine_score[1]'
+    if ident_file.upper().endswith("MZTAB"):
+        evidence_score_field = "search_engine_score[1]"
     else:
         # this is the default value in the adaptor
-        evidence_score_field = 'PEP'
+        evidence_score_field = "PEP"
 
-    print(
-        'Evidence score field "{0}" will be used.'.format(
-            evidence_score_field
-        )
-    )
+    print('Evidence score field "{0}" will be used.'.format(evidence_score_field))
 
     fixed_labels, evidences, molecules = pyqms.adaptors.parse_evidence(
-        fixed_labels         = None,
-        evidence_files       = [ ident_file ],
-        evidence_score_field = evidence_score_field
+        fixed_labels=None,
+        evidence_files=[ident_file],
+        evidence_score_field=evidence_score_field,
     )
 
     params = {
-        'molecules'        : molecules,
-        'charges'          : [1, 2, 3, 4, 5],
-        'metabolic_labels' : {'15N' : [0]},
-        'fixed_labels'     : fixed_labels,
-        'verbose'          : True,
-        'evidences'        : evidences
+        "molecules": molecules,
+        "charges": [1, 2, 3, 4, 5],
+        "metabolic_labels": {"15N": [0]},
+        "fixed_labels": fixed_labels,
+        "verbose": True,
+        "evidences": evidences,
     }
 
-    lib = pyqms.IsotopologueLibrary( **params )
+    lib = pyqms.IsotopologueLibrary(**params)
 
-    run = pymzml.run.Reader(
-        mzml_file
-    )
-    out_folder         = os.path.dirname(mzml_file)
+    run = pymzml.run.Reader(mzml_file)
+    out_folder = os.path.dirname(mzml_file)
     mzml_file_basename = os.path.basename(mzml_file)
-    results            = None
+    results = None
     for spectrum in run:
         try:
             # pymzML 2.0.0 style
             scan_time = spectrum.scan_time
         except:
             # scan time will be in seconds
-            scan_time = spectrum.get('MS:1000016')
-        if spectrum['ms level'] == 1:
+            scan_time = spectrum.get("MS:1000016")
+        if spectrum["ms level"] == 1:
             results = lib.match_all(
-                mz_i_list = spectrum.centroidedPeaks,
-                file_name = mzml_file_basename,
-                spec_id   = spectrum['id'],
-                spec_rt   = scan_time,
-                results   = results
+                mz_i_list=spectrum.centroidedPeaks,
+                file_name=mzml_file_basename,
+                spec_id=spectrum["id"],
+                spec_rt=scan_time,
+                results=results,
             )
     pickle.dump(
         results,
         open(
             os.path.join(
-                out_folder,
-                '{0}_pyQms_results.pkl'.format(
-                    mzml_file_basename
-                )
+                out_folder, "{0}_pyQms_results.pkl".format(mzml_file_basename)
             ),
-            'wb'
-        )
+            "wb",
+        ),
     )
     return
 
 
-if __name__ == '__main__':
-    if len( sys.argv ) < 3:
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
         print(main.__doc__)
     else:
-        main(
-            ident_file = sys.argv[1],
-            mzml_file  = sys.argv[2]
-        )
+        main(ident_file=sys.argv[1], mzml_file=sys.argv[2])
