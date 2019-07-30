@@ -301,7 +301,7 @@ class ChemicalComposition(dict):
             # print( self , 'peptide only')
             # print( 'Unimod:', unimod, unimod[:end] , )
             # Full addition
-            print( unimodcomposition , '<<<<<<', ChemicalComposition._unimod_parser)
+            # print( unimodcomposition , '<<<<<<', ChemicalComposition._unimod_parser)
             for k, v in unimodcomposition.items():
                 self[ k ] += v
             # storage position related modifications
