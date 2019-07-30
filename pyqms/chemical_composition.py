@@ -546,8 +546,9 @@ class ChemicalComposition(dict):
             if element not in self.isotopic_distributions.keys():
                 match = re.search('(?P<isotope>[0-9]*)(?P<element>[A-Z][a-z]*$)', element)
                 for _emass, _distribution in self.isotopic_distributions[match.group('element')]:
-                    if int(round(mass)) == int(match.group('isotope')):
+                    if int(round(_emass)) == int(match.group('isotope')):
                         emass = _emass
+                        break
             else:
                 emass = self.isotopic_distributions[element][0][0]
             mass += count * emass
