@@ -1,12 +1,31 @@
 language: python
 python:
-  - "3.5"
+- '3.6'
 sudo: false
-
-before_install: pip install codecov
-after_success:  codecov
-
-install:
-  - pip install -r requirements.txt
-
-script: nosetests --with-coverage
+matrix:
+  include:
+  - python: 3.5
+    env: TOXENV=py35
+  - python: 3.6
+    env: TOXENV=py36
+  - python: 3.7
+    env: TOXENV=py37
+    dist: xenial
+  - python: 3.6
+    env: TOXENV=docu
+  - python: 3.6
+    env: TOXENV=coverage
+  - python: 3.6
+    env: TOXENV=example_scripts
+script: tox
+deploy:
+  provider: pypi
+  user: pyratez
+  password:
+    secure: "A0jlXz1gVH59jp9ulMQs7QTSDABkFMH7CQCW/9KRXpVFwWcc/DHAicNs+ixWE6ERbcjUQzv6rFH8B3ufONeYSl1MMAcbufQutibsM6MFwxAcqR2B/wLW+YP7mUFX3upXF3hC58CgVAyLVZwGV/TTcixIoOvacvR4Et867fKtpc3NZKY4f5yh6V6t7l7JJq380At2kRKa0i6503EzlUDH63Csq+xcMjBlGsJIraTpmxQn+DBCBgjDMLHXr5cUphWUbXqBTDrT5XBzeYtpiScovSrvMoh7WPVob46v1M1W4DTxN9SzIKKo91f9fwmD27ed1Db7StdkjcMtq7gyf9DRKjDOp4mESM7cP5bZ23srCRaWZn5TDRM0fwM0SMotDrULAIAondzv7A2UPz+iagNpzk4ay5kunPseUseknuzemsDcZHoAvp0dEaKzO3Adlm6vx02vCtkfRnbVXUO26o23vxzB79sAl7pkIyfJy/A/cUxWDc56DVDbhR5G6lVY1XGmBFndoTXDZyKqGEB+NqKqYkTVtxB+NYCM1ZGuKB7VOWiz7/7CoBbloxB2GDnGUKbKYf5tqWFo0BR2qk5JYKkJhOi3eKZZn9WfG4kP0kaz06t8ASQ4/6htIRhscfKU4ULXaOrzddRfbjDMd1UDF16o0fqWfLxcCF6keaWCoLnTSys="
+  distributions: sdist bdist_wheel bdist_egg
+  on:
+    tags: true
+    all_branches: true
+    skip_existing: true
+    skip_cleanup: true
