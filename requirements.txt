@@ -1,3 +1,6 @@
 pymzml >= 2.0
 openpyxl >= 2.3.2
 nose
+tox
+coverage
+codecov
