@@ -36,9 +36,9 @@ if not hasattr(sys, "version_info") or sys.version_info < (3, 5):
     raise RuntimeError("pyQms requires Python 3.5 or later.")
 
 from . import knowledge_base
+from .unimod_mapper import UnimodMapper
 from .isotopologue_library import IsotopologueLibrary
 from .chemical_composition import ChemicalComposition
-from .unimod_mapper import UnimodMapper
 from .results import Results
 from .results import match
 from .params import params

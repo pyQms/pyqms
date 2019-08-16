@@ -86,12 +86,13 @@ class ChemicalComposition(dict):
 
 
     """
-
+    _unimod_parser = pyqms.UnimodMapper()
+    
     def __init__(
         self, sequence=None, aa_compositions=None, isotopic_distributions=None
     ):
 
-        self._unimod_parser = None
+        # self._unimod_parser = None
         self.composition_of_mod_at_pos = {}
         """dict: chemical composition of unimod modifications at given position
         (if peptide sequence was used as input or using the `use` function)
@@ -245,14 +246,18 @@ class ChemicalComposition(dict):
             if unimod == "":
                 continue
             # print( unimod )
+            unimodcomposition = None
+
             unimod = unimod.strip()
-            if ":" not in unimod:
-                print("This unimod: {0} requires positional information".format(unimod))
-                exit(1)
-            for occ, match in enumerate(pattern.finditer(unimod)):
+
+            if ':' not in unimod:
+                print('This unimod: {0} requires positional information'.format(unimod))
+                sys.exit(1)
+            for occ, match in enumerate( pattern.finditer( unimod )):
                 try:
-                    unimodcomposition = self._unimod_parser.name2composition(
-                        unimod[: match.start()]
+                    unimodcomposition = ChemicalComposition._unimod_parser.name2composition(
+                        unimod[ :match.start() ]
+
                     )
                 except:
                     print(
@@ -261,8 +266,17 @@ class ChemicalComposition(dict):
                         )
                     )
                     sys.exit(1)
-                # if occ >= 1:
+
+
+                if unimodcomposition is None:
+                    print(
+                        'This unimod: {0} could not be mapped and thus no CC could be read'.format(
+                            unimod
+                        )
+                    )
+                    sys.exit(1)
                 position = int(match.group("pos"))
+
                 if position in self.unimod_at_pos.keys():
                     sys.exit(
                         "{0} <<- Two unimods at the same position ? ".format(sequence)
@@ -288,7 +302,7 @@ class ChemicalComposition(dict):
             # print( self , 'peptide only')
             # print( 'Unimod:', unimod, unimod[:end] , )
             # Full addition
-            # print( unimodcomposition , '<<<<<<')
+            # print( unimodcomposition , '<<<<<<', ChemicalComposition._unimod_parser)
             for k, v in unimodcomposition.items():
                 self[k] += v
             # storage position related modifications
@@ -438,7 +452,7 @@ class ChemicalComposition(dict):
 
         Returns:
             str: Hill notation format of self.
-                
+
                 For example::
 
                     'C50H88N10O17'
@@ -483,9 +497,9 @@ class ChemicalComposition(dict):
 
         Returns:
             str: Hill notation format including unimod format rules of self.
-                
+
                 For example::
-                
+
                     'C(50)H(88)N(10)O(17)'
                     'C(50)H(88)14N(1)N(9)(17)'
 
@@ -527,8 +541,15 @@ class ChemicalComposition(dict):
         else:
             cc_mass_dict = cc
         for element, count in cc_mass_dict.items():
-            mass += count * self.isotopic_distributions[element][0][0]
-
+            if element not in self.isotopic_distributions.keys():
+                match = re.search('(?P<isotope>[0-9]*)(?P<element>[A-Z][a-z]*$)', element)
+                for _emass, _distribution in self.isotopic_distributions[match.group('element')]:
+                    if int(round(_emass)) == int(match.group('isotope')):
+                        emass = _emass
+                        break
+            else:
+                emass = self.isotopic_distributions[element][0][0]
+            mass += count * emass
         return mass
 
     def _merge(self, chemical_formula, mode="addition"):
