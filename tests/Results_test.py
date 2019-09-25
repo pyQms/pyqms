@@ -392,6 +392,31 @@ class TestResults( unittest.TestCase ):
 
         return
 
+    def write_result_xlsx_test(self):
+
+        output_file_name = os.path.join(
+            'tests',
+            'data',
+            'test_results.xls'
+        )
+        self.results.lookup['formula to evidences'] = {
+            'C(37)H(59)N(9)O(16)' : {
+                'DDSPDLPK'  : {
+                    'trivial_names' : [ 'BSA' ]
+                },
+            },
+            'C(43)H(75)N(15)O(17)S(2)' : {
+                'CCTESLVNR' : {
+                    'trivial_names' : [ 'BSA' ]
+                }
+            }
+
+        }
+        self.results.write_result_csv(
+            output_file_name = output_file_name
+        )
+        assert os.path.exists(output_file_name) is True
+
     def quant_summary_test(self):
         results_class = pickle.load(
             open(
