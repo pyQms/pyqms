@@ -23,7 +23,7 @@ import sys
 
 
 def main(result_pkl=None):
-    '''
+    """
 
     usage:
         ./write_raw_result_csv.py <Path2ResultPkl>
@@ -48,22 +48,16 @@ def main(result_pkl=None):
         * mScore            : score of the isotopologue match
         * Filename          : filename of spectrum input files
 
-    '''
-    results_class = pickle.load(
-        open(
-            result_pkl,
-            'rb'
-        )
-    )
+    """
+    results_class = pickle.load(open(result_pkl, "rb"))
 
     results_class.write_result_csv(
-        output_file_name= '{0}_raw_results.csv'.format(result_pkl)
+        output_file_name="{0}_raw_results.csv".format(result_pkl)
     )
 
-if __name__ == '__main__':
-    if len( sys.argv ) < 2:
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
         print(main.__doc__)
     else:
-        main(
-            result_pkl = sys.argv[1],
-        )
+        main(result_pkl=sys.argv[1])

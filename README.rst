@@ -4,7 +4,7 @@ Introduction
 *pyQms enables universal and accurate quantification of mass spectrometry data*
 
 
-|doc-status| |build-status-travis| |build-status-appveyor| |pypi|
+|doc-status| |build-status-travis| |build-status-appveyor| |pypi| |black|
 
 .. |doc-status| image:: https://readthedocs.org/projects/pyqms/badge/?version=latest
    :target: http://pyqms.readthedocs.io/en/latest/?badge=latest
@@ -20,6 +20,11 @@ Introduction
 
 .. |pypi| image:: https://img.shields.io/pypi/v/pyqms.svg
    :target: https://pypi.org/project/pyqms/
+
+.. |black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+   :target: https://github.com/psf/black
+   :alt: As long it is black
+
 
 
 Summary
@@ -44,7 +49,7 @@ Quantitative mass spectrometry (MS) is a key technique in many research areas (Y
 
 Link to manuscript.
 
-http://www.mcponline.org/content/early/2017/07/20/mcp.M117.068007.abstract 
+http://www.mcponline.org/content/early/2017/07/20/mcp.M117.068007.abstract
 
 
 pyQms module
@@ -89,7 +94,7 @@ Please cite us when using pyQms in your work.
 
 The original publication can be found here:
     Leufken, J., Niehues, A., Hippler, M., Sarin, L. P., Hippler, M., Leidel, S. A., and Fufezan, C. (2017) pyQms enables universal and accurate quantification of mass spectrometry data. Mol. Cell. Proteomics 16, 1736–1745
-    
+
 
 Full article
 ============
@@ -101,7 +106,7 @@ Early access article version
 ============================
 
 
-http://www.mcponline.org/content/early/2017/07/20/mcp.M117.068007.abstract 
+http://www.mcponline.org/content/early/2017/07/20/mcp.M117.068007.abstract
 
 DOI
 ===
@@ -135,16 +140,16 @@ Install pyQms::
 
 .. note:
 
-    Consider to use a Python virtual environment for easy installation and use. 
+    Consider to use a Python virtual environment for easy installation and use.
     Further, usage of python3.4+ is recommended.
 
 
 pyQms can be also be installed via pip::
-    
+
     pip install pyqms
 
 .. note:
-    
+
     For obtaining the latest version of pyQms please use the github repo.
 
 
@@ -187,14 +192,14 @@ This software is under MIT license, please refer to LICENSE for full license.
 
 Publications and project using pyQms for quantification
 *******************************************************
-        
+
  | - Hohner, R., Barth, J., Magneschi, L., Jaeger, D., Niehues, A., Bald, T., Grossman, A., Fufezan, C., and Hippler, M. (2013) The Metabolic Status Drives Acclimation of Iron Deficiency Responses in Chlamydomonas reinhardtii as Revealed by Proteomics Based Hierarchical Clustering and Reverse Genetics. **Mol. Cell. Proteomics** 12, 2774–2790 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/23820728>`_
- | - Barth, J., Bergner, S. V., Jaeger, D., Niehues, A., Schulze, S., Scholz, M., and Fufezan, C. (2014) The Interplay of Light and Oxygen in the Reactive Oxygen Stress Response of Chlamydomonas reinhardtii Dissected by Quantitative Mass Spectrometry. **Mol. Cell. Proteomics** 13, 969–989 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/24482124>`_ 
- | - Kukuczka, B., Magneschi, L., Petroutsos, D., Steinbeck, J., Bald, T., Powikrowska, M., Fufezan, C., Finazzi, G., and Hippler, M. (2014) Proton Gradient Regulation5-Like1-Mediated Cyclic Electron Flow Is Crucial for Acclimation to Anoxia and Complementary to Nonphotochemical Quenching in Stress Adaptation. **Plant Physiol.** 165, 1604–1617 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/24948831>`_ 
- | - Alings, F., Sarin, L. P., Fufezan, C., Drexler, H. C. A., and Leidel, S. A. (2015) An evolutionary approach uncovers a diverse response of tRNA 2-thiolation to elevated temperatures in yeast. **RNA** 21, 202–212 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/25505025>`_ 
- | - Bergner, S. V., Scholz, M., Trompelt, K., Barth, J., Gäbelein, P., Steinbeck, J., Xue, H., Clowez, S., Fucile, G., Goldschmidt-Clermont, M., Fufezan, C., and Hippler, M. (2015) STATE TRANSITION7-Dependent Phosphorylation Is Modulated by Changing Environmental Conditions, and Its Absence Triggers Remodeling of Photosynthetic Protein Complexes. **Plant Physiol.** 168, 615–634 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/25858915>`_ 
- | - Hochmal, A. K., Zinzius, K., Charoenwattanasatien, R., Gäbelein, P., Mutoh, R., Tanaka, H., Schulze, S., Liu, G., Scholz, M., Nordhues, A., Offenborn, J. N., Petroutsos, D., Finazzi, G., Fufezan, C., Huang, K., Kurisu, G., and Hippler, M. (2016) Calredoxin represents a novel type of calcium-dependent sensor-responder connected to redox regulation in the chloroplast. **Nat. Commun.** 7, 11847 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/27297041>`_ 
- | - Pfannmüller, A., Leufken, J., Studt, L., Michielse, C. B., Sieber, C. M. K., Güldener, U., Hawat, S., Hippler, M., Fufezan, C., and Tudzynski, B. (2017) Comparative transcriptome and proteome analysis reveals a global impact of the nitrogen regulators AreA and AreB on secondary metabolism in Fusarium fujikuroi. PLoS One in press, 1–27 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/28441411>`_ 
+ | - Barth, J., Bergner, S. V., Jaeger, D., Niehues, A., Schulze, S., Scholz, M., and Fufezan, C. (2014) The Interplay of Light and Oxygen in the Reactive Oxygen Stress Response of Chlamydomonas reinhardtii Dissected by Quantitative Mass Spectrometry. **Mol. Cell. Proteomics** 13, 969–989 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/24482124>`_
+ | - Kukuczka, B., Magneschi, L., Petroutsos, D., Steinbeck, J., Bald, T., Powikrowska, M., Fufezan, C., Finazzi, G., and Hippler, M. (2014) Proton Gradient Regulation5-Like1-Mediated Cyclic Electron Flow Is Crucial for Acclimation to Anoxia and Complementary to Nonphotochemical Quenching in Stress Adaptation. **Plant Physiol.** 165, 1604–1617 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/24948831>`_
+ | - Alings, F., Sarin, L. P., Fufezan, C., Drexler, H. C. A., and Leidel, S. A. (2015) An evolutionary approach uncovers a diverse response of tRNA 2-thiolation to elevated temperatures in yeast. **RNA** 21, 202–212 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/25505025>`_
+ | - Bergner, S. V., Scholz, M., Trompelt, K., Barth, J., Gäbelein, P., Steinbeck, J., Xue, H., Clowez, S., Fucile, G., Goldschmidt-Clermont, M., Fufezan, C., and Hippler, M. (2015) STATE TRANSITION7-Dependent Phosphorylation Is Modulated by Changing Environmental Conditions, and Its Absence Triggers Remodeling of Photosynthetic Protein Complexes. **Plant Physiol.** 168, 615–634 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/25858915>`_
+ | - Hochmal, A. K., Zinzius, K., Charoenwattanasatien, R., Gäbelein, P., Mutoh, R., Tanaka, H., Schulze, S., Liu, G., Scholz, M., Nordhues, A., Offenborn, J. N., Petroutsos, D., Finazzi, G., Fufezan, C., Huang, K., Kurisu, G., and Hippler, M. (2016) Calredoxin represents a novel type of calcium-dependent sensor-responder connected to redox regulation in the chloroplast. **Nat. Commun.** 7, 11847 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/27297041>`_
+ | - Pfannmüller, A., Leufken, J., Studt, L., Michielse, C. B., Sieber, C. M. K., Güldener, U., Hawat, S., Hippler, M., Fufezan, C., and Tudzynski, B. (2017) Comparative transcriptome and proteome analysis reveals a global impact of the nitrogen regulators AreA and AreB on secondary metabolism in Fusarium fujikuroi. PLoS One in press, 1–27 `Pubmed <https://www.ncbi.nlm.nih.gov/pubmed/28441411>`_
 
 Contact information
 *******************

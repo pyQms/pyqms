@@ -23,15 +23,13 @@ from __future__ import absolute_import
 import sys
 import os
 from pkg_resources import parse_version
+
 # version_info  = (0, 5, 0, 'beta')
 # version = '0.5.0-beta'
 
-__version_str__ = open(
-    os.path.join(
-        os.path.dirname(__file__),
-        'version.txt'
-    )
-).readline().strip()
+__version_str__ = (
+    open(os.path.join(os.path.dirname(__file__), "version.txt")).readline().strip()
+)
 __version__ = parse_version(__version_str__)
 
 if not hasattr(sys, "version_info") or sys.version_info < (3, 5):
@@ -44,7 +42,5 @@ from .chemical_composition import ChemicalComposition
 from .results import Results
 from .results import match
 from .params import params
-
-# cco = ChemicalComposition()
 
 del sys
