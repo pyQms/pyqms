@@ -19,7 +19,7 @@ and developing pyQms.
 Matching a peak list
 ====================
 
-Let's start with a most simple example: Mathing a single peptide on a predefined
+Let's start with a most simple example: Matching a single peptide on a predefined
 peak list. Start a Python (3.4+) console and start quantifying in 4 steps:
 
 First import pyQms: ::
