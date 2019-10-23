@@ -479,7 +479,7 @@ def parse_evidence(
 
 def calc_amount_function(obj_for_calc_amount):
     """
-    Fucntion to calculate actual molecule amounts. Three types of amounts are
+    Calculates actual molecule amounts. Three types of amounts are
     calculated for a matched isotope chromatogram (MIC), maximum intensity,
     summed up intensity and area under curve.
     Additionally the score and the retention time at the maximum
