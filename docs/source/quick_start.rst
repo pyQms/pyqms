@@ -26,7 +26,7 @@ First import pyQms: ::
 
     import pyqms
 
-Second, initialize a isotopologue library (:py:class:`pyqms.IsotopologueLibrary`) 
+Second, initialize an isotopologue library (:py:class:`pyqms.IsotopologueLibrary`) 
 using 'DDSPDLPK' as the example peptide (from BSA example file) and the charge 
 state 2: ::
     
@@ -56,7 +56,7 @@ with the next section to learn how to access and process the results.
 .. note::
 
     The keyword arguments `file_name`, `spec_id` and `spec_rt` are hardcoded in
-    this example case. In the advanced examples these information (as well as 
+    this example case. In the advanced examples this information (as well as 
     the peak list) are parsed from the mzML file directly.
 
 
