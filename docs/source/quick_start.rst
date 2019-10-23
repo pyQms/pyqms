@@ -175,7 +175,7 @@ quality of the `match`.
     Please note, that measured m/z entry in `peaks` can be `None`, if this peak
     was not found in the input data.
 
-We have now seen, how peptides/molecules can be quantified and how the results
+We have now seen how peptides/molecules can be quantified and how the results
 can be accessed.
 
 .. note::
