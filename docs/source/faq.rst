@@ -107,7 +107,7 @@ sensitivity.
 Q: How can i adjust pyQms parameters to my mass spectrometer?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A: Genereally, now extensive adjustements are required. It is normally sufficient
+A: Generally, no extensive adjustements are required. It is normally sufficient
 to use the default parameters. For further specifications please refer to the 
 :ref:`parameter section` section. Most importantly the `REL_MZ_RANGE` has to
 be set according to the mass spectrometer's accuracy.
@@ -117,7 +117,7 @@ be set according to the mass spectrometer's accuracy.
 Q: Where can I find my final peptide and protein abundances of my LC-MS/MS runs?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A: In pyQms, we offer, on purpose however, no direct estimation of peptide or
+A: In pyQms, by design we offer no direct estimation of peptide or
 even protein abundances. We believe, that the user should use the raw quantification
 data provided by pyQms and determine the abundance with own functions. However, 
 pyQms offers adaptors to read in peptide identification results and use this
