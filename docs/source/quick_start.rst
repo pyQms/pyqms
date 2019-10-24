@@ -56,8 +56,8 @@ with the next section to learn how to access and process the results.
 .. note::
 
     The keyword arguments `file_name`, `spec_id` and `spec_rt` are hardcoded in
-    this example case. In the advanced examples this information (as well as 
-    the peak list) are parsed from the mzML file directly.
+    this example case. In the advanced examples, this information (as well as 
+    the peak list) is parsed from the mzML file directly.
 
 
 .. _access results:
