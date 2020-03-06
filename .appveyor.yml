@@ -6,13 +6,6 @@ environment:
   # TOX_ENV: "pywin"
 
   matrix:
-    # - PYTHON: "C:\\Python35-x64"
-    #   PYTHON_VERSION: '3.5'
-    #   PYTHON_ARCH: '64'
-    #   TOXENV: "py35"
-    #   # PYTHON_HOME: C:\Python35
-    #   # TOXPYTHON: C:\Python35-x64\python.exe
-
     # - PYTHON: "C:\\Python36-x64"
     #   PYTHON_VERSION: '3.6'
     #   PYTHON_ARCH: '64'
