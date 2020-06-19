@@ -722,7 +722,7 @@ class Results(dict):
         color = [0, 0, 0]  # copy becauuuuse  ?
         colorGradient = [
             (score_threshold, rgb_tuple)
-            for (score_threshold, rgb_tuple) in sorted(pyqms.params["COLORS"].items())
+            for (score_threshold, rgb_tuple) in sorted(self.params["COLORS"].items())
         ]
         if score is not None:
             idx = bisect.bisect(colorGradient, (score,))
