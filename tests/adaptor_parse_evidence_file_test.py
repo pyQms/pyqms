@@ -177,7 +177,12 @@ def adaptor_check(test_dict):
     # print(molecule_list)
     assert len(molecule_list) == len(test_dict["output"]["molecules"])
     assert sorted(molecule_list) == sorted(test_dict["output"]["molecules"])
-
+    print(evidence_lookup)
+    for formula in evidence_lookup.keys():
+        for molecule in evidence_lookup[formula].keys():
+            if len(evidence_lookup[formula][molecule]['trivial_names']) !=0:
+                for ev_dict in evidence_lookup[formula][molecule]['evidences']:
+                    assert 'trivial_name' in ev_dict.keys()
 
 if __name__ == "__main__":
     for test_dict in TESTS:
