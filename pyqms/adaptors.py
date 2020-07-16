@@ -371,7 +371,6 @@ def parse_evidence(
 
                 if molecule not in tmp_evidences.keys():
                     tmp_evidences[molecule] = {"evidences": [], "trivial_names": set()}
-                tmp_evidences[molecule]["evidences"].append(dict_2_append)
                 for trivial_name_key in [
                     "proteinacc_start_stop_pre_post_;",  # old ursgal style
                     "trivial_name",  # self defined name
@@ -382,6 +381,11 @@ def parse_evidence(
                     if additional_name != "":
                         # use set to remove double values
                         tmp_evidences[molecule]["trivial_names"].add(additional_name)
+                        if 'trivial_name' not in dict_2_append.keys():
+                            dict_2_append['trivial_name'] = additional_name
+                        else:
+                            dict_2_append['trivial_name'] += ';{0}'.format(additional_name)                
+                tmp_evidences[molecule]["evidences"].append(dict_2_append)
 
     mod_pattern = re.compile(r""":(?P<pos>[0-9]*$)""")
 
