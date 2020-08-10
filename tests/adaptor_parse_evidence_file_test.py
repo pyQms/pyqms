@@ -183,6 +183,15 @@ def adaptor_check(test_dict):
             if len(evidence_lookup[formula][molecule]['trivial_names']) !=0:
                 for ev_dict in evidence_lookup[formula][molecule]['evidences']:
                     assert 'trivial_name' in ev_dict.keys()
+                    trivial_name = ev_dict['trivial_name']
+                    if ';' in trivial_name:
+                        trivial_name_list = trivial_name.split(';')
+                    else:
+                        trivial_name_list = [ trivial_name ]
+                    for tmp_trivial_name in trivial_name_list:
+                        assert tmp_trivial_name in evidence_lookup[formula][molecule]['trivial_names']
+                    assert sorted(evidence_lookup[formula][molecule]['trivial_names']) == sorted(trivial_name_list)
+                    # for trivial_name in ev_dict['trivial_name']
 
 if __name__ == "__main__":
     for test_dict in TESTS:
