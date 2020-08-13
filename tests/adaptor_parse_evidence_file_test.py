@@ -174,10 +174,8 @@ def adaptor_check(test_dict):
     formatted_fixed_labels, evidence_lookup, molecule_list = parse_evidence(
         **test_dict["input"]
     )
-    # print(molecule_list)
     assert len(molecule_list) == len(test_dict["output"]["molecules"])
     assert sorted(molecule_list) == sorted(test_dict["output"]["molecules"])
-    print(evidence_lookup)
     for formula in evidence_lookup.keys():
         for molecule in evidence_lookup[formula].keys():
             if len(evidence_lookup[formula][molecule]['trivial_names']) !=0:
@@ -191,7 +189,6 @@ def adaptor_check(test_dict):
                     for tmp_trivial_name in trivial_name_list:
                         assert tmp_trivial_name in evidence_lookup[formula][molecule]['trivial_names']
                     assert sorted(evidence_lookup[formula][molecule]['trivial_names']) == sorted(trivial_name_list)
-                    # for trivial_name in ev_dict['trivial_name']
 
 if __name__ == "__main__":
     for test_dict in TESTS:
