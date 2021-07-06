@@ -33,12 +33,29 @@ import pyqms.adaptors
 import pprint
 import copy
 from collections import defaultdict as ddict
+import pandas as pd
 
 # import numpy
 
 m_key = namedtuple("m_key", ["file_name", "formula", "charge", "label_percentiles"])
 
 match = namedtuple("match", ["spec_id", "rt", "score", "scaling_factor", "peaks"])
+
+combined = namedtuple(
+    "combined",
+    [
+        "file_name",
+        "formula",
+        "charge",
+        "label_percentiles",
+        "spec_id",
+        "rt",
+        "score",
+        "scaling_factor",
+        "peaks",
+    ],
+)
+
 """
 file_name, molecule, charge, label_percentile_tuple = key
 """
@@ -120,6 +137,7 @@ class Results(dict):
         }
         self._match_class = match
         self._m_key_class = m_key
+        self._combined_class = combined
         self._silac_pairs = None
         return
 
@@ -287,6 +305,38 @@ class Results(dict):
                 if score_threshold is not None and entry.score < score_threshold:
                     continue
                 yield key, i, entry
+
+    def format_all_results(self,):
+        """
+        Format all results to a pandas DataFrame.
+
+        Args:
+
+        returns:
+            results_df (Dataframe) : containing all results with their m_key data
+
+        Structure
+
+            columns
+                * file_name
+                * formula
+                * charge
+                * label_percentiles
+                * spec_id
+                * rt
+                * score
+                * scaling_factor
+                * peaks
+
+        """
+        results = []
+        for key in self.keys():
+            for ion_match in self[key]["data"]:
+                extended = self._combined_class(*key, *ion_match)
+                results.append(extended)
+
+        results_df = pd.DataFrame(results)
+        return results_df
 
     def _translate_molecules_to_formulas(self, molecules, formulas):
         """"""
