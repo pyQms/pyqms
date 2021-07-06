@@ -7,6 +7,7 @@ import os
 import pickle
 import csv
 from pyqms.adaptors import read_xlsx_file as read_xlsx_file
+import pandas as pd
 
 
 class TestResults(unittest.TestCase):
@@ -150,6 +151,75 @@ class TestResults(unittest.TestCase):
             # print(self.results)
             # print(self.results.lookup)
             assert n == 0
+
+    def extract_format_results_test(self):
+        """
+        format_results(
+            self,
+            molecules         = None,
+            charges           = None,
+            file_names        = None,
+            label_percentiles = None,
+            formulas          = None,
+            score_threshold   = None
+        )
+
+        keys    = [
+            ('BSA1.mzML', 'C(37)H(59)N(9)O(16)', 2, (('N', '0.000'),) ),
+            ('BSA2.mzML', 'C(43)H(75)N(15)O(17)S(2)', 3, (('N', '0.010'),) ),
+        ]
+        values  = [
+            ( 1337, 13.37, 1, 100 , [(443.7112649, 100, 1, 443.7112649, 100 )] ),
+            ( 1338, 13.38, 0.9, 100 , [(443.7112649, 100, 1, 443.7112649, 1)] ),
+            ( 1337, 13.37, 1, 10  , [(569.7526156, 10, 0.9, 569.7526156, 10 )] )
+        ]
+
+        """
+        assert len(self.results.keys()) != 0
+        TESTS = [
+            {
+                "output": [
+                    {
+                        "file_name": "BSA1.mzML",
+                        "spec_id": 1337,
+                        "formula": "C(37)H(59)N(9)O(16)",
+                        "scaling_factor": 100,
+                        "score": 1,
+                        "charge": 2,
+                    },
+                    {
+                        "file_name": "BSA1.mzML",
+                        "spec_id": 1338,
+                        "formula": "C(37)H(59)N(9)O(16)",
+                        "scaling_factor": 100,
+                        "score": 0.9,
+                        "charge": 2,
+                    },
+                    {
+                        "file_name": "BSA2.mzML",
+                        "spec_id": 1337,
+                        "formula": "C(43)H(75)N(15)O(17)S(2)",
+                        "scaling_factor": 10,
+                        "score": 1,
+                        "charge": 3,
+                    },
+                ]
+            }
+        ]
+        for test_dict in TESTS:
+            values = self.results.format_all_results()
+
+            assert isinstance(values, pd.DataFrame)
+
+            for out_data in test_dict["output"]:
+                result = values.loc[
+                    (values["file_name"] == out_data["file_name"])
+                    & (values["spec_id"] == out_data["spec_id"])
+                ]
+                assert (result["formula"] == out_data["formula"]).all()
+                assert (result["scaling_factor"] == out_data["scaling_factor"]).all()
+                assert (result["score"] == out_data["score"]).all()
+                assert (result["charge"] == out_data["charge"]).all()
 
     def translate_test(self):
         """
