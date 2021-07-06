@@ -36,6 +36,8 @@ example_scripts/htmlcov
 tests/htmlcov
 docs/build/doctrees/*
 docs/build/*
+pyenv/
+.idea/
 # Compiled source #
 ###################
 *.com
