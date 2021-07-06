@@ -4,3 +4,4 @@ nose
 tox
 coverage
 codecov
+pandas
