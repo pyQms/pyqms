@@ -86,13 +86,13 @@ class ChemicalComposition(dict):
 
 
     """
-    _unimod_parser = pyqms.UnimodMapper()
-    
+
     def __init__(
-        self, sequence=None, aa_compositions=None, isotopic_distributions=None
+        self, sequence=None, aa_compositions=None, isotopic_distributions=None, unimod_file="unimod.xml"
     ):
 
         # self._unimod_parser = None
+        self._unimod_parser = pyqms.UnimodMapper(filename=unimod_file)
         self.composition_of_mod_at_pos = {}
         """dict: chemical composition of unimod modifications at given position
         (if peptide sequence was used as input or using the `use` function)
@@ -141,6 +141,7 @@ class ChemicalComposition(dict):
             self.isotopic_distributions = isotopic_distributions
         if sequence is not None:
             self.use(sequence)
+
 
     def __add__(self, other_cc):
         """Experimental"""
@@ -255,7 +256,7 @@ class ChemicalComposition(dict):
                 sys.exit(1)
             for occ, match in enumerate( pattern.finditer( unimod )):
                 try:
-                    unimodcomposition = ChemicalComposition._unimod_parser.name2composition(
+                    unimodcomposition = self._unimod_parser.name2composition(
                         unimod[ :match.start() ]
 
                     )

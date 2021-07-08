@@ -41,14 +41,17 @@ class TestChemicalComposition(unittest.TestCase):
         cc = pyqms.ChemicalComposition("+H2O")
         self.assertAlmostEqual(cc._mass(), 18.0105646844)
 
-
     def test__mass_with_cc_even_though_you_should_not_use_it(self):
         cc = pyqms.ChemicalComposition("+H2O")
         self.assertAlmostEqual(cc._mass(cc=cc), 18.0105646844)
 
     def test__mass_with_heavy_isotopes_TMT6Plex_example(self):
         cc = pyqms.ChemicalComposition('#TMT6plex:0')
-        self.assertAlmostEqual(cc._mass(cc=cc) , 229.162932, 6)
+        self.assertAlmostEqual(cc._mass(cc=cc), 229.162932, 6)
+
+    def test__mass_with_heavy_isotopes_TMTpro_usermod_example(self):
+        cc = pyqms.ChemicalComposition('#TMTpro:0', unimod_file="usermod.xml")
+        self.assertAlmostEqual(cc._mass(cc=cc), 304.207145, 6)
 
     def fail_test(self):
         cc = pyqms.ChemicalComposition()

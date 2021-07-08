@@ -40,11 +40,11 @@ class UnimodMapper(object):
     
     """
 
-    def __init__(self):
+    def __init__(self, filename="unimod.xml"):
         self._data_list = None
         self._mapper = None
 
-        self.unimod_xml_name = "unimod.xml"
+        self.unimod_xml_name = filename
         # self.data_list = self._parseXML()
         # self.mapper    = self._initialize_mapper()
 
@@ -89,11 +89,18 @@ class UnimodMapper(object):
                 codecs.open(xmlFile, "r", encoding="utf8"), events=(b"start", b"end")
             )
             collect_element = False
+            usermod_id = 10000
             for event, element in unimodXML:
                 if event == b"start":
                     if element.tag.endswith("}mod"):
+                        if "record_id" in element.attrib:
+                            mod_id = element.attrib["record_id"]
+                        else:
+                            mod_id = f"{usermod_id}"
+                            usermod_id += 1
+
                         tmp = {
-                            "unimodID": element.attrib["record_id"],
+                            "unimodID": mod_id,
                             "unimodname": element.attrib["title"],
                             "element": {},
                             "specificity_sites": [],

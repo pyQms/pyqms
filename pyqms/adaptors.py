@@ -201,6 +201,7 @@ def parse_evidence(
     molecules=None,
     evidence_score_field=None,
     return_raw_csv_data=False,
+    unimod_file="unimod.xml",
 ):
     """
     Reads in the evidence file and returns the final formatted fixed labels,
@@ -255,7 +256,7 @@ def parse_evidence(
     if evidence_score_field is None:
         evidence_score_field = "PEP"  #  default
 
-    unimod_parser = pyqms.UnimodMapper()
+    unimod_parser = pyqms.UnimodMapper(filename=unimod_file)
 
     fixed_mod_lookup = {}
     amino_acid_2_fixed_mod_name = ddict(list)
