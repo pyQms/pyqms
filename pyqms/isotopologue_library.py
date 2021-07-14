@@ -351,6 +351,7 @@ class IsotopologueLibrary(dict):
             # hill_notation to avoid any mismatches
             if formula not in self.keys():
                 self[formula] = {"env": {}, "cc": chemical_composition}
+                # self[formula] = {"env": {}, "cc": ChemicalComposition}
             for percentile_tuple in self.labled_percentiles:
                 self[formula]["env"][percentile_tuple] = {}
 
@@ -978,7 +979,7 @@ class IsotopologueLibrary(dict):
         """
         default_aa_compositions = pyqms.knowledge_base.aa_compositions
         for aa, composition in default_aa_compositions.items():
-            self.aa_compositions[aa] = pyqms.ChemicalComposition("+" + composition)
+            self.aa_compositions[aa] = pyqms.ChemicalComposition(formula="+" + composition)
 
         default_isotopic_distributions = pyqms.knowledge_base.isotopic_distributions
         for element, distribution in default_isotopic_distributions.items():
