@@ -27,7 +27,7 @@ setup(
     long_description = "pyQms enables universal and accurate quantification of mass spectrometry data",
     author           = 'Johannes Leufken, Anna Niehues, L. Peter Sarin, Florian Wessels, Michael Hippler, Sebastian A. Leidel and Christian Fufezan',
     author_email     = 'christian@fufezan.net',
-    url              = 'http://pyqms.github.io',
+    url              = 'https://github.com/pyQms/pyqms',
     license          = 'The MIT License (MIT)',
     platforms        = 'any that supports python 3.4',
     classifiers      = [
