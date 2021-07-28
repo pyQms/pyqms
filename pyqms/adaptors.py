@@ -349,7 +349,7 @@ def parse_evidence(
                             modification_fieldname
                         ].split(","):
                             pos, unimod_id = pos_and_unimod_id.split("-")
-                            unimod_name = unimod_parser.id2name(unimod_id.split(":")[1])
+                            unimod_name = unimod_parser.id2first_name(unimod_id.split(":")[1])
                             formatted_mods.append("{0}:{1}".format(unimod_name, pos))
                         formatted_mods = ";".join(formatted_mods)
 
