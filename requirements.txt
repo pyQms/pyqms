@@ -5,5 +5,4 @@ tox
 coverage
 codecov
 pandas
-unimod_mapper==0.4.2.dev1
-chemical_composition==0.1.2.dev3
+chemical_composition>=1.0.0
