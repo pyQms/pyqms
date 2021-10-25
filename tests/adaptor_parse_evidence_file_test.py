@@ -28,7 +28,7 @@ from pyqms.adaptors import parse_evidence as parse_evidence
 import os
 import pyqms
 
-tmp_cc_factory = pyqms.chemical_composition.ChemicalComposition()
+tmp_cc_factory = pyqms.ChemicalComposition()
 
 tmp_cc_factory.add_chemical_formula("C2O1H3N1")
 TESTS = [

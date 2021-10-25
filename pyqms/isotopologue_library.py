@@ -218,6 +218,8 @@ class IsotopologueLibrary(dict):
         trivial_names=None,
         verbose=True,
         evidences=None,
+        unimod_files=None,
+        add_default_files=True,
     ):
         assert molecules is not None, "require list of molecules"
         assert charges is not None, "require list of charges"
@@ -310,12 +312,24 @@ class IsotopologueLibrary(dict):
         cc_factory = pyqms.ChemicalComposition(
             aa_compositions=self.aa_compositions,
             isotopic_distributions=self.isotopic_distributions,
+            unimod_file_list=unimod_files,
+            add_default_files=add_default_files
         )
         # ----------------------------------------------------------------
         #       BUILDING ISOTOPOLGUES ....
         # ----------------------------------------------------------------
         for molecule in list(set(molecules)):
-            cc_factory.use(molecule)
+            if "#" in molecule:
+                # molecule is peptide with unimod modification format
+                bits = molecule.split("#")
+                if len(bits) > 2:
+                    raise ValueError(f"{molecule} contains too many '#' {len(bits)} only one allowed")
+                sequence = bits[0]
+                modification = bits[1]
+            else:
+                sequence = molecule
+                modification = None
+            cc_factory.use(sequence=sequence, modifications=modification)
             # mass = cc_factory.mass()
             # if mass / max(self.charges) > self.params['UPPER_MZ_LIMIT']:
             #     continue
@@ -351,6 +365,7 @@ class IsotopologueLibrary(dict):
             # hill_notation to avoid any mismatches
             if formula not in self.keys():
                 self[formula] = {"env": {}, "cc": chemical_composition}
+                # self[formula] = {"env": {}, "cc": ChemicalComposition}
             for percentile_tuple in self.labled_percentiles:
                 self[formula]["env"][percentile_tuple] = {}
 
@@ -978,7 +993,10 @@ class IsotopologueLibrary(dict):
         """
         default_aa_compositions = pyqms.knowledge_base.aa_compositions
         for aa, composition in default_aa_compositions.items():
-            self.aa_compositions[aa] = pyqms.ChemicalComposition("+" + composition)
+            self.aa_compositions[aa] = pyqms.ChemicalComposition(formula="+" + composition)
+
+        for user_aa, composition in self.params.get("AMINO_ACIDS", {}).items():
+            self.aa_compositions[user_aa] = pyqms.ChemicalComposition(formula="+" + composition)
 
         default_isotopic_distributions = pyqms.knowledge_base.isotopic_distributions
         for element, distribution in default_isotopic_distributions.items():

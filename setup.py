@@ -23,7 +23,7 @@ setup(
             'kb/ext/unimod.xml',
         ]
     },
-    install_requires         = ['pymzml', 'openpyxl'],
+    install_requires         = ['pymzml', 'openpyxl', 'chemical_composition'],
     long_description = "pyQms enables universal and accurate quantification of mass spectrometry data",
     author           = 'Johannes Leufken, Anna Niehues, L. Peter Sarin, Florian Wessels, Michael Hippler, Sebastian A. Leidel and Christian Fufezan',
     author_email     = 'christian@fufezan.net',

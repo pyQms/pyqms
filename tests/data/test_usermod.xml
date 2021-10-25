@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<umod:unimod xmlns:umod="http://www.unimod.org/xmlns/schema/unimod_2" majorVersion="2" minorVersion="0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.unimod.org/xmlns/schema/unimod_2 unimod_2.xsd">
+
+  <umod:elements>
+    <umod:elem avge_mass="1.00794" full_name="Hydrogen" mono_mass="1.007825035" title="H"/>
+    <umod:elem avge_mass="2.014101779" full_name="Deuterium" mono_mass="2.014101779" title="2H"/>
+    <umod:elem avge_mass="6.941" full_name="Lithium" mono_mass="7.016003" title="Li"/>
+    <umod:elem avge_mass="12.0107" full_name="Carbon" mono_mass="12" title="C"/>
+    <umod:elem avge_mass="13.00335483" full_name="Carbon13" mono_mass="13.00335483" title="13C"/>
+    <umod:elem avge_mass="14.0067" full_name="Nitrogen" mono_mass="14.003074" title="N"/>
+    <umod:elem avge_mass="15.00010897" full_name="Nitrogen15" mono_mass="15.00010897" title="15N"/>
+    <umod:elem avge_mass="15.9994" full_name="Oxygen" mono_mass="15.99491463" title="O"/>
+    <umod:elem avge_mass="17.9991603" full_name="Oxygen18" mono_mass="17.9991603" title="18O"/>
+    <umod:elem avge_mass="18.9984032" full_name="Fluorine" mono_mass="18.99840322" title="F"/>
+    <umod:elem avge_mass="22.98977" full_name="Sodium" mono_mass="22.9897677" title="Na"/>
+    <umod:elem avge_mass="30.973761" full_name="Phosphorous" mono_mass="30.973762" title="P"/>
+    <umod:elem avge_mass="32.065" full_name="Sulfur" mono_mass="31.9720707" title="S"/>
+    <umod:elem avge_mass="35.453" full_name="Chlorine" mono_mass="34.96885272" title="Cl"/>
+    <umod:elem avge_mass="39.0983" full_name="Potassium" mono_mass="38.9637074" title="K"/>
+    <umod:elem avge_mass="40.078" full_name="Calcium" mono_mass="39.9625906" title="Ca"/>
+    <umod:elem avge_mass="55.845" full_name="Iron" mono_mass="55.9349393" title="Fe"/>
+    <umod:elem avge_mass="58.6934" full_name="Nickel" mono_mass="57.9353462" title="Ni"/>
+    <umod:elem avge_mass="65.409" full_name="Zinc" mono_mass="63.9291448" title="Zn"/>
+    <umod:elem avge_mass="78.96" full_name="Selenium" mono_mass="79.9165196" title="Se"/>
+    <umod:elem avge_mass="79.904" full_name="Bromine" mono_mass="78.9183361" title="Br"/>
+    <umod:elem avge_mass="107.8682" full_name="Silver" mono_mass="106.905092" title="Ag"/>
+    <umod:elem avge_mass="200.59" full_name="Mercury" mono_mass="201.970617" title="Hg"/>
+    <umod:elem avge_mass="196.96655" full_name="Gold" mono_mass="196.966543" title="Au"/>
+    <umod:elem avge_mass="126.90447" full_name="Iodine" mono_mass="126.904473" title="I"/>
+    <umod:elem avge_mass="95.94" full_name="Molybdenum" mono_mass="97.9054073" title="Mo"/>
+    <umod:elem avge_mass="63.546" full_name="Copper" mono_mass="62.9295989" title="Cu"/>
+    <umod:elem avge_mass="0.000549" full_name="electron" mono_mass="0.000549" title="e"/>
+    <umod:elem avge_mass="10.811" full_name="Boron" mono_mass="11.0093055" title="B"/>
+    <umod:elem avge_mass="74.9215942" full_name="Arsenic" mono_mass="74.9215942" title="As"/>
+    <umod:elem avge_mass="112.411" full_name="Cadmium" mono_mass="113.903357" title="Cd"/>
+    <umod:elem avge_mass="51.9961" full_name="Chromium" mono_mass="51.9405098" title="Cr"/>
+    <umod:elem avge_mass="58.933195" full_name="Cobalt" mono_mass="58.9331976" title="Co"/>
+    <umod:elem avge_mass="54.938045" full_name="Manganese" mono_mass="54.9380471" title="Mn"/>
+    <umod:elem avge_mass="24.305" full_name="Magnesium" mono_mass="23.9850423" title="Mg"/>
+    <umod:elem avge_mass="106.42" full_name="Palladium" mono_mass="105.903478" title="Pd"/>
+  </umod:elements>
+
+  <umod:modifications>
+    <umod:mod approved="true" date_time_modified="2015-06-10 17-00-40" date_time_posted="2015-06-10 17-00-04" full_name="SILAC K+6 + TMT modification" group_of_poster="guest" title="SILAC TMT" username_of_poster="guest">
+      <umod:specificity classification="Isotopic label" hidden="false" position="Anywhere" site="K" spec_group="0">
+        <umod:misc_notes></umod:misc_notes>
+      </umod:specificity>
+      <umod:delta avge_mass="235.2194" composition="13C(10) 15N C(2) H(20) N O(2)" mono_mass="235.183061">
+        <umod:element number="10" symbol="13C"/>
+        <umod:element number="1" symbol="15N"/>
+        <umod:element number="2" symbol="C"/>
+        <umod:element number="20" symbol="H"/>
+        <umod:element number="1" symbol="N"/>
+        <umod:element number="2" symbol="O"/>
+      </umod:delta>
+    </umod:mod>
+  </umod:modifications>
+
+  <umod:amino_acids>
+    <umod:aa avge_mass="0.0000" full_name="" mono_mass="0.000000" three_letter="" title="-"/>
+    <umod:aa avge_mass="150.0379" full_name="Selenocysteine" mono_mass="150.953633" three_letter="Sel" title="U">
+      <umod:element number="5" symbol="H"/>
+      <umod:element number="3" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+      <umod:element number="1" symbol="Se"/>
+    </umod:aa>
+    <umod:aa avge_mass="237.2982" full_name="Pyrrolysine" mono_mass="237.147727" three_letter="Pyr" title="O">
+      <umod:element number="19" symbol="H"/>
+      <umod:element number="12" symbol="C"/>
+      <umod:element number="3" symbol="N"/>
+      <umod:element number="2" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="113.1576" full_name="Leu or Ile" mono_mass="113.084064" three_letter="Xle" title="J">
+      <umod:element number="11" symbol="H"/>
+      <umod:element number="6" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="71.0779" full_name="Alanine" mono_mass="71.037114" three_letter="Ala" title="A">
+      <umod:element number="5" symbol="H"/>
+      <umod:element number="3" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="156.1857" full_name="Arginine" mono_mass="156.101111" three_letter="Arg" title="R">
+      <umod:element number="12" symbol="H"/>
+      <umod:element number="6" symbol="C"/>
+      <umod:element number="4" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="114.1026" full_name="Asparagine" mono_mass="114.042927" three_letter="Asn" title="N">
+      <umod:element number="6" symbol="H"/>
+      <umod:element number="4" symbol="C"/>
+      <umod:element number="2" symbol="N"/>
+      <umod:element number="2" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="115.0874" full_name="Aspartic acid" mono_mass="115.026943" three_letter="Asp" title="D">
+      <umod:element number="5" symbol="H"/>
+      <umod:element number="4" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="3" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="103.1429" full_name="Cysteine" mono_mass="103.009185" three_letter="Cys" title="C">
+      <umod:element number="5" symbol="H"/>
+      <umod:element number="3" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+      <umod:element number="1" symbol="S"/>
+    </umod:aa>
+    <umod:aa avge_mass="129.1140" full_name="Glutamic acid" mono_mass="129.042593" three_letter="Glu" title="E">
+      <umod:element number="7" symbol="H"/>
+      <umod:element number="5" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="3" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="128.1292" full_name="Glutamine" mono_mass="128.058578" three_letter="Gln" title="Q">
+      <umod:element number="8" symbol="H"/>
+      <umod:element number="5" symbol="C"/>
+      <umod:element number="2" symbol="N"/>
+      <umod:element number="2" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="57.0513" full_name="Glycine" mono_mass="57.021464" three_letter="Gly" title="G">
+      <umod:element number="3" symbol="H"/>
+      <umod:element number="2" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="137.1393" full_name="Histidine" mono_mass="137.058912" three_letter="His" title="H">
+      <umod:element number="7" symbol="H"/>
+      <umod:element number="6" symbol="C"/>
+      <umod:element number="3" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="113.1576" full_name="Isoleucine" mono_mass="113.084064" three_letter="Ile" title="I">
+      <umod:element number="11" symbol="H"/>
+      <umod:element number="6" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="113.1576" full_name="Leucine" mono_mass="113.084064" three_letter="Leu" title="L">
+      <umod:element number="11" symbol="H"/>
+      <umod:element number="6" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="128.1723" full_name="Lysine" mono_mass="128.094963" three_letter="Lys" title="K">
+      <umod:element number="12" symbol="H"/>
+      <umod:element number="6" symbol="C"/>
+      <umod:element number="2" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="131.1961" full_name="Methionine" mono_mass="131.040485" three_letter="Met" title="M">
+      <umod:element number="9" symbol="H"/>
+      <umod:element number="5" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+      <umod:element number="1" symbol="S"/>
+    </umod:aa>
+    <umod:aa avge_mass="147.1739" full_name="Phenylalanine" mono_mass="147.068414" three_letter="Phe" title="F">
+      <umod:element number="9" symbol="H"/>
+      <umod:element number="9" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="97.1152" full_name="Proline" mono_mass="97.052764" three_letter="Pro" title="P">
+      <umod:element number="7" symbol="H"/>
+      <umod:element number="5" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="87.0773" full_name="Serine" mono_mass="87.032028" three_letter="Ser" title="S">
+      <umod:element number="5" symbol="H"/>
+      <umod:element number="3" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="2" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="101.1039" full_name="Threonine" mono_mass="101.047679" three_letter="Thr" title="T">
+      <umod:element number="7" symbol="H"/>
+      <umod:element number="4" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="2" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="186.2099" full_name="Tryptophan" mono_mass="186.079313" three_letter="Trp" title="W">
+      <umod:element number="10" symbol="H"/>
+      <umod:element number="11" symbol="C"/>
+      <umod:element number="2" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="163.1733" full_name="Tyrosine" mono_mass="163.063329" three_letter="Tyr" title="Y">
+      <umod:element number="9" symbol="H"/>
+      <umod:element number="9" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="2" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="99.1311" full_name="Valine" mono_mass="99.068414" three_letter="Val" title="V">
+      <umod:element number="9" symbol="H"/>
+      <umod:element number="5" symbol="C"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+    <umod:aa avge_mass="1.0079" full_name="N-term" mono_mass="1.007825" three_letter="N-term" title="N-term">
+      <umod:element number="1" symbol="H"/>
+    </umod:aa>
+    <umod:aa avge_mass="17.0073" full_name="C-term" mono_mass="17.002740" three_letter="C-term" title="C-term">
+      <umod:element number="1" symbol="H"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:aa>
+  </umod:amino_acids>
+
+  <umod:mod_bricks>
+    <umod:brick avge_mass="0.0000" full_name="" mono_mass="0.000000" title="-"/>
+    <umod:brick avge_mass="1.0079" full_name="Hydrogen" mono_mass="1.007825" title="H">
+      <umod:element number="1" symbol="H"/>
+    </umod:brick>
+    <umod:brick avge_mass="12.0107" full_name="Carbon" mono_mass="12.000000" title="C">
+      <umod:element number="1" symbol="C"/>
+    </umod:brick>
+    <umod:brick avge_mass="14.0067" full_name="Nitrogen" mono_mass="14.003074" title="N">
+      <umod:element number="1" symbol="N"/>
+    </umod:brick>
+    <umod:brick avge_mass="15.9994" full_name="Oxygen" mono_mass="15.994915" title="O">
+      <umod:element number="1" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="30.9738" full_name="Phosphorous" mono_mass="30.973762" title="P">
+      <umod:element number="1" symbol="P"/>
+    </umod:brick>
+    <umod:brick avge_mass="32.0650" full_name="Sulphur" mono_mass="31.972071" title="S">
+      <umod:element number="1" symbol="S"/>
+    </umod:brick>
+    <umod:brick avge_mass="2.0141" full_name="Deuterium" mono_mass="2.014102" title="2H">
+      <umod:element number="1" symbol="2H"/>
+    </umod:brick>
+    <umod:brick avge_mass="17.9992" full_name="Oxygen 18" mono_mass="17.999160" title="18O">
+      <umod:element number="1" symbol="18O"/>
+    </umod:brick>
+    <umod:brick avge_mass="18.9984" full_name="Fluorine" mono_mass="18.998403" title="F">
+      <umod:element number="1" symbol="F"/>
+    </umod:brick>
+    <umod:brick avge_mass="22.9898" full_name="Sodium" mono_mass="22.989768" title="Na">
+      <umod:element number="1" symbol="Na"/>
+    </umod:brick>
+    <umod:brick avge_mass="78.9600" full_name="Selenium" mono_mass="79.916520" title="Se">
+      <umod:element number="1" symbol="Se"/>
+    </umod:brick>
+    <umod:brick avge_mass="162.1406" full_name="Hexose" mono_mass="162.052823" title="Hex">
+      <umod:element number="10" symbol="H"/>
+      <umod:element number="6" symbol="C"/>
+      <umod:element number="5" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="203.1925" full_name="N-Acetyl Hexosamine" mono_mass="203.079373" title="HexNAc">
+      <umod:element number="8" symbol="C"/>
+      <umod:element number="13" symbol="H"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="5" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="42.0367" full_name="Acetate" mono_mass="42.010565" title="Ac">
+      <umod:element number="2" symbol="C"/>
+      <umod:element number="2" symbol="H"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="146.1412" full_name="Deoxy-hexose" mono_mass="146.057909" title="dHex">
+      <umod:element number="6" symbol="C"/>
+      <umod:element number="10" symbol="H"/>
+      <umod:element number="4" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="176.1241" full_name="Hexosamine" mono_mass="176.032088" title="HexA">
+      <umod:element number="6" symbol="C"/>
+      <umod:element number="8" symbol="H"/>
+      <umod:element number="6" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="250.2027" full_name="3-deoxy-d-glycero-D-galacto-nonulosonic acid" mono_mass="250.068868" title="Kdn">
+      <umod:element number="9" symbol="C"/>
+      <umod:element number="14" symbol="H"/>
+      <umod:element number="8" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="220.1767" full_name="2-keto-3-deoxyoctulosonic acid" mono_mass="220.058303" title="Kdo">
+      <umod:element number="8" symbol="C"/>
+      <umod:element number="12" symbol="H"/>
+      <umod:element number="7" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="14.0266" full_name="Methyl" mono_mass="14.015650" title="Me">
+      <umod:element number="1" symbol="C"/>
+      <umod:element number="2" symbol="H"/>
+    </umod:brick>
+    <umod:brick avge_mass="291.2546" full_name="N-acetyl neuraminic acid" mono_mass="291.095417" title="NeuAc">
+      <umod:element number="11" symbol="C"/>
+      <umod:element number="17" symbol="H"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="8" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="307.2540" full_name="N-glycoyl neuraminic acid" mono_mass="307.090331" title="NeuGc">
+      <umod:element number="11" symbol="C"/>
+      <umod:element number="17" symbol="H"/>
+      <umod:element number="1" symbol="N"/>
+      <umod:element number="9" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="18.0153" full_name="Water" mono_mass="18.010565" title="Water">
+      <umod:element number="2" symbol="H"/>
+      <umod:element number="1" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="79.9799" full_name="Phosphate" mono_mass="79.966331" title="Phos">
+      <umod:element number="1" symbol="H"/>
+      <umod:element number="1" symbol="P"/>
+      <umod:element number="3" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="80.0632" full_name="Sulfate" mono_mass="79.956815" title="Sulf">
+      <umod:element number="1" symbol="S"/>
+      <umod:element number="3" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="132.1146" full_name="Pentose" mono_mass="132.042259" title="Pent">
+      <umod:element number="5" symbol="C"/>
+      <umod:element number="8" symbol="H"/>
+      <umod:element number="4" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="6.9410" full_name="Lithium" mono_mass="7.016003" title="Li">
+      <umod:element number="1" symbol="Li"/>
+    </umod:brick>
+    <umod:brick avge_mass="13.0034" full_name="Carbon 13" mono_mass="13.003355" title="13C">
+      <umod:element number="1" symbol="13C"/>
+    </umod:brick>
+    <umod:brick avge_mass="15.0001" full_name="Nitrogen 15" mono_mass="15.000109" title="15N">
+      <umod:element number="1" symbol="15N"/>
+    </umod:brick>
+    <umod:brick avge_mass="35.4530" full_name="Chlorine" mono_mass="34.968853" title="Cl">
+      <umod:element number="1" symbol="Cl"/>
+    </umod:brick>
+    <umod:brick avge_mass="39.0983" full_name="Potassium" mono_mass="38.963707" title="K">
+      <umod:element number="1" symbol="K"/>
+    </umod:brick>
+    <umod:brick avge_mass="40.0780" full_name="Calcium" mono_mass="39.962591" title="Ca">
+      <umod:element number="1" symbol="Ca"/>
+    </umod:brick>
+    <umod:brick avge_mass="55.8450" full_name="Iron" mono_mass="55.934939" title="Fe">
+      <umod:element number="1" symbol="Fe"/>
+    </umod:brick>
+    <umod:brick avge_mass="58.6934" full_name="Nickel" mono_mass="57.935346" title="Ni">
+      <umod:element number="1" symbol="Ni"/>
+    </umod:brick>
+    <umod:brick avge_mass="65.4090" full_name="Zinc" mono_mass="63.929145" title="Zn">
+      <umod:element number="1" symbol="Zn"/>
+    </umod:brick>
+    <umod:brick avge_mass="79.9040" full_name="Bromine" mono_mass="78.918336" title="Br">
+      <umod:element number="1" symbol="Br"/>
+    </umod:brick>
+    <umod:brick avge_mass="107.8682" full_name="Silver" mono_mass="106.905092" title="Ag">
+      <umod:element number="1" symbol="Ag"/>
+    </umod:brick>
+    <umod:brick avge_mass="200.5900" full_name="Mercury" mono_mass="201.970617" title="Hg">
+      <umod:element number="1" symbol="Hg"/>
+    </umod:brick>
+    <umod:brick avge_mass="196.9666" full_name="Gold" mono_mass="196.966543" title="Au">
+      <umod:element number="1" symbol="Au"/>
+    </umod:brick>
+    <umod:brick avge_mass="126.9045" full_name="Iodine" mono_mass="126.904473" title="I">
+      <umod:element number="1" symbol="I"/>
+    </umod:brick>
+    <umod:brick avge_mass="95.9400" full_name="Molybdenum" mono_mass="97.905407" title="Mo">
+      <umod:element number="1" symbol="Mo"/>
+    </umod:brick>
+    <umod:brick avge_mass="63.5460" full_name="Copper" mono_mass="62.929599" title="Cu">
+      <umod:element number="1" symbol="Cu"/>
+    </umod:brick>
+    <umod:brick avge_mass="192.1666" full_name="Heptose" mono_mass="192.063388" title="Hep">
+      <umod:element number="7" symbol="C"/>
+      <umod:element number="12" symbol="H"/>
+      <umod:element number="6" symbol="O"/>
+    </umod:brick>
+    <umod:brick avge_mass="10.8110" full_name="Boron" mono_mass="11.009305" title="B">
+      <umod:element number="1" symbol="B"/>
+    </umod:brick>
+    <umod:brick avge_mass="74.9216" full_name="Arsenic" mono_mass="74.921594" title="As">
+      <umod:element number="1" symbol="As"/>
+    </umod:brick>
+    <umod:brick avge_mass="112.4110" full_name="Cadmium" mono_mass="113.903357" title="Cd">
+      <umod:element number="1" symbol="Cd"/>
+    </umod:brick>
+    <umod:brick avge_mass="51.9961" full_name="Chromium" mono_mass="51.940510" title="Cr">
+      <umod:element number="1" symbol="Cr"/>
+    </umod:brick>
+    <umod:brick avge_mass="58.9332" full_name="Cobalt" mono_mass="58.933198" title="Co">
+      <umod:element number="1" symbol="Co"/>
+    </umod:brick>
+    <umod:brick avge_mass="54.9380" full_name="Manganese" mono_mass="54.938047" title="Mn">
+      <umod:element number="1" symbol="Mn"/>
+    </umod:brick>
+    <umod:brick avge_mass="24.3050" full_name="Magnesium" mono_mass="23.985042" title="Mg">
+      <umod:element number="1" symbol="Mg"/>
+    </umod:brick>
+    <umod:brick avge_mass="106.4200" full_name="Palladium" mono_mass="105.903478" title="Pd">
+      <umod:element number="1" symbol="Pd"/>
+    </umod:brick>
+  </umod:mod_bricks>
+
+</umod:unimod>
