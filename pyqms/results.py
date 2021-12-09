@@ -1238,7 +1238,14 @@ class Results(dict):
                 obj_for_calc_amount = {"rt": [], "i": [], "scores": [], "spec_ids": []}
                 # calculate the lists and pass to the calc amoutn fucntion...
                 for entry in self[m_key]["data"]:
-                    rt = entry.rt
+                    try:
+                        if entry.rt[1] == "second":
+                            rt = entry.rt[0] / 60
+                        elif entry.rt[1] == "minute":
+                            rt = entry.rt[0]
+                    except TypeError:
+                        rt = entry.rt
+
                     if rt < line_dict["start (min)"]:  # i.e. start of rt window
                         continue
                     elif rt > line_dict["stop (min)"]:  # i.e. end of rt window

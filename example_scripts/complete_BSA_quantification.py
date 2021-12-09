@@ -101,6 +101,10 @@ def main(ident_file=None, mzml_file=None):
     results = None
     for spectrum in run:
         spec_id = spectrum["id"]
+        # # reduce spectra for test pickle output only
+        # if spec_id > 1050:
+        #     continue
+
         try:
             # pymzML 2.0.0 style
             scan_time = spectrum.scan_time
@@ -163,6 +167,9 @@ def main(ident_file=None, mzml_file=None):
                 formula_charge_to_quant_info[
                     (line_dict["formula"], int(line_dict["charge"]))
                 ]["evidence_rts"].append(round(float(ev_string.split("@")[1]), 2))
+
+    # # pickle results to form test file quant_summary_test
+    # pickle.dump(results, open("bsa_resultst_obj.pkl", "wb"))
     import_ok = False
     try:
         import rpy2
