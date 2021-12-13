@@ -21,7 +21,7 @@ TESTS = [
             }
         },
         "out": {
-            "aa": {"U": "C3H7NO2Se"},
+            "aa": {"U": {"C": 3, "H": 7, "N": 1, "O": 2, "Se": 1}},
             "formula": "C(6)H(16)N(2)O(5)Se(2)"
         },
     },
@@ -56,7 +56,7 @@ def _extend_kb_with_amino_acids(test_id, test_dict):
         assert aa in lib_1.aa_compositions
         print(f"lib1 composition: {str(lib_1.aa_compositions[aa])}")
         print(f"expected composition: {composition}")
-        assert composition == str(lib_1.aa_compositions[aa])
+        assert composition == lib_1.aa_compositions[aa]
 
     formula_1 = list(lib_1.keys())[0]
     assert test_dict["out"]["formula"] == formula_1
