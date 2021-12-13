@@ -54,6 +54,8 @@ def _extend_kb_with_amino_acids(test_id, test_dict):
     lib_1 = pyqms.IsotopologueLibrary(**test_dict["in"]["params"])
     for aa, composition in test_dict["out"]["aa"].items():
         assert aa in lib_1.aa_compositions
+        print(f"lib1 composition: {lib_1.aa_compositions[aa]}")
+        print(f"expected composition: {composition}")
         assert composition == str(lib_1.aa_compositions[aa])
 
     formula_1 = list(lib_1.keys())[0]
