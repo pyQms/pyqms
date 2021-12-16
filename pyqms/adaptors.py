@@ -349,7 +349,9 @@ def parse_evidence(
                             modification_fieldname
                         ].split(","):
                             pos, unimod_id = pos_and_unimod_id.split("-")
-                            unimod_name = unimod_parser.id2first_name(unimod_id.split(":")[1])
+                            unimod_name = unimod_parser.id2first_name(
+                                unimod_id.split(":")[1]
+                            )
                             formatted_mods.append("{0}:{1}".format(unimod_name, pos))
                         formatted_mods = ";".join(formatted_mods)
 
@@ -383,10 +385,12 @@ def parse_evidence(
                     if additional_name != "":
                         # use set to remove double values
                         tmp_evidences[molecule]["trivial_names"].add(additional_name)
-                        if 'trivial_name' not in dict_2_append.keys():
-                            dict_2_append['trivial_name'] = additional_name
+                        if "trivial_name" not in dict_2_append.keys():
+                            dict_2_append["trivial_name"] = additional_name
                         else:
-                            dict_2_append['trivial_name'] += ';{0}'.format(additional_name)                
+                            dict_2_append["trivial_name"] += ";{0}".format(
+                                additional_name
+                            )
                 tmp_evidences[molecule]["evidences"].append(dict_2_append)
 
     mod_pattern = re.compile(r""":(?P<pos>[0-9]*$)""")
@@ -462,7 +466,7 @@ def parse_evidence(
             cc_factory.use(sequence=sequence, modifications=modifications)
         else:
             cc_factory.use(sequence=molecule)
-            
+
         if len(fixed_label_mod_addon_names) != 0:
             for fixed_mod_name in fixed_label_mod_addon_names:
                 cc_factory.add_chemical_formula(fixed_mod_lookup[fixed_mod_name])

@@ -6,7 +6,7 @@ app_path = tests_path.parent
 
 unimod_file_list = [
     tests_path.joinpath("data", "test_usermod.xml"),
-    app_path.joinpath("pyqms", "kb", "ext", "unimod.xml")
+    app_path.joinpath("pyqms", "kb", "ext", "unimod.xml"),
 ]
 
 TESTS = [
@@ -43,7 +43,9 @@ def peptide_sequence_test():
 
 
 def sequence_to_isotopes(sequence, results):
-    lib = pyqms.IsotopologueLibrary(molecules=[sequence], charges=[2], unimod_files=unimod_file_list)
+    lib = pyqms.IsotopologueLibrary(
+        molecules=[sequence], charges=[2], unimod_files=unimod_file_list
+    )
     assert results["cc"] in lib
     iso_data = lib[results["cc"]]["env"][(("N", "0.000"),)]
     assert iso_data["abun"] == results["abun"]

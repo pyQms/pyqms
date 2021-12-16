@@ -313,7 +313,7 @@ class IsotopologueLibrary(dict):
             aa_compositions=self.aa_compositions,
             isotopic_distributions=self.isotopic_distributions,
             unimod_file_list=unimod_files,
-            add_default_files=add_default_files
+            add_default_files=add_default_files,
         )
         # ----------------------------------------------------------------
         #       BUILDING ISOTOPOLGUES ....
@@ -323,7 +323,9 @@ class IsotopologueLibrary(dict):
                 # molecule is peptide with unimod modification format
                 bits = molecule.split("#")
                 if len(bits) > 2:
-                    raise ValueError(f"{molecule} contains too many '#' {len(bits)} only one allowed")
+                    raise ValueError(
+                        f"{molecule} contains too many '#' {len(bits)} only one allowed"
+                    )
                 sequence = bits[0]
                 modification = bits[1]
             else:
@@ -993,10 +995,14 @@ class IsotopologueLibrary(dict):
         """
         default_aa_compositions = pyqms.knowledge_base.aa_compositions
         for aa, composition in default_aa_compositions.items():
-            self.aa_compositions[aa] = pyqms.ChemicalComposition(formula="+" + composition)
+            self.aa_compositions[aa] = pyqms.ChemicalComposition(
+                formula="+" + composition
+            )
 
         for user_aa, composition in self.params.get("AMINO_ACIDS", {}).items():
-            self.aa_compositions[user_aa] = pyqms.ChemicalComposition(formula="+" + composition)
+            self.aa_compositions[user_aa] = pyqms.ChemicalComposition(
+                formula="+" + composition
+            )
 
         default_isotopic_distributions = pyqms.knowledge_base.isotopic_distributions
         for element, distribution in default_isotopic_distributions.items():
