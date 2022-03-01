@@ -30,6 +30,7 @@ import time
 import numpy as np
 from chemical_composition import ChemicalComposition
 
+
 class IsotopologueLibrary(dict):
     """
     The Isotopologue library is the core of pyQms.
@@ -524,8 +525,7 @@ class IsotopologueLibrary(dict):
                     )
                 # element_stats              = {}
                 not_labled_elements = (
-                    set(self[formula]["cc"].keys())
-                    - self.metabolically_labeled_elements
+                    set(self[formula]["cc"].keys()) - self.metabolically_labeled_elements
                 )
 
                 pt_dependency = {}
@@ -558,12 +558,14 @@ class IsotopologueLibrary(dict):
                                 label_percentile,
                             ) in label_percentile_tuple:
                                 # print(percentile_element, label_percentile, isotope_less_element)
-                                if percentile_element == isotope_less_element and label_percentile == self.params[
-                                    "PERCENTILE_FORMAT_STRING"
-                                ].format(
-                                    self.params[
-                                        "FIXED_LABEL_ISOTOPE_ENRICHMENT_LEVELS"
-                                    ][element]
+                                if (
+                                    percentile_element == isotope_less_element
+                                    and label_percentile
+                                    == self.params["PERCENTILE_FORMAT_STRING"].format(
+                                        self.params[
+                                            "FIXED_LABEL_ISOTOPE_ENRICHMENT_LEVELS"
+                                        ][element]
+                                    )
                                 ):
                                     targe_element_key = isotope_less_element
                         # else:
@@ -587,9 +589,9 @@ class IsotopologueLibrary(dict):
                         if element in self.metabolically_labeled_elements:
                             continue
 
-                        default_element_label = list(
-                            self.element_trees[element].keys()
-                        )[0]
+                        default_element_label = list(self.element_trees[element].keys())[
+                            0
+                        ]
                         # is this zero_labeled_percentile ?
                         # --------
                         env_range = (
@@ -675,12 +677,12 @@ class IsotopologueLibrary(dict):
                             except:
                                 print(
                                     "Can we use the limits ?",
-                                    self.element_trees[element][label_percentile][
-                                        level
-                                    ]["minPos"],
-                                    self.element_trees[element][label_percentile][
-                                        level
-                                    ]["maxPos"],
+                                    self.element_trees[element][label_percentile][level][
+                                        "minPos"
+                                    ],
+                                    self.element_trees[element][label_percentile][level][
+                                        "maxPos"
+                                    ],
                                     pos,
                                     element,
                                     combo,
@@ -744,9 +746,7 @@ class IsotopologueLibrary(dict):
                                 )
                             )
                         )
-                        relative_intensity = total_local_intensity / float(
-                            max_intensity
-                        )
+                        relative_intensity = total_local_intensity / float(max_intensity)
                         self[formula]["env"][label_percentile_tuple]["relabun"].append(
                             relative_intensity
                         )
@@ -787,8 +787,7 @@ class IsotopologueLibrary(dict):
                             #
                             if self.params["MACHINE_OFFSET_IN_PPM"] != 0:
                                 mz = (
-                                    mz
-                                    + mz * 1e-6 * self.params["MACHINE_OFFSET_IN_PPM"]
+                                    mz + mz * 1e-6 * self.params["MACHINE_OFFSET_IN_PPM"]
                                 )
 
                             self[formula]["env"][label_percentile_tuple][charge][
@@ -884,9 +883,13 @@ class IsotopologueLibrary(dict):
                     "mz_range": [None, None],
                 }
                 for index in range(raw_index, next_raw_index):
-                    lower_mz, upper_mz, charge, label_percentile_tuple, formula = self.formulas_sorted_by_mz[
-                        index
-                    ]
+                    (
+                        lower_mz,
+                        upper_mz,
+                        charge,
+                        label_percentile_tuple,
+                        formula,
+                    ) = self.formulas_sorted_by_mz[index]
                     if self.params["MAX_MOLECULES_PER_MATCH_BIN"] != 1:
                         self.match_sets[package_number]["tmzs"] |= self[formula]["env"][
                             label_percentile_tuple
@@ -977,9 +980,9 @@ class IsotopologueLibrary(dict):
                 # isotope = match.group('isotope')
                 element = match.group("element")
                 index = entry[1]
-                label_tmp_dict[element] = self.params[
-                    "PERCENTILE_FORMAT_STRING"
-                ].format(self.metabolic_labels[entry[0]][index])
+                label_tmp_dict[element] = self.params["PERCENTILE_FORMAT_STRING"].format(
+                    self.metabolic_labels[entry[0]][index]
+                )
 
             # element_list, label_percentiles = zip(*sorted(label_tmp_dict.items()))
             self.labled_percentiles.append(tuple(sorted(label_tmp_dict.items())))
@@ -997,14 +1000,12 @@ class IsotopologueLibrary(dict):
         default_aa_compositions = pyqms.knowledge_base.aa_compositions
         for aa, composition in default_aa_compositions.items():
             self.aa_compositions[aa] = ChemicalComposition(
-                formula="+" + composition,
-                unimod_file_list=self.unimod_files
+                formula="+" + composition, unimod_file_list=self.unimod_files
             )
 
         for user_aa, composition in self.params.get("AMINO_ACIDS", {}).items():
             self.aa_compositions[user_aa] = ChemicalComposition(
-                formula="+" + composition,
-                unimod_file_list=self.unimod_files
+                formula="+" + composition, unimod_file_list=self.unimod_files
             )
 
         default_isotopic_distributions = pyqms.knowledge_base.isotopic_distributions
@@ -1144,12 +1145,12 @@ class IsotopologueLibrary(dict):
             ):
                 self.element_trees[element][label_percentile] = {
                     1: {
-                        "maxPos": self.isotopic_distributions[element][
-                            label_percentile
-                        ][-1][2],
-                        "minPos": self.isotopic_distributions[element][
-                            label_percentile
-                        ][0][2],
+                        "maxPos": self.isotopic_distributions[element][label_percentile][
+                            -1
+                        ][2],
+                        "minPos": self.isotopic_distributions[element][label_percentile][
+                            0
+                        ][2],
                         "env": {},
                     }
                 }
@@ -1650,9 +1651,7 @@ class IsotopologueLibrary(dict):
                         extend_variation_lookup = True
                     if extend_variation_lookup:
                         try:
-                            self.lookup["molecule fixed label variations"][
-                                full_molecule
-                            ]
+                            self.lookup["molecule fixed label variations"][full_molecule]
                         except:
                             self.lookup["molecule fixed label variations"][
                                 full_molecule
@@ -1734,9 +1733,9 @@ class IsotopologueLibrary(dict):
                     previousMass = self.element_trees[element][label_percentile][
                         self.computed_level_complex_isotopes
                     ]["env"][envPos]["mass"]
-                    isotopeMass = self.isotopic_distributions[element][
-                        label_percentile
-                    ][isotopePos][0]
+                    isotopeMass = self.isotopic_distributions[element][label_percentile][
+                        isotopePos
+                    ][0]
                     self.element_trees[element][label_percentile][n]["env"][
                         envPos + isotopePos
                     ]["mass"].append(previousMass + isotopeMass)
@@ -1862,9 +1861,13 @@ class IsotopologueLibrary(dict):
                     ):
                         continue
 
-                    lower_mz, upper_mz, charge, label_percentile_tuple, formula = self.formulas_sorted_by_mz[
-                        index
-                    ]
+                    (
+                        lower_mz,
+                        upper_mz,
+                        charge,
+                        label_percentile_tuple,
+                        formula,
+                    ) = self.formulas_sorted_by_mz[index]
                     key = (file_name, formula, charge, label_percentile_tuple)
                     value = (spec_id, spec_rt, score, scaling_factor, matched_peaks)
                     # print('added', score, matched_peaks )
@@ -1937,9 +1940,13 @@ class IsotopologueLibrary(dict):
             # use function blabla (to be written) to scan
             # self.formulas_sorted_by_mz for your target(s)
         else:
-            lower_mz, upper_mz, charge, label_percentile, formula = self.formulas_sorted_by_mz[
-                index
-            ]
+            (
+                lower_mz,
+                upper_mz,
+                charge,
+                label_percentile,
+                formula,
+            ) = self.formulas_sorted_by_mz[index]
         if mz_i_list is not None:
             assert (
                 spec_tmz_set is None

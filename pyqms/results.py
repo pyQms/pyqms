@@ -306,7 +306,9 @@ class Results(dict):
                     continue
                 yield key, i, entry
 
-    def format_all_results(self,):
+    def format_all_results(
+        self,
+    ):
         """
         Format all results to a pandas DataFrame.
 
@@ -484,9 +486,7 @@ class Results(dict):
 
                     error_dict["mz_error"].append(rel_mz_error_in_ppm)
                     error_dict["intensity_error"].append(rel_i_error)
-                    error_dict["time_dependent_mz_error"][rt].append(
-                        rel_mz_error_in_ppm
-                    )
+                    error_dict["time_dependent_mz_error"][rt].append(rel_mz_error_in_ppm)
                     error_dict["time_dependent_intensity_error"][rt].append(rel_i_error)
         if plot and len(error_dict["mz_error"]) > 0:
             assert self._import_rpy2() == True, "require R & rpy2 installed..."
@@ -630,7 +630,7 @@ class Results(dict):
 
     def plot_MIC_3D(self, key, file_name=None, rt_window=None, i_transform=None):
         """
-            Plot MIC from results using rpy2 in 3D.
+        Plot MIC from results using rpy2 in 3D.
 
 
 
@@ -953,23 +953,23 @@ class Results(dict):
 
     def _add_ablines_into_r_plot(self, graphics, ablines):
         """
-            ablines representing a list with dicts passed to the abline
-            function of rpy2
+        ablines representing a list with dicts passed to the abline
+        function of rpy2
 
-            Example:
-                ablines = [
-                    {
-                        'v' : 1
-                    }
-                ]
-
-            The example above will plot a vertical line at x=1
-
-            Please note that the default entries are:
+        Example:
+            ablines = [
                 {
-                    'col' : 'black',
-                    'lty' : 'solid'
+                    'v' : 1
                 }
+            ]
+
+        The example above will plot a vertical line at x=1
+
+        Please note that the default entries are:
+            {
+                'col' : 'black',
+                'lty' : 'solid'
+            }
 
         """
         defaultValues = {"col": "black", "lty": "solid"}
@@ -982,13 +982,13 @@ class Results(dict):
 
     def _add_additional_legend_into_r_plot(self, graphics, additional_legends):
         """
-            Minimal a position with x and y is required as well as the label
+        Minimal a position with x and y is required as well as the label
 
-            paramDict = {
-                'x' :  0,
-                'y' ;  0,
-                'legend': 'origin'
-            }
+        paramDict = {
+            'x' :  0,
+            'y' ;  0,
+            'legend': 'origin'
+        }
 
         """
 
@@ -1373,7 +1373,10 @@ class Results(dict):
         else:
             csv_kwargs["lineterminator"] = "\r\n"
 
-        full_rt_border_lookup, full_molecule_lookup = self._determine_rt_windows_from_evidence(
+        (
+            full_rt_border_lookup,
+            full_molecule_lookup,
+        ) = self._determine_rt_windows_from_evidence(
             rt_border_tolerance=rt_border_tolerance
         )
         lines_2_write = []
@@ -1466,9 +1469,7 @@ class Results(dict):
                             tmp["trivial_name(s)"] = ";".join(
                                 sorted(
                                     list(
-                                        set(
-                                            tmp_evidence_dict[molecule]["trivial_names"]
-                                        )
+                                        set(tmp_evidence_dict[molecule]["trivial_names"])
                                     )
                                 )
                             )
@@ -1523,29 +1524,29 @@ class Results(dict):
 
     def write_result_csv(self, output_file_name=None):
         """
-            Write raw results into a .csv file
+        Write raw results into a .csv file
 
-            Args:
-                output_file_name (str): output file name of the csv containing
-                    containing all raw results, should be a complete path
+        Args:
+            output_file_name (str): output file name of the csv containing
+                containing all raw results, should be a complete path
 
-            Warning:
+        Warning:
 
-                Depending on data size the resulting csv can become very large.
-                Some csv viewer can not handle files with a large number of
-                lines.
+            Depending on data size the resulting csv can become very large.
+            Some csv viewer can not handle files with a large number of
+            lines.
 
-            Keys in csv:
+        Keys in csv:
 
-                * Formula           : molecular formula of the molecule (str)
-                * Molecule          : molecule or trivial name (str)
-                * Charge            : charge of the molecule (int)
-                * ScanID            : ScanID of the quantified spectrum (int)
-                * Label Percentiles : Labeling percentile ( (element, enrichment in %), )
-                * Amount            : the determined amount of the molecule
-                * Retention Time    : retetention time of the ScanID
-                * mScore            : score of the isotopologue match
-                * Filename          : filename of spectrum input files
+            * Formula           : molecular formula of the molecule (str)
+            * Molecule          : molecule or trivial name (str)
+            * Charge            : charge of the molecule (int)
+            * ScanID            : ScanID of the quantified spectrum (int)
+            * Label Percentiles : Labeling percentile ( (element, enrichment in %), )
+            * Amount            : the determined amount of the molecule
+            * Retention Time    : retetention time of the ScanID
+            * mScore            : score of the isotopologue match
+            * Filename          : filename of spectrum input files
 
         """
         raw_amounts_fieldnames = [
@@ -1880,7 +1881,7 @@ MTD peptide-quantification-value [PRIDE, PRIDE:0000425, MS1 intensity based labe
 
     def _smooth_list(self, input_list, k=5):
         """
-            Smooth list with sliding window of k points
+        Smooth list with sliding window of k points
         """
         k = k
         fill_value = 0
@@ -1967,9 +1968,7 @@ MTD peptide-quantification-value [PRIDE, PRIDE:0000425, MS1 intensity based labe
         for pos, current_window_object in enumerate(window_sort_list):
             # print(pos, current_window_object)
             # set windows for everz peptide!
-            upep_2_rt[current_window_object[1]] = {
-                "rt_window": current_window_object[0]
-            }
+            upep_2_rt[current_window_object[1]] = {"rt_window": current_window_object[0]}
             if pos == 0:
                 continue
             last_window_object = window_sort_list[pos - 1]
@@ -2032,10 +2031,7 @@ MTD peptide-quantification-value [PRIDE, PRIDE:0000425, MS1 intensity based labe
                         pass
 
                     if unseparable is True:
-                        if (
-                            "window_is_unseparable"
-                            not in upep_2_rt[current_upep].keys()
-                        ):
+                        if "window_is_unseparable" not in upep_2_rt[current_upep].keys():
                             upep_2_rt[current_upep]["window_is_unseparable"] = []
                         if "window_is_unseparable" not in upep_2_rt[last_upep].keys():
                             upep_2_rt[last_upep]["window_is_unseparable"] = []
@@ -2052,9 +2048,7 @@ MTD peptide-quantification-value [PRIDE, PRIDE:0000425, MS1 intensity based labe
                             "lower_window_border"
                         ] = half_diff_redef_win
 
-                        upep_2_rt[last_upep][
-                            "upper_window_border"
-                        ] = half_diff_redef_win
+                        upep_2_rt[last_upep]["upper_window_border"] = half_diff_redef_win
 
         return upep_2_rt
 

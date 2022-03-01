@@ -29,6 +29,7 @@ import os
 import pyqms
 from chemical_composition import ChemicalComposition
 from pathlib import Path
+
 unimod_file_list = [Path("tests", "data", "usermod.xml")]
 tmp_cc_factory = ChemicalComposition(unimod_file_list=unimod_file_list)
 
@@ -41,7 +42,7 @@ TESTS = [
             "molecules": None,
             "evidence_score_field": None,
             "evidence_files": [os.path.join("tests", "data", "test_BSA_evidence.csv")],
-            "unimod_file_list": unimod_file_list
+            "unimod_file_list": unimod_file_list,
         },
         "output": {
             "molecules": [

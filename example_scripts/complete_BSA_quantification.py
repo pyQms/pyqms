@@ -78,7 +78,11 @@ def main(ident_file=None, mzml_file=None):
         evidence_score_field = "PEP"
 
     print('Evidence score field "{0}" will be used.'.format(evidence_score_field))
-    formatted_fixed_labels, evidence_lookup, molecule_list = pyqms.adaptors.parse_evidence(
+    (
+        formatted_fixed_labels,
+        evidence_lookup,
+        molecule_list,
+    ) = pyqms.adaptors.parse_evidence(
         fixed_labels=tmp_fixed_labels,
         evidence_files=[ident_file],
         evidence_score_field=evidence_score_field,
@@ -117,9 +121,7 @@ def main(ident_file=None, mzml_file=None):
                 results=results,
             )
     # print(results)
-    out_folder = os.path.join(
-        os.path.dirname(ident_file), "complete_BSA_quantification"
-    )
+    out_folder = os.path.join(os.path.dirname(ident_file), "complete_BSA_quantification")
     if os.path.exists(out_folder) is False:
         os.mkdir(out_folder)
     print()

@@ -115,7 +115,9 @@ def adaptor_test():
 
 def adaptor_check(test_dict):
 
-    result_dict = _parse_evidence_and_format_fixed_labels(test_dict["input"], unimod_file_list=unimod_file_list)
+    result_dict = _parse_evidence_and_format_fixed_labels(
+        test_dict["input"], unimod_file_list=unimod_file_list
+    )
     print(result_dict)
     for key in test_dict["output"].keys():
         if key == "fixed_labels":
