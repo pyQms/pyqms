@@ -28,7 +28,7 @@ import pyqms
 import operator
 import time
 import numpy as np
-
+from chemical_composition import ChemicalComposition
 
 class IsotopologueLibrary(dict):
     """
@@ -251,6 +251,7 @@ class IsotopologueLibrary(dict):
             self.lookup["molecule to trivial name"] = trivial_names
         if evidences is None:
             evidences = {}
+        self.unimod_files = unimod_files
         self.lookup["formula to evidences"] = evidences
 
         self.regex = {
@@ -309,7 +310,7 @@ class IsotopologueLibrary(dict):
             # will be redefined ...self._highest_element_count
         self._highest_element_count = {}
         self._range_for_elements_with_two_isotopes = [None, None]
-        cc_factory = pyqms.ChemicalComposition(
+        cc_factory = ChemicalComposition(
             aa_compositions=self.aa_compositions,
             isotopic_distributions=self.isotopic_distributions,
             unimod_file_list=unimod_files,
@@ -995,13 +996,15 @@ class IsotopologueLibrary(dict):
         """
         default_aa_compositions = pyqms.knowledge_base.aa_compositions
         for aa, composition in default_aa_compositions.items():
-            self.aa_compositions[aa] = pyqms.ChemicalComposition(
-                formula="+" + composition
+            self.aa_compositions[aa] = ChemicalComposition(
+                formula="+" + composition,
+                unimod_file_list=self.unimod_files
             )
 
         for user_aa, composition in self.params.get("AMINO_ACIDS", {}).items():
-            self.aa_compositions[user_aa] = pyqms.ChemicalComposition(
-                formula="+" + composition
+            self.aa_compositions[user_aa] = ChemicalComposition(
+                formula="+" + composition,
+                unimod_file_list=self.unimod_files
             )
 
         default_isotopic_distributions = pyqms.knowledge_base.isotopic_distributions

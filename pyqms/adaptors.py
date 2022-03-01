@@ -28,6 +28,8 @@ import sys
 import codecs
 import re
 from pathlib import Path
+from chemical_composition import ChemicalComposition
+from unimod_mapper import UnimodMapper
 
 POST_EXPERIMENTAL_MODIFICATIONS = ["Carbamidomethyl"]
 
@@ -54,7 +56,7 @@ PARAM_TYPE_LOOKUP = {
 }
 
 
-def _parse_evidence_and_format_fixed_labels(data=None):
+def _parse_evidence_and_format_fixed_labels(data=None, unimod_file_list=None):
     """
 
     Reformats input params to pyQms compatible params. Additionally evidence
@@ -153,7 +155,7 @@ def _parse_evidence_and_format_fixed_labels(data=None):
             converted_value = PARAM_TYPE_LOOKUP[k](v)
             r["params"][k] = converted_value
 
-    cc_factory = pyqms.ChemicalComposition()
+    cc_factory = ChemicalComposition(unimod_file_list=unimod_file_list, add_default_files=False)
     tmp_fixed_labels = None
     if "fixed_labels" in data.keys() and len(data["fixed_labels"]) != 0:
         tmp_fixed_labels = {}
@@ -188,6 +190,7 @@ def _parse_evidence_and_format_fixed_labels(data=None):
         evidence_files=evidence_file_list,
         molecules=data["molecules"],
         evidence_score_field=data["evidence_score_field"],
+        unimod_file_list=unimod_file_list
     )
     r["fixed_labels"] = formatted_fixed_labels
     r["molecules"] = molecule_list
@@ -257,7 +260,7 @@ def parse_evidence(
     if evidence_score_field is None:
         evidence_score_field = "PEP"  #  default
 
-    unimod_parser = pyqms.UnimodMapper(xml_file_list=unimod_file_list)
+    unimod_parser = UnimodMapper(xml_file_list=unimod_file_list, add_default_files=False)
 
     fixed_mod_lookup = {}
     amino_acid_2_fixed_mod_name = ddict(list)
@@ -273,7 +276,7 @@ def parse_evidence(
         for aa, fixed_mod_info_dict_list in fixed_labels.items():
             for fixed_mod_info_dict in fixed_mod_info_dict_list:
                 if isinstance(fixed_mod_info_dict["element_composition"], dict):
-                    tmp_cc_factory = pyqms.ChemicalComposition()
+                    tmp_cc_factory = ChemicalComposition(unimod_file_list=unimod_file_list, add_default_files=False)
                     tmp_cc_factory.add_chemical_formula(
                         fixed_mod_info_dict["element_composition"]
                     )
@@ -294,7 +297,7 @@ def parse_evidence(
                 all_fixed_mod_names.add(fixed_mod_info_dict["evidence_mod_name"])
                 tmp_cc_factory.clear()
 
-    cc_factory = pyqms.ChemicalComposition()
+    cc_factory = ChemicalComposition(unimod_file_list=unimod_file_list, add_default_files=False)
 
     # this is the lookup for the lib with the evidences
     # tmp_evidences = ddict(list)

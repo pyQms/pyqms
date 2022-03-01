@@ -27,8 +27,10 @@
 from pyqms.adaptors import (
     _parse_evidence_and_format_fixed_labels as _parse_evidence_and_format_fixed_labels,
 )
+from pathlib import Path
 import os
 
+unimod_file_list = [Path("tests", "data", "usermod.xml")]
 
 TESTS = [
     {
@@ -53,6 +55,7 @@ TESTS = [
                 "CLEINERTEST#Carbamidomethyl:1;Oxidation:2",
             ],
             "evidence_score_field": "PEP",
+            "unimod_file_list": unimod_file_list,
         },
         "output": {
             "fixed_labels": {"C": ["C(2)H(3)14N(1)O(1)", ""]},
@@ -65,6 +68,7 @@ TESTS = [
             "charges": ["True", "False", "2", "3", "4", "5"],
             "molecules": [],
             "evidence_score_field": "PEP",
+            "unimod_file_list": unimod_file_list,
         },
         "output": {"charges": set([2, 3, 4, 5])},
     },
@@ -80,6 +84,7 @@ TESTS = [
             "charges": [],
             "molecules": [],
             "evidence_score_field": "PEP",
+            "unimod_file_list": unimod_file_list,
         },
         "output": {
             "params": {
@@ -96,6 +101,7 @@ TESTS = [
             "charges": ["B"],
             "molecules": [],
             "evidence_score_field": None,
+            "unimod_file_list": unimod_file_list,
         },
         "output": {"charges": []},
     },
@@ -109,7 +115,7 @@ def adaptor_test():
 
 def adaptor_check(test_dict):
 
-    result_dict = _parse_evidence_and_format_fixed_labels(test_dict["input"])
+    result_dict = _parse_evidence_and_format_fixed_labels(test_dict["input"], unimod_file_list=unimod_file_list)
     print(result_dict)
     for key in test_dict["output"].keys():
         if key == "fixed_labels":
