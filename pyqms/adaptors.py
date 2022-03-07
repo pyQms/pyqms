@@ -27,6 +27,9 @@ from copy import deepcopy as dc
 import sys
 import codecs
 import re
+from pathlib import Path
+from chemical_composition import ChemicalComposition
+from unimod_mapper import UnimodMapper
 
 POST_EXPERIMENTAL_MODIFICATIONS = ["Carbamidomethyl"]
 
@@ -53,7 +56,7 @@ PARAM_TYPE_LOOKUP = {
 }
 
 
-def _parse_evidence_and_format_fixed_labels(data=None):
+def _parse_evidence_and_format_fixed_labels(data=None, unimod_file_list=None):
     """
 
     Reformats input params to pyQms compatible params. Additionally evidence
@@ -152,7 +155,9 @@ def _parse_evidence_and_format_fixed_labels(data=None):
             converted_value = PARAM_TYPE_LOOKUP[k](v)
             r["params"][k] = converted_value
 
-    cc_factory = pyqms.chemical_composition.ChemicalComposition()
+    cc_factory = ChemicalComposition(
+        unimod_file_list=unimod_file_list, add_default_files=False
+    )
     tmp_fixed_labels = None
     if "fixed_labels" in data.keys() and len(data["fixed_labels"]) != 0:
         tmp_fixed_labels = {}
@@ -187,6 +192,7 @@ def _parse_evidence_and_format_fixed_labels(data=None):
         evidence_files=evidence_file_list,
         molecules=data["molecules"],
         evidence_score_field=data["evidence_score_field"],
+        unimod_file_list=unimod_file_list,
     )
     r["fixed_labels"] = formatted_fixed_labels
     r["molecules"] = molecule_list
@@ -201,6 +207,7 @@ def parse_evidence(
     molecules=None,
     evidence_score_field=None,
     return_raw_csv_data=False,
+    unimod_file_list=None,
 ):
     """
     Reads in the evidence file and returns the final formatted fixed labels,
@@ -255,7 +262,7 @@ def parse_evidence(
     if evidence_score_field is None:
         evidence_score_field = "PEP"  #  default
 
-    unimod_parser = pyqms.UnimodMapper()
+    unimod_parser = UnimodMapper(xml_file_list=unimod_file_list, add_default_files=False)
 
     fixed_mod_lookup = {}
     amino_acid_2_fixed_mod_name = ddict(list)
@@ -271,7 +278,9 @@ def parse_evidence(
         for aa, fixed_mod_info_dict_list in fixed_labels.items():
             for fixed_mod_info_dict in fixed_mod_info_dict_list:
                 if isinstance(fixed_mod_info_dict["element_composition"], dict):
-                    tmp_cc_factory = pyqms.chemical_composition.ChemicalComposition()
+                    tmp_cc_factory = ChemicalComposition(
+                        unimod_file_list=unimod_file_list, add_default_files=False
+                    )
                     tmp_cc_factory.add_chemical_formula(
                         fixed_mod_info_dict["element_composition"]
                     )
@@ -292,7 +301,9 @@ def parse_evidence(
                 all_fixed_mod_names.add(fixed_mod_info_dict["evidence_mod_name"])
                 tmp_cc_factory.clear()
 
-    cc_factory = pyqms.chemical_composition.ChemicalComposition()
+    cc_factory = ChemicalComposition(
+        unimod_file_list=unimod_file_list, add_default_files=False
+    )
 
     # this is the lookup for the lib with the evidences
     # tmp_evidences = ddict(list)
@@ -343,17 +354,17 @@ def parse_evidence(
                     else:
                         formatted_mods = []
                         # 2-UNIMOD:4,3-UNIMOD:4
-                        for pos_and_unimod_id in line_dict[
-                            modification_fieldname
-                        ].split(","):
+                        for pos_and_unimod_id in line_dict[modification_fieldname].split(
+                            ","
+                        ):
                             pos, unimod_id = pos_and_unimod_id.split("-")
-                            unimod_name = unimod_parser.id2name(unimod_id.split(":")[1])
+                            unimod_name = unimod_parser.id2first_name(
+                                unimod_id.split(":")[1]
+                            )
                             formatted_mods.append("{0}:{1}".format(unimod_name, pos))
                         formatted_mods = ";".join(formatted_mods)
 
-                    molecule = "{0}#{1}".format(
-                        line_dict[seq_fieldname], formatted_mods
-                    )
+                    molecule = "{0}#{1}".format(line_dict[seq_fieldname], formatted_mods)
 
                 dict_2_append = {}
                 rt = line_dict.get(rt_fieldname, "")
@@ -381,10 +392,12 @@ def parse_evidence(
                     if additional_name != "":
                         # use set to remove double values
                         tmp_evidences[molecule]["trivial_names"].add(additional_name)
-                        if 'trivial_name' not in dict_2_append.keys():
-                            dict_2_append['trivial_name'] = additional_name
+                        if "trivial_name" not in dict_2_append.keys():
+                            dict_2_append["trivial_name"] = additional_name
                         else:
-                            dict_2_append['trivial_name'] += ';{0}'.format(additional_name)                
+                            dict_2_append["trivial_name"] += ";{0}".format(
+                                additional_name
+                            )
                 tmp_evidences[molecule]["evidences"].append(dict_2_append)
 
     mod_pattern = re.compile(r""":(?P<pos>[0-9]*$)""")
@@ -451,8 +464,16 @@ def parse_evidence(
         # print(molecule)
         if molecule.startswith("+"):
             cc_factory.add_chemical_formula(molecule)
+        elif "#" in molecule:
+            try:
+                sequence, modifications = molecule.split("#")
+            except ValueError:
+                raise ValueError(f"Invalid Sequence too many # ({molecule})")
+
+            cc_factory.use(sequence=sequence, modifications=modifications)
         else:
-            cc_factory.use(molecule)
+            cc_factory.use(sequence=molecule)
+
         if len(fixed_label_mod_addon_names) != 0:
             for fixed_mod_name in fixed_label_mod_addon_names:
                 cc_factory.add_chemical_formula(fixed_mod_lookup[fixed_mod_name])

@@ -5,3 +5,4 @@ tox
 coverage
 codecov
 pandas
+chemical_composition

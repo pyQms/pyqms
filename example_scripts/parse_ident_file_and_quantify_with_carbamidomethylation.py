@@ -75,7 +75,11 @@ def main(ident_file=None, mzml_file=None):
         ]
     }
 
-    formatted_fixed_labels, evidence_lookup, molecule_list = pyqms.adaptors.parse_evidence(
+    (
+        formatted_fixed_labels,
+        evidence_lookup,
+        molecule_list,
+    ) = pyqms.adaptors.parse_evidence(
         fixed_labels=tmp_fixed_labels, evidence_files=[ident_file]
     )
 
@@ -116,9 +120,7 @@ def main(ident_file=None, mzml_file=None):
     pickle.dump(
         results,
         open(
-            os.path.join(
-                out_folder, "{0}_pyQms_results.pkl".format(mzml_file_basename)
-            ),
+            os.path.join(out_folder, "{0}_pyQms_results.pkl".format(mzml_file_basename)),
             "wb",
         ),
     )
