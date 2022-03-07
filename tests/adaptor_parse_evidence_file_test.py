@@ -27,8 +27,11 @@
 from pyqms.adaptors import parse_evidence as parse_evidence
 import os
 import pyqms
+from chemical_composition import ChemicalComposition
+from pathlib import Path
 
-tmp_cc_factory = pyqms.chemical_composition.ChemicalComposition()
+unimod_file_list = [Path("tests", "data", "usermod.xml")]
+tmp_cc_factory = ChemicalComposition(unimod_file_list=unimod_file_list)
 
 tmp_cc_factory.add_chemical_formula("C2O1H3N1")
 TESTS = [
@@ -39,6 +42,7 @@ TESTS = [
             "molecules": None,
             "evidence_score_field": None,
             "evidence_files": [os.path.join("tests", "data", "test_BSA_evidence.csv")],
+            "unimod_file_list": unimod_file_list,
         },
         "output": {
             "molecules": [
@@ -63,6 +67,7 @@ TESTS = [
             "molecules": None,
             "evidence_score_field": None,
             "evidence_files": [os.path.join("tests", "data", "test_BSA_evidence.csv")],
+            "unimod_file_list": unimod_file_list,
         },
         "output": {"molecules": ["CCTESLVNR", "DDSPDLPK", "+C37H59N9O16"]},
     },
@@ -80,6 +85,7 @@ TESTS = [
             "molecules": None,
             "evidence_score_field": None,
             "evidence_files": [os.path.join("tests", "data", "test_BSA_evidence.csv")],
+            "unimod_file_list": unimod_file_list,
         },
         "output": {"molecules": ["CCTESLVNR", "DDSPDLPK", "+C37H59N9O16"]},
     },
@@ -97,45 +103,7 @@ TESTS = [
             "molecules": None,
             "evidence_score_field": None,
             "evidence_files": [os.path.join("data", "BSA1_omssa_2_1_9_unified.csv")],
-        },
-        "output": {
-            "molecules": [
-                "AEFVEVTK",
-                "CCTESLVNR",
-                "DDSPDLPK",
-                "DLGEEHFK",
-                "EACFAVEGPK",
-                "ECCDKPLLEK",
-                "ETYGDMADCCEK",
-                "EYEATLEECCAK",
-                "GACLLPK",
-                "HLVDEPQNLIK",
-                "LCVLHEK",
-                "LKPDPNTLCDEFK",
-                "LKPDPNTLCDEFK#Oxidation:1",
-                "LKPDPNTLCDEFK#Oxidation:1;Oxidation:2",
-                "LVTDLTK",
-                "LVVSTQTALA",
-                "SHCIAEVEK",
-                "YICDNQDTISSK",
-                "YLYEIAR",
-            ]
-        },
-    },
-    {
-        # full evidence parse
-        "input": {
-            "fixed_labels": {
-                "C": [
-                    {
-                        "element_composition": tmp_cc_factory,
-                        "evidence_mod_name": "Carbamidomethyl",
-                    }
-                ]
-            },
-            "molecules": None,
-            "evidence_score_field": None,
-            "evidence_files": [os.path.join("data", "BSA1_omssa_2_1_9.mztab")],
+            "unimod_file_list": unimod_file_list,
         },
         "output": {
             "molecules": [
@@ -178,17 +146,23 @@ def adaptor_check(test_dict):
     assert sorted(molecule_list) == sorted(test_dict["output"]["molecules"])
     for formula in evidence_lookup.keys():
         for molecule in evidence_lookup[formula].keys():
-            if len(evidence_lookup[formula][molecule]['trivial_names']) !=0:
-                for ev_dict in evidence_lookup[formula][molecule]['evidences']:
-                    assert 'trivial_name' in ev_dict.keys()
-                    trivial_name = ev_dict['trivial_name']
-                    if ';' in trivial_name:
-                        trivial_name_list = trivial_name.split(';')
+            if len(evidence_lookup[formula][molecule]["trivial_names"]) != 0:
+                for ev_dict in evidence_lookup[formula][molecule]["evidences"]:
+                    assert "trivial_name" in ev_dict.keys()
+                    trivial_name = ev_dict["trivial_name"]
+                    if ";" in trivial_name:
+                        trivial_name_list = trivial_name.split(";")
                     else:
-                        trivial_name_list = [ trivial_name ]
+                        trivial_name_list = [trivial_name]
                     for tmp_trivial_name in trivial_name_list:
-                        assert tmp_trivial_name in evidence_lookup[formula][molecule]['trivial_names']
-                    assert sorted(evidence_lookup[formula][molecule]['trivial_names']) == sorted(trivial_name_list)
+                        assert (
+                            tmp_trivial_name
+                            in evidence_lookup[formula][molecule]["trivial_names"]
+                        )
+                    assert sorted(
+                        evidence_lookup[formula][molecule]["trivial_names"]
+                    ) == sorted(trivial_name_list)
+
 
 if __name__ == "__main__":
     for test_dict in TESTS:

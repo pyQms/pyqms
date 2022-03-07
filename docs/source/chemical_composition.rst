@@ -6,6 +6,6 @@
 Chemical composition
 ####################
 
-.. autoclass:: pyqms.ChemicalComposition
+.. autoclass:: ChemicalComposition
    :members:
 

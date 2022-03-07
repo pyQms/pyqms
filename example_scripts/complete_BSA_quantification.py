@@ -78,7 +78,11 @@ def main(ident_file=None, mzml_file=None):
         evidence_score_field = "PEP"
 
     print('Evidence score field "{0}" will be used.'.format(evidence_score_field))
-    formatted_fixed_labels, evidence_lookup, molecule_list = pyqms.adaptors.parse_evidence(
+    (
+        formatted_fixed_labels,
+        evidence_lookup,
+        molecule_list,
+    ) = pyqms.adaptors.parse_evidence(
         fixed_labels=tmp_fixed_labels,
         evidence_files=[ident_file],
         evidence_score_field=evidence_score_field,
@@ -101,6 +105,7 @@ def main(ident_file=None, mzml_file=None):
     results = None
     for spectrum in run:
         spec_id = spectrum["id"]
+
         try:
             # pymzML 2.0.0 style
             scan_time = spectrum.scan_time
@@ -116,9 +121,7 @@ def main(ident_file=None, mzml_file=None):
                 results=results,
             )
     # print(results)
-    out_folder = os.path.join(
-        os.path.dirname(ident_file), "complete_BSA_quantification"
-    )
+    out_folder = os.path.join(os.path.dirname(ident_file), "complete_BSA_quantification")
     if os.path.exists(out_folder) is False:
         os.mkdir(out_folder)
     print()
@@ -163,6 +166,7 @@ def main(ident_file=None, mzml_file=None):
                 formula_charge_to_quant_info[
                     (line_dict["formula"], int(line_dict["charge"]))
                 ]["evidence_rts"].append(round(float(ev_string.split("@")[1]), 2))
+
     import_ok = False
     try:
         import rpy2
