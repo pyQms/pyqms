@@ -333,10 +333,8 @@ class IsotopologueLibrary(dict):
             else:
                 sequence = molecule
                 modification = None
-            if sequence.startswith('+'):
-                cc_factory.use(formula=sequence)
-            else:
-                cc_factory.use(sequence=sequence, modifications=modification)
+            
+            cc_factory.use(deprecated_format=molecule)
             # mass = cc_factory.mass()
             # if mass / max(self.charges) > self.params['UPPER_MZ_LIMIT']:
             #     continue
