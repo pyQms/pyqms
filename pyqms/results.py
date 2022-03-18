@@ -486,7 +486,9 @@ class Results(dict):
 
                     error_dict["mz_error"].append(rel_mz_error_in_ppm)
                     error_dict["intensity_error"].append(rel_i_error)
-                    error_dict["time_dependent_mz_error"][rt].append(rel_mz_error_in_ppm)
+                    error_dict["time_dependent_mz_error"][rt].append(
+                        rel_mz_error_in_ppm
+                    )
                     error_dict["time_dependent_intensity_error"][rt].append(rel_i_error)
         if plot and len(error_dict["mz_error"]) > 0:
             assert self._import_rpy2() == True, "require R & rpy2 installed..."
@@ -1469,7 +1471,9 @@ class Results(dict):
                             tmp["trivial_name(s)"] = ";".join(
                                 sorted(
                                     list(
-                                        set(tmp_evidence_dict[molecule]["trivial_names"])
+                                        set(
+                                            tmp_evidence_dict[molecule]["trivial_names"]
+                                        )
                                     )
                                 )
                             )
@@ -1968,7 +1972,9 @@ MTD peptide-quantification-value [PRIDE, PRIDE:0000425, MS1 intensity based labe
         for pos, current_window_object in enumerate(window_sort_list):
             # print(pos, current_window_object)
             # set windows for everz peptide!
-            upep_2_rt[current_window_object[1]] = {"rt_window": current_window_object[0]}
+            upep_2_rt[current_window_object[1]] = {
+                "rt_window": current_window_object[0]
+            }
             if pos == 0:
                 continue
             last_window_object = window_sort_list[pos - 1]
@@ -2031,7 +2037,10 @@ MTD peptide-quantification-value [PRIDE, PRIDE:0000425, MS1 intensity based labe
                         pass
 
                     if unseparable is True:
-                        if "window_is_unseparable" not in upep_2_rt[current_upep].keys():
+                        if (
+                            "window_is_unseparable"
+                            not in upep_2_rt[current_upep].keys()
+                        ):
                             upep_2_rt[current_upep]["window_is_unseparable"] = []
                         if "window_is_unseparable" not in upep_2_rt[last_upep].keys():
                             upep_2_rt[last_upep]["window_is_unseparable"] = []
@@ -2048,7 +2057,9 @@ MTD peptide-quantification-value [PRIDE, PRIDE:0000425, MS1 intensity based labe
                             "lower_window_border"
                         ] = half_diff_redef_win
 
-                        upep_2_rt[last_upep]["upper_window_border"] = half_diff_redef_win
+                        upep_2_rt[last_upep][
+                            "upper_window_border"
+                        ] = half_diff_redef_win
 
         return upep_2_rt
 

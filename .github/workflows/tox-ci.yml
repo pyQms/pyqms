@@ -8,13 +8,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run black
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: 3.8
       - name: install black
         run: pip install black
       - name: run black
-        run: black --line-length 89 --check .
+        run: black --check .
 
   build:
     runs-on: ubuntu-latest
@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python }}
       - name: install tox

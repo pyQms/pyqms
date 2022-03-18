@@ -352,7 +352,9 @@ class TestResults(unittest.TestCase):
         assert i_transform_function(10) == 10
 
         # log 2 transform, check
-        i_label, i_transform_function = self.results._define_i_transformation(tag="log2")
+        i_label, i_transform_function = self.results._define_i_transformation(
+            tag="log2"
+        )
         assert i_label == "log2 Intensity [a.u.]"
         assert i_transform_function(10) == math.log(1 + 10, 2)
 

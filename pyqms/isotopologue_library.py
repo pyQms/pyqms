@@ -333,7 +333,7 @@ class IsotopologueLibrary(dict):
             else:
                 sequence = molecule
                 modification = None
-            cc_factory.use(sequence=sequence, modifications=modification)
+            cc_factory.use(deprecated_format=molecule)
             # mass = cc_factory.mass()
             # if mass / max(self.charges) > self.params['UPPER_MZ_LIMIT']:
             #     continue
@@ -525,7 +525,8 @@ class IsotopologueLibrary(dict):
                     )
                 # element_stats              = {}
                 not_labled_elements = (
-                    set(self[formula]["cc"].keys()) - self.metabolically_labeled_elements
+                    set(self[formula]["cc"].keys())
+                    - self.metabolically_labeled_elements
                 )
 
                 pt_dependency = {}
@@ -589,9 +590,9 @@ class IsotopologueLibrary(dict):
                         if element in self.metabolically_labeled_elements:
                             continue
 
-                        default_element_label = list(self.element_trees[element].keys())[
-                            0
-                        ]
+                        default_element_label = list(
+                            self.element_trees[element].keys()
+                        )[0]
                         # is this zero_labeled_percentile ?
                         # --------
                         env_range = (
@@ -677,12 +678,12 @@ class IsotopologueLibrary(dict):
                             except:
                                 print(
                                     "Can we use the limits ?",
-                                    self.element_trees[element][label_percentile][level][
-                                        "minPos"
-                                    ],
-                                    self.element_trees[element][label_percentile][level][
-                                        "maxPos"
-                                    ],
+                                    self.element_trees[element][label_percentile][
+                                        level
+                                    ]["minPos"],
+                                    self.element_trees[element][label_percentile][
+                                        level
+                                    ]["maxPos"],
                                     pos,
                                     element,
                                     combo,
@@ -746,7 +747,9 @@ class IsotopologueLibrary(dict):
                                 )
                             )
                         )
-                        relative_intensity = total_local_intensity / float(max_intensity)
+                        relative_intensity = total_local_intensity / float(
+                            max_intensity
+                        )
                         self[formula]["env"][label_percentile_tuple]["relabun"].append(
                             relative_intensity
                         )
@@ -787,7 +790,8 @@ class IsotopologueLibrary(dict):
                             #
                             if self.params["MACHINE_OFFSET_IN_PPM"] != 0:
                                 mz = (
-                                    mz + mz * 1e-6 * self.params["MACHINE_OFFSET_IN_PPM"]
+                                    mz
+                                    + mz * 1e-6 * self.params["MACHINE_OFFSET_IN_PPM"]
                                 )
 
                             self[formula]["env"][label_percentile_tuple][charge][
@@ -980,9 +984,9 @@ class IsotopologueLibrary(dict):
                 # isotope = match.group('isotope')
                 element = match.group("element")
                 index = entry[1]
-                label_tmp_dict[element] = self.params["PERCENTILE_FORMAT_STRING"].format(
-                    self.metabolic_labels[entry[0]][index]
-                )
+                label_tmp_dict[element] = self.params[
+                    "PERCENTILE_FORMAT_STRING"
+                ].format(self.metabolic_labels[entry[0]][index])
 
             # element_list, label_percentiles = zip(*sorted(label_tmp_dict.items()))
             self.labled_percentiles.append(tuple(sorted(label_tmp_dict.items())))
@@ -1145,12 +1149,12 @@ class IsotopologueLibrary(dict):
             ):
                 self.element_trees[element][label_percentile] = {
                     1: {
-                        "maxPos": self.isotopic_distributions[element][label_percentile][
-                            -1
-                        ][2],
-                        "minPos": self.isotopic_distributions[element][label_percentile][
-                            0
-                        ][2],
+                        "maxPos": self.isotopic_distributions[element][
+                            label_percentile
+                        ][-1][2],
+                        "minPos": self.isotopic_distributions[element][
+                            label_percentile
+                        ][0][2],
                         "env": {},
                     }
                 }
@@ -1611,11 +1615,13 @@ class IsotopologueLibrary(dict):
                         aa,
                         fixed_label_index,
                     ) in sorted_exchange_list:
-                        modified_molecule = "{seq1}{aa}{fixed_label_index}{seq2}".format(
-                            seq1=modified_molecule[:index_in_molecule],
-                            seq2=modified_molecule[index_in_molecule + 1 :],
-                            aa=aa,
-                            fixed_label_index=fixed_label_index,
+                        modified_molecule = (
+                            "{seq1}{aa}{fixed_label_index}{seq2}".format(
+                                seq1=modified_molecule[:index_in_molecule],
+                                seq2=modified_molecule[index_in_molecule + 1 :],
+                                aa=aa,
+                                fixed_label_index=fixed_label_index,
+                            )
                         )
                         if (
                             self.params["SILAC_AAS_LOCKED_IN_EXPERIMENT"] is not None
@@ -1651,7 +1657,9 @@ class IsotopologueLibrary(dict):
                         extend_variation_lookup = True
                     if extend_variation_lookup:
                         try:
-                            self.lookup["molecule fixed label variations"][full_molecule]
+                            self.lookup["molecule fixed label variations"][
+                                full_molecule
+                            ]
                         except:
                             self.lookup["molecule fixed label variations"][
                                 full_molecule
@@ -1733,9 +1741,9 @@ class IsotopologueLibrary(dict):
                     previousMass = self.element_trees[element][label_percentile][
                         self.computed_level_complex_isotopes
                     ]["env"][envPos]["mass"]
-                    isotopeMass = self.isotopic_distributions[element][label_percentile][
-                        isotopePos
-                    ][0]
+                    isotopeMass = self.isotopic_distributions[element][
+                        label_percentile
+                    ][isotopePos][0]
                     self.element_trees[element][label_percentile][n]["env"][
                         envPos + isotopePos
                     ]["mass"].append(previousMass + isotopeMass)
