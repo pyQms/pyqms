@@ -121,7 +121,9 @@ def main(ident_file=None, mzml_file=None):
                 results=results,
             )
     # print(results)
-    out_folder = os.path.join(os.path.dirname(ident_file), "complete_BSA_quantification")
+    out_folder = os.path.join(
+        os.path.dirname(ident_file), "complete_BSA_quantification"
+    )
     if os.path.exists(out_folder) is False:
         os.mkdir(out_folder)
     print()
