@@ -44,7 +44,9 @@ def main():
         basename = os.path.basename(http_url).replace("?", "")  # Win compatible
         output_path = os.path.join(os.path.dirname(mzML_file), basename)
         with open(output_path, "wb") as ooo:
-            local_filename, headers = request.urlretrieve(http_url, filename=output_path)
+            local_filename, headers = request.urlretrieve(
+                http_url, filename=output_path
+            )
         try:
             shutil.move("{0}?format=raw".format(mzML_file), mzML_file)
         except:

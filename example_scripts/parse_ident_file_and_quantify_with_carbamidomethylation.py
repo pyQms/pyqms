@@ -120,7 +120,9 @@ def main(ident_file=None, mzml_file=None):
     pickle.dump(
         results,
         open(
-            os.path.join(out_folder, "{0}_pyQms_results.pkl".format(mzml_file_basename)),
+            os.path.join(
+                out_folder, "{0}_pyQms_results.pkl".format(mzml_file_basename)
+            ),
             "wb",
         ),
     )
