@@ -262,7 +262,9 @@ def parse_evidence(
     if evidence_score_field is None:
         evidence_score_field = "PEP"  #  default
 
-    unimod_parser = UnimodMapper(xml_file_list=unimod_file_list, add_default_files=False)
+    unimod_parser = UnimodMapper(
+        xml_file_list=unimod_file_list, add_default_files=False
+    )
 
     fixed_mod_lookup = {}
     amino_acid_2_fixed_mod_name = ddict(list)
@@ -354,9 +356,9 @@ def parse_evidence(
                     else:
                         formatted_mods = []
                         # 2-UNIMOD:4,3-UNIMOD:4
-                        for pos_and_unimod_id in line_dict[modification_fieldname].split(
-                            ","
-                        ):
+                        for pos_and_unimod_id in line_dict[
+                            modification_fieldname
+                        ].split(","):
                             pos, unimod_id = pos_and_unimod_id.split("-")
                             unimod_name = unimod_parser.id2first_name(
                                 unimod_id.split(":")[1]
@@ -364,7 +366,9 @@ def parse_evidence(
                             formatted_mods.append("{0}:{1}".format(unimod_name, pos))
                         formatted_mods = ";".join(formatted_mods)
 
-                    molecule = "{0}#{1}".format(line_dict[seq_fieldname], formatted_mods)
+                    molecule = "{0}#{1}".format(
+                        line_dict[seq_fieldname], formatted_mods
+                    )
 
                 dict_2_append = {}
                 rt = line_dict.get(rt_fieldname, "")
