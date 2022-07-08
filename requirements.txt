@@ -1,4 +1,4 @@
-pymzml==2.4.6
+pymzml==2.5.1
 openpyxl==3.0.4
 nose
 tox
