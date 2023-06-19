@@ -1,5 +1,5 @@
 pymzml==2.5.1
-openpyxl==3.0.4
+openpyxl==3.1.2
 nose
 tox
 coverage
