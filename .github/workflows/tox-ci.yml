@@ -6,7 +6,7 @@ jobs:
   black:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Run black
         uses: actions/setup-python@v4
         with:
@@ -22,7 +22,7 @@ jobs:
       matrix:
         python: [3.7, 3.8, 3.9]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
